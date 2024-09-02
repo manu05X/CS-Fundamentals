@@ -1,0 +1,30 @@
+main.Constructor in java is used to create the instance of the class.
+Constructors are almost similar to methods except for two things
+- its name is the same as the class name and it has no return type.
+Sometimes constructors are also referred to as special methods to initialize an object.
+
+Types of main.Constructor in Java
+A> There are three types of constructor in java.
+    1> Default main.Constructor
+    2> No-Args constructor
+    3> Parameterized constructor
+
+B> constructor overloading
+C> Private main.Constructor in Java :
+    Note that we can’t use abstract, final, static and synchronized keywords with constructors.
+    However we can use access modifiers to control the instantiation of class object.
+    Using public and default access is still fine, but what is the use of making a constructor private?
+    In that case any other class won’t be able to create the instance of the class.
+    Well, a constructor is made private in case we want to implement singleton design pattern.
+    Since java automatically provides default constructor, we have to explicitly create a constructor and keep it private.
+    Client classes are provided with a utility static method to get the instance of the class.
+
+D> main.Constructor Chaining in Java
+E> Java Super main.Constructor
+F> Java Copy main.Constructor
+    Java copy constructor takes the object of the same class as an argument and creates a copy of it.
+    Sometimes we need a copy of another object to do some processing.
+    We can do this by following ways:
+        a> implement cloning
+        b> providing a utility method for deep copy of the object.
+        c> Having a copy constructor

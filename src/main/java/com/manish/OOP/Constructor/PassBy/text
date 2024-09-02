@@ -1,0 +1,10 @@
+The two most prevalent modes of passing arguments to methods are “passing-by-value” and “passing-by-reference”.
+Different programming languages use these concepts in different ways. As far as Java is concerned,
+everything is strictly Pass-by-Value.
+
+We learned that parameter passing in Java is always Pass-by-Value. However, the context changes depending upon whether we’re dealing with Primitives or Objects:
+
+1> For Primitive types, parameters are pass-by-value
+2> For Object types, the object reference is pass-by-value
+
+//https://www.baeldung.com/java-pass-by-value-or-pass-by-reference
