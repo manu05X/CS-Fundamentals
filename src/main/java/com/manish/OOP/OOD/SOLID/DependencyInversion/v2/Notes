@@ -1,0 +1,13 @@
+Explanation:
+
+The Faculty interface represents the common behavior of all faculty members.
+The Teacher, Assistant, and Helper classes implement the Faculty interface, providing specific implementations for each type of faculty.
+The Headmaster class now maintains a list of Faculty objects, reducing direct dependencies on concrete implementations.
+The addFaculty() method allows dynamically adding different types of faculty without modifying the Headmaster class.
+The manageSchool() method in Headmaster iterates through the list of faculty, delegating tasks without worrying about concrete implementations.
+This approach follows the Dependency Inversion Principle, promoting a more flexible and extensible design. Adding new types of faculty in the future is easier, and the Headmaster class remains open for extension but closed for modification.
+
+
+Highy Level Module should not depend on Low level modules
+
+DI only comes in HAS-A relationship
