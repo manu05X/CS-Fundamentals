@@ -1,0 +1,76 @@
+Non-blocking Synchronization
+Introduction
+Much of the performance improvements seen in classes such as Semaphore and ConcurrentLinkedQueue versus their synchronized equivalents come from the use of atomic variables and non-blocking synchronization. Non-blocking algorithms use machine-level atomic instructions such as compare-and-swap instead of locks to provide data integrity when multiple threads access shared resources. Non-blocking algorithms are harder to design and implement but out perform lock-based alternatives in terms of liveness and scalability. As the name suggests, non-blocking algorithms don’t block when multiple threads contend for the same data, and as a consequence greatly reduce scheduling overhead. These algorithms don’t suffer from deadlocks, liveness issues and individual thread failures. More formally:
+
+An algorithm is called non-blocking if the failure or suspension of a thread doesn’t cause the failure or suspension of another thread.
+
+An algorithm is called lock free if at every step of the algorithm some thread participant of the algorithm can make progress.
+
+Nonblocking counter
+Designing a thread-safe counter would require using locks so that threads don’t step over each other. An increment operation on a long variable consists of three steps. Fetching the current value, incrementing it and then writing it back. All three have to be executed atomically to achieve thread-safety. A lock-based implementation of the lock appears below:
+
+class LockBasedCounter {
+    private long value;
+
+    public synchronized long getValue() {
+        return value;
+    }
+
+    // When multiple threads attempt to invoke the method at the same time,
+    // only one is allowed to do so while the rest are suspended
+    public synchronized void increment() {
+        value++;
+    }
+}
+
+Locking comes with its baggage and we can design a counter that doesn’t cause threads to be suspended in the face of contention. To build such a counter, we’ll need the hardware to support the CAS instruction. For our purposes we’ll write a class SimulatedCAS that imitates the CAS instruction. The listing for this class along with comments appears in the widget below:
+
+    public class SimulatedCAS {
+
+        // Let's assume for simplicity our value is a long
+        private long value = 0;
+
+        // constructor to initialize the value
+        public SimulatedCAS(long initValue) {
+            value = initValue;
+        }
+
+        synchronized long getValue() {
+            return value;
+        }
+
+        // The synchronized keyword causes all the steps in this method to execute
+        // atomically, which is akin to simulating the compare and swap processor
+        // instruction. The behavior of the function is as follows:
+        //
+        // 1. Return the expectedValue if the CAS instruction completes successfully, i.e.
+        //    the newValue is written.
+        // 2. Return the current value if the CAS instruction doesn't complete successfully
+        //
+        // The method is setup such that when expectedValue equals the return value
+        // the caller can assume success.
+        synchronized long compareAndSwap(long expectedValue, long newValue) {
+
+            if (value == expectedValue) {
+                value = newValue;
+                return expectedValue;
+            }
+
+            // return whatever is the current value
+            return value;
+        }
+
+        // This method uses the compareAndSwap() method to indicate if the CAS
+        // instruction completed successfully or not.
+        synchronized boolean compareAndSet(long expectedValue, long newValue) {
+            return compareAndSwap(expectedValue, newValue) == expectedValue;
+        }
+    }
+
+The compare and swap (CAS) functionality is also implemented by some processors as a pair of instructions loadlinked and store-conditional. Using the SimulatedCAS class we can now construct a non-blocking counter that doesn’t block threads when multiple of them attempt to manipulate shared state
+
+
+___________
+Conclusion
+-----------+
+There are well-known non-blocking algorithms for commonly used data structures such as hashtables, priority queues, stacks, linked-lists etc. However, designing non-blocking algorithms is much more complex than lock-based alternatives. Generally, non-blocking algorithms skirt many of the vices associated with lock-based approaches such as deadlocks or priority inversion, however, threads participating in a non-blocking algorithm can still experience starvation or livelocks as they may perform repeated retries without success.
