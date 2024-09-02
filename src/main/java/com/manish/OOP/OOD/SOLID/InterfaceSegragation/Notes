@@ -1,0 +1,48 @@
+The main.Interface Segregation Principle (ISP) is a design principle that does not recommend having methods that an interface would not use and require. Therefore, it goes against having fat interfaces in classes and prefers having small interfaces with a group of methods, each serving a particular purpose.
+
+The goal behind implementing the ISP is to have a precise code design that follows the correct abstraction guidelines and tends to be more flexible, which would help in making it more robust and reusable. This becomes key when more and more features are added to the software, making it bloated and harder to maintain.
+
+
+interface Shape {
+    double area();
+}
+
+class Square implements Shape {
+    private double side;
+
+    public Square(double side) {
+        this.side = side;
+    }
+
+    @Override
+    public double area() {
+        return side * side;
+    }
+}
+
+class Rectangle implements Shape {
+    private double length;
+    private double width;
+
+    public Rectangle(double length, double width) {
+        this.length = length;
+        this.width = width;
+    }
+
+    @Override
+    public double area() {
+        return length * width;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Create instances of Square and Rectangle
+        Square square = new Square(5.0);
+        Rectangle rectangle = new Rectangle(4.0, 6.0);
+
+        // Calculate and print the area of each shape
+        System.out.println("Area of Square: " + square.area());
+        System.out.println("Area of Rectangle: " + rectangle.area());
+    }
+}

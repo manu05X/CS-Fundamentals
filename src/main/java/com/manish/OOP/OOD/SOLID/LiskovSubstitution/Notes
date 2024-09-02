@@ -1,0 +1,8 @@
+Conclusion
+The LSP is an important principle that should be extended to the level of system architecture. A small violation of the substitutability of classes can cause the system to break down, which is why we should always be on the lookout for violations. A few benefits of the LSP are provided below:
+
+It avoids the generalization of concepts that may not be needed in the future.
+
+It makes the code maintainable and easier to upgrade.
+
+Now that we have learned about the Liskov Substitution Principle, let's look at the main.Interface Segregation Principle in the next lesson.

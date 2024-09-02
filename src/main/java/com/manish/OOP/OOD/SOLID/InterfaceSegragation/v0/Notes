@@ -1,0 +1,91 @@
+interface Shape {
+    double area();
+    double volume();
+}
+
+class Square implements Shape {
+    private double side;
+
+    public Square(double side) {
+        this.side = side;
+    }
+
+    @Override
+    public double area() {
+        return side * side;
+    }
+
+    @Override
+    public double volume() {
+        // Volume of a square is not defined, return 0
+        return 0.0;
+    }
+}
+
+class Rectangle implements Shape {
+    private double length;
+    private double width;
+
+    public Rectangle(double length, double width) {
+        this.length = length;
+        this.width = width;
+    }
+
+    @Override
+    public double area() {
+        return length * width;
+    }
+
+    @Override
+    public double volume() {
+        // Volume of a rectangle is not defined, return 0
+        return 0.0;
+    }
+}
+
+class Cube implements Shape {
+    private double side;
+
+    public Cube(double side) {
+        this.side = side;
+    }
+
+    @Override
+    public double area() {
+        return 6 * side * side; // Surface area of a cube
+    }
+
+    @Override
+    public double volume() {
+        return Math.pow(side, 3); // Volume of a cube
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Create instances of Square, Rectangle, and Cube
+        Square square = new Square(5.0);
+        Rectangle rectangle = new Rectangle(4.0, 6.0);
+        Cube cube = new Cube(3.0);
+
+        // Calculate and print the area and volume of each shape
+        System.out.println("Area of Square: " + square.area());
+        System.out.println("Volume of Square: " + square.volume());
+
+        System.out.println("Area of Rectangle: " + rectangle.area());
+        System.out.println("Volume of Rectangle: " + rectangle.volume());
+
+        System.out.println("Area of Cube: " + cube.area());
+        System.out.println("Volume of Cube: " + cube.volume());
+    }
+}
+In this modification:
+
+The Shape interface now includes a volume() method.
+The Square and Rectangle classes provide a default implementation of volume() that returns 0 since the volume of a 2D shape is not defined.
+The new Cube class implements both area() and volume() methods based on the formulas for the surface area and volume of a cube.
+In the Main class, we create instances of Square, Rectangle, and Cube, and calculate and print their respective areas and volumes.
+Now, the Shape interface provides a common structure for both 2D and 3D shapes, and each shape class can implement the methods relevant to its geometry.
+
+
+The violation leads to a problem. The 2-D shapes cannot have a volume, yet they’re forced to implement the volume() method of the Shape interface that they don’t have any use of. This is a clear violation of the main.Interface Segregation Principle.

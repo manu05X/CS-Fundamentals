@@ -1,0 +1,10 @@
+To adhere to the main.Interface Segregation Principle (ISP), you should ensure that an interface is client-specific rather than general-purpose. In this context, it means separating functionalities specific to 2D shapes from those specific to 3D shapes.
+
+Let's segregate the Shape interface into two interfaces: TwoDimensionalShape and ThreeDimensionalShape.
+
+Conclusion
+The ISP, being an important principle, is the most violated principle in object-oriented programming. This can easily be achieved by adding more features to our software, requiring us to update large parts of our program. A few benefits of the ISP are as follows:
+
+It helps to keep our software maintainable and robust.
+
+It allows for efficient refactoring and redeployment of code.
