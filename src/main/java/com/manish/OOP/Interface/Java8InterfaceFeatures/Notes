@@ -1,0 +1,54 @@
+- Java8 main.Interface features:
+         - Default Method
+         - Static Method
+         - Functional main.Interface
+         - Lambda expression
+
+
+- Java8 main.Interface features:
+         - Default Method
+         ANS: main.Interface can have only Abstract method and all child classes has to provide abstract method implementation
+         ________________________
+         - Static Method:
+            - We can provide the implementation of the method in interface.
+            - But it can not be overridden by classes which implement the interface.
+            - We can access it using main.Interface name itself.
+            - Its by default public.
+         __________________________
+3. Private Method and Private Static Method Java9
+    - ANS: - We can provide the implementation of method but as a private access modifier in interface.
+           - It brings more readability of the code. For example if multiple default method share some code, that this can help.
+           - It can be defined as static and non-static.
+           - From Static method, we can call only private static interface method.
+           - Private static method, can be called from both static and non static method.
+           - Private interface method can not be abstract. Means we have to provide the definition.
+           - It can be used inside of the particular interface only.
+__________
+Example:
+           public interface Bird {
+                void canFly(); //this is equivalent to public abstract void canFly();
+           }
+
+           public default void minimumFlyingHeight() {
+                myStaticPublicMethod(); //calling static method
+                myPrivateMethod(); //calling private method
+                myPrivateStaticMethod(); //calling private static method
+           }
+
+           static void myStaticPublicMethod() {
+                myPrivateStaticMethod(); //from static we can call other static method only
+           }
+
+           private void myPrivateMethod(){
+                //private method implementation
+
+           }
+
+           private static void my PrivateStaticMethod() {
+                //private static method implementation
+
+           }
+
+___________________________________
+         - Functional main.Interface
+         - Lambda expression

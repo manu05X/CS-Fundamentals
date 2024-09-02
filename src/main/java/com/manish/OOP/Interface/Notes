@@ -1,0 +1,93 @@
+- What is main.Interface.
+-ANS: main.Interface helps 2 system to interact with each other, without one
+    system has to know the details of other.
+    An interface is a fully abstract class.
+    It includes a group of abstract methods (methods without a body).
+
+
+
+- How to define main.Interface?
+_____________________________
+    -ANS: main.Interface declaration consist of
+            -Modifiers
+            -"interface" keyword
+            -main.Interface Name
+            -Comma seperated list of parent interfaces
+            -Body
+
+Public main.Interface:
+    public interface Bird{
+        public void fly();
+    }
+
+Default main.Interface:
+    interface Bird{
+        public void fly();
+    }
+
+Comma Separated list of parent interfaces (it can extend from Class) Example:
+
+    public interface NonFlyingBirds extends Bird, LivingThings{
+        public void canRun();
+    }
+
+
+
+___________________________________________
+- Why we need main.Interface?
+-ANS:
+    1. Abstraction:
+    -----------------
+        Using interface, we can achieve full Abstraction means, we can define WHAT class must do,
+        But not HOW to do it.
+        HOW part will be done by the classes implementing the interface.
+
+
+    2. main.Polymorphism:
+    --------------------
+        -main.Interface can be used as a Data Type.
+        -We can not create the object of an interface, but it can hols the reference of all the classes
+         which implements it. And at runtime, it decide which method need to be invoked.
+
+    3. Multiple Inheritance:
+    --------------------------
+        -In Java Multiple Inheritance is possible only through main.Interface only.
+
+            Diamond Problem Solution
+_______________________________________________
+- Diamond Problem and Solution
+-----------------------------------------------
+
+- Method in main.Interface
+    Ans:-> -All method are implicit public only.
+           -Method can not be declared as final.
+________________________________________________
+- Fields in main.Interface
+    - Fields are public, static and final implicitly(CONSTANTS).
+    - You can not make field private or protected.
+------------------------------------------------
+
+- main.Interface Implementation and Rules
+    Ans: -Overriding method can not have more restrict access specifiers.
+        - Concrete class must override all the methods declared in the interface.
+        - Abstract classes are not forced to override all the methods.
+        - A class can implement from multiple interfaces.
+
+_____________________________________________
+- Nested main.Interface
+        - main.Interface within main.Interface
+        - main.Interface within a Class
+
+        Generally its is used to group, logical related interfaced. And nested interface
+        Rules:
+            - A nested interface declared within an interface must be public.
+            - A nested interface declared within a class can have any access modifier.
+            - When you implement outer interface, inner interface implementation is not required and vice versa.
+
+___________________________________________________________
+- Abstract Class Vs main.Interface
+- Java8 and Java9 main.Interface features
+         - Default Method
+         - Static Method
+         - Functional main.Interface
+         - Private Method
