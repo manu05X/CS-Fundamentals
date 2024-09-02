@@ -1,0 +1,132 @@
+Mutex vs Semaphore
+Mutex
+Mutex as the name hints implies mutual exclusion. A mutex is used to guard shared data such as a linked-list, an array or any primitive type. A mutex allows only a single thread to access a resource or critical section.
+
+Once a thread acquires a mutex, all other threads attempting to acquire the same mutex are blocked until the first thread releases the mutex. Once released, most implementations arbitrarily chose one of the waiting threads to acquire the mutex and make progress.
+
+Semaphore
+Semaphore, on the other hand, is used for limiting access to a collection of resources. Think of semaphore as having a limited number of permits to give out. If a semaphore has given out all the permits it has, then any new thread that comes along requesting for a permit will be blocked, till an earlier thread with a permit returns it to the semaphore. A typical example would be a pool of database connections that can be handed out to requesting threads. Say there are ten available connections but 50 requesting threads. In such a scenario, a semaphore can only give out ten permits or connections at any given point in time.
+
+A semaphore with a single permit is called a binary semaphore and is often thought of as an equivalent of a mutex, which isn't completely correct as we'll shortly explain. Semaphores can also be used for signaling among threads. This is an important distinction as it allows threads to cooperatively work towards completing a task. A mutex, on the other hand, is strictly limited to serializing access to shared state among competing threads.
+
+Mutex Example
+The following illustration shows how two threads acquire and release a mutex one after the other to gain access to shared data. Mutex guarantees the shared state isn't corrupted when competing threads work on it.
+
+TIME
+|
+|       Thread A acquires Mutex
+|                   |
+|                   |
+|                   |
+|                   V
+|       Thread A works on array data
+|   while Thread B waits for Mutex to Become
+|           available for acquisition
+|                   |
+|                   |
+|                   |
+|                   V
+|           Thread A releases MUTEX
+|__________________________________________________________________________________________
+|                                               Thread B acquires Mutex
+|                                                           |
+|                                                           |
+|                                                           |
+|                                                           V
+|                                              Thread B works on array data
+|                                       while Thread A now waits for Mutex to Become
+|                                              available for acquisition
+|                                                           |
+|                                                           |
+|                                                           |
+|                                                           V
+|                                                   Thread B releases MUTEX
+------------------------------------------------------------------------------------------------------------------
+
+When a Semaphore Masquerades as a Mutex?
+A semaphore can potentially act as a mutex if the permits it can give out is set to 1. However, the most important difference between the two is that in case of a mutex the same thread must call acquire and subsequent release on the mutex whereas in case of a binary sempahore, different threads can call acquire and release on the semaphore. The pthreads library documentation states this in the pthread_mutex_unlock() method's description.
+** If a thread attempts to unlock a mutex that it has not locked or a mutex which is unlocked, undefined behavior results.
+This leads us to the concept of ownership. A mutex is owned by the thread acquiring it till the point the owning-thread releases it, whereas for a semaphore there's no notion of ownership.
+
+Semaphore for Signaling
+Another distinction between a semaphore and a mutex is that semaphores can be used for signaling amongst threads, for example in case of the classical producer/consumer problem the producer thread can signal the consumer thread by incrementing the semaphore count to indicate to the consumer thread to consume the freshly produced item. A mutex in contrast only guards access to shared data among competing threads by forcing threads to serialize their access to critical sections and shared data-structures.
+
+          ___________                         ___________
+T1 ----> |           |       critical        |           |
+T2 ----> |   Mutex   | --------------------->|           |
+T3 ----> |   Locked  |        Section        |           |
+         |           |                       |           |
+         |___________|                       |___________|
+
+
+          ___________                         ___________
+T1 ----> |           |        critical       |           |
+         |   Mutex   | --------------------->|           |
+T2 ----> |  Locked   | T3 lock the mutex and |           |
+         |           | executes through the  |           |
+         |___________|    critical section   |___________|
+
+
+          ___________                         ___________
+T1 ----> |           |                       |           |
+         |   Mutex   |                       |           |   T3 exists the critical section and unlocks the mutex
+T2 ----> |  Locked   |     critical section  |           |   ----------------->
+         |           |                       |           |
+         |___________|                       |___________|
+
+
+Below is a depiction of how a semaphore works. The semaphore initially has two permits and allows at most two threads to enter the critical section or access protected resources.
+
+
+
+
+            ___________                         ___________
+T1 ---->   |           |                       |           |
+Semaphore  |   Mutex   |                       |           |
+with 2     |   Locked  |                       |           |
+permits    |           |                       |           |
+           |___________|                       |___________|
+
+
+
+                   ___________                         ___________
+T2 ---->          |           |   critical section    |           |
+T3 ---->          |           |     /Resource         |           |
+Semaphore         |           |   -------T1-------->  |           |
+with 1 permit     |           |                       |           |
+and 2 new         |           |                       |           |
+ threads arrive   |___________|                       |___________|
+
+
+
+
+                   ___________                         ___________
+                  |           |   critical section    |           |
+T3 ---->          |           |     /Resource         |           |
+Semaphore left    |           |   -------T1-------->  |           |
+with 0 permit.    |           |   -------T2-------->  |           |
+T3 blocks         |           |                       |           |
+                  |___________|                       |___________|
+
+
+                   ___________                         ___________
+T3 let in, while  |           |   critical section    |           |
+T1 and T2 release |           |     /Resource         |           |
+the Semaphore     |           |   -------T2-------->  |           |  T1 ----------->
+                  |           |                       |           |  T2 ----------->
+                  |           |                       |           |
+                  |___________|                       |___________|
+
+
+
+
+____________________________________
+
+Summary
+Mutex implies mutual exclusion and is used to serialize access to critical sections whereas semaphore can potentially be used as a mutex but it can also be used for cooperation and signaling amongst threads. Semaphore also solves the issue of missed signals.
+
+Mutex is owned by a thread, whereas a semaphore has no concept of ownership.
+
+Mutex if locked, must necessarily be unlocked by the same thread. A semaphore can be acted upon by different threads. This is true even if the semaphore has a permit of one
+
+Think of semaphore analogous to a car rental service such as Hertz. Each outlet has a certain number of cars, it can rent out to customers. It can rent several cars to several customers at the same time but if all the cars are rented out then any new customers need to be put on a waitlist till one of the rented cars is returned. In contrast, think of a mutex like a lone runway on a remote airport. Only a single jet can land or take-off from the runway at a given point in time. No other jet can use the runway simultaneously with the first aircraft.
