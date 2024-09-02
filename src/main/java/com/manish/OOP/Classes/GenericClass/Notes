@@ -1,0 +1,16 @@
+What is Generic Class and what is the need of it?
+- How to define the Generic Class
+- Inheritance with Generic main.Classes
+      - Non Generic Subclass
+      - Generic Subclass
+- Multiple Type Parameters in Generic Class
+- Generic Methods
+- What is Raw Type
+- Bounded Generics
+     - Upper Bound
+     - Multi Bound
+- Wildcards
+   - UpperBound
+  - LowerBound
+  - Unbounded
+- Type Erasure

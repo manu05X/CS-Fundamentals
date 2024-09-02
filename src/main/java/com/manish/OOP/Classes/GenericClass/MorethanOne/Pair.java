@@ -1,0 +1,15 @@
+package com.manish.OOP.Classes.GenericClass.MorethanOne;
+
+
+public class Pair<K, V> {
+    private K key;
+    private V value;
+
+    public Pair() {
+    }
+
+    public void put(K key, V value) {
+        this.key = key;
+        this.value = value;
+    }
+}

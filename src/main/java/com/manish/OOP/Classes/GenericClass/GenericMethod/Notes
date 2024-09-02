@@ -1,0 +1,3 @@
+What if we only wants to make Method Generic, not the complete class, we can write Generic Method Too.
+    -Type Parameter should be before the return type of the method declaration.
+    -Type Parameter scope is limited to method only.
