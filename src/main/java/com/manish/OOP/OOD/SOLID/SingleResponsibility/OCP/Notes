@@ -1,0 +1,116 @@
+
+The Liskov Substitution Principle (LSP) states that objects of a superclass should be able to be replaced with objects of a subclass without affecting the correctness of the program. To adhere to LSP, we want to ensure that subclasses can be substituted for their base classes without introducing unexpected behavior.
+
+In the given code, there's no explicit inheritance or subclassing, but we can still demonstrate the Liskov Substitution Principle by ensuring that different implementations of the InvoiceAction interface can be used interchangeably.
+
+import java.util.UUID;
+
+interface InvoiceAction {
+    void perform(Invoice invoice);
+}
+
+class Book {
+    private String name;
+    private String authorName;
+    private int year;
+    private double price;
+    private UUID isbn;
+
+    public Book(String name, String authorName, int year, double price) {
+        this.name = name;
+        this.authorName = authorName;
+        this.year = year;
+        this.price = price;
+        this.isbn = UUID.randomUUID();
+    }
+
+    // Getters and other methods related to Book
+
+    public String getName() {
+        return name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+}
+
+class Invoice {
+    private Book book;
+    private int quantity;
+    private double discount;
+    private double tax;
+
+    public Invoice(Book book, int quantity, double discount, double tax) {
+        this.book = book;
+        this.quantity = quantity;
+        this.discount = discount;
+        this.tax = tax;
+    }
+
+    public double calculateTotal() {
+        double price = ((book.getPrice() - book.getPrice() * discount) * this.quantity);
+        return price * (1 + tax);
+    }
+
+    // Getters for Invoice class
+
+    public Book getBook() {
+        return book;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public double getTax() {
+        return tax;
+    }
+
+    // Other getters
+}
+
+class InvoicePrinter implements InvoiceAction {
+    @Override
+    public void perform(Invoice invoice) {
+        System.out.println(invoice.getQuantity() + "x " + invoice.getBook().getName() + " " + invoice.getBook().getPrice() + "$");
+        System.out.println("Discount Rate: " + invoice.getDiscount());
+        System.out.println("Tax Rate: " + invoice.getTax());
+        System.out.println("Total: " + invoice.calculateTotal());
+    }
+}
+
+class InvoiceStorage implements InvoiceAction {
+    @Override
+    public void perform(Invoice invoice) {
+        // Database-saving logic here
+        System.out.println("Invoice saved to the database.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Book book = new Book("The Java Programming Language", "James Gosling", 2022, 49.99);
+        Invoice invoice = new Invoice(book, 2, 0.1, 0.05);
+
+        // Using polymorphism to demonstrate Liskov Substitution Principle
+        InvoiceAction invoicePrinter = new InvoicePrinter();
+        InvoiceAction invoiceStorage = new InvoiceStorage();
+
+        invoicePrinter.perform(invoice);
+        invoiceStorage.perform(invoice);
+    }
+}
+
+
+In this code:
+
+The InvoicePrinter and InvoiceStorage classes both implement the InvoiceAction interface, and objects of these classes can be used interchangeably wherever InvoiceAction is expected.
+
+The Main class demonstrates polymorphism by creating instances of different InvoiceAction implementations and using them interchangeably to perform actions on an Invoice object.
+
+This adheres to the Liskov Substitution Principle, as different implementations of the InvoiceAction interface can be used without affecting the correctness of the program.

@@ -1,0 +1,101 @@
+As the business grew, Alex also started selling cone-shaped boxes. To integrate the calculation of its volume, we need to make a Cone class and update the volume() function
+
+
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+abstract class Shape {
+    abstract double calculateVolume();
+}
+
+class Cuboid extends Shape {
+    private double length;
+    private double width;
+    private double height;
+
+    public Cuboid(double length, double width, double height) {
+        this.length = length;
+        this.width = width;
+        this.height = height;
+    }
+
+    @Override
+    double calculateVolume() {
+        return length * width * height;
+    }
+}
+
+class Cylinder extends Shape {
+    private double radius;
+    private double height;
+
+    public Cylinder(double radius, double height) {
+        this.radius = radius;
+        this.height = height;
+    }
+
+    @Override
+    double calculateVolume() {
+        return Math.PI * radius * radius * height;
+    }
+}
+
+class Cone extends Shape {
+    private double radius;
+    private double height;
+
+    public Cone(double radius, double height) {
+        this.radius = radius;
+        this.height = height;
+    }
+
+    @Override
+    double calculateVolume() {
+        return (1.0 / 3.0) * Math.PI * radius * radius * height;
+    }
+}
+
+class VolumeCalculator {
+    private List<Shape> shapes;
+
+    public VolumeCalculator() {
+        this.shapes = new ArrayList<>();
+    }
+
+    public void addShape(Shape shape) {
+        shapes.add(shape);
+    }
+
+    public double sumVolume() {
+        double totalVolume = 0.0;
+        for (Shape shape : shapes) {
+            totalVolume += shape.calculateVolume();
+        }
+        return totalVolume;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Create shapes
+        Cuboid cuboid = new Cuboid(3.0, 4.0, 5.0);
+        Cylinder cylinder = new Cylinder(2.0, 4.0);
+        Cone cone = new Cone(2.0, 4.0);
+
+        // Create a volume calculator
+        VolumeCalculator volumeCalculator = new VolumeCalculator();
+
+        // Add shapes to the calculator
+        volumeCalculator.addShape(cuboid);
+        volumeCalculator.addShape(cylinder);
+        volumeCalculator.addShape(cone);
+
+        // Calculate the total volume of all shapes
+        double totalVolume = volumeCalculator.sumVolume();
+
+        // Print the result
+        System.out.println("Total Volume of Shapes: " + totalVolume);
+    }
+}

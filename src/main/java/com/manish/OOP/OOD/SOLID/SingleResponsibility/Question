@@ -1,0 +1,334 @@
+S-> Only one reason to change
+O-> Open for extension close for modification
+L-> No special case when subtyping (Parent shuld be substitutible for child)
+I-> Lean Interfaces
+D-> Highy Level modules should not depend on low level module
+
+
+Q>
+Let’s try to understand SRP with the help of an example. We have a book invoice application that has two classes: Book and Invoice. The Book class contains the data members related to the book. Whereas, the Invoice class contains the following three functionalities:
+
+Calculating the price of the book having attributes name, authorName, year,price,isbn
+
+Printing the invoice having book, quantity, discount, tax, total and functions invoice, calculateTotal, printvoice
+
+Saving the invoice into the database
+
+
+import java.util.UUID;
+
+class Book {
+    private String name;
+    private String authorName;
+    private int year;
+    private double price;
+    private UUID isbn;
+
+    public Book(String name, String authorName, int year, double price) {
+        this.name = name;
+        this.authorName = authorName;
+        this.year = year;
+        this.price = price;
+        this.isbn = UUID.randomUUID();
+    }
+
+    // Getters and other methods related to Book
+}
+
+class Invoice {
+    private Book book;
+    private int quantity;
+    private double discount;
+    private double tax;
+
+    public Invoice(Book book, int quantity, double discount, double tax) {
+        this.book = book;
+        this.quantity = quantity;
+        this.discount = discount;
+        this.tax = tax;
+    }
+
+    public double calculateTotal() {
+        double price = ((book.getPrice() - book.getPrice() * discount) * this.quantity);
+        return price * (1 + tax);
+    }
+
+    // Other methods related to Invoice
+}
+
+class InvoicePrinter {
+    public void printInvoice(Invoice invoice) {
+        System.out.println(invoice.getQuantity() + "x " + invoice.getBook().getName() + " " + invoice.getBook().getPrice() + "$");
+        System.out.println("Discount Rate: " + invoice.getDiscount());
+        System.out.println("Tax Rate: " + invoice.getTax());
+        System.out.println("Total: " + invoice.calculateTotal());
+    }
+}
+
+class InvoiceStorage {
+    public void saveToDatabase(Invoice invoice) {
+        // Database-saving logic here
+        System.out.println("Invoice saved to the database.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Book book = new Book("The Java Programming Language", "James Gosling", 2022, 49.99);
+        Invoice invoice = new Invoice(book, 2, 0.1, 0.05);
+
+        // Use the InvoicePrinter
+        InvoicePrinter invoicePrinter = new InvoicePrinter();
+        invoicePrinter.printInvoice(invoice);
+
+        // Use the InvoiceStorage
+        InvoiceStorage invoiceStorage = new InvoiceStorage();
+        invoiceStorage.saveToDatabase(invoice);
+    }
+}
+
+
+
+import java.util.UUID;
+
+class Book {
+    private String name;
+    private String authorName;
+    private int year;
+    private double price;
+    private UUID isbn;
+
+    public Book(String name, String authorName, int year, double price) {
+        this.name = name;
+        this.authorName = authorName;
+        this.year = year;
+        this.price = price;
+        this.isbn = UUID.randomUUID();
+    }
+
+    // Getters and other methods related to Book
+}
+
+class Invoice {
+    private Book book;
+    private int quantity;
+    private double discount;
+    private double tax;
+
+    public Invoice(Book book, int quantity, double discount, double tax) {
+        this.book = book;
+        this.quantity = quantity;
+        this.discount = discount;
+        this.tax = tax;
+    }
+
+    public double calculateTotal() {
+        double price = ((book.getPrice() - book.getPrice() * discount) * this.quantity);
+        return price * (1 + tax);
+    }
+
+    // Getters and setters for Invoice attributes
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public double getTax() {
+        return tax;
+    }
+
+    public void setTax(double tax) {
+        this.tax = tax;
+    }
+}
+
+class InvoicePrinter {
+    public void printInvoice(Invoice invoice) {
+        System.out.println(invoice.getQuantity() + "x " + invoice.getBook().getName() + " " + invoice.getBook().getPrice() + "$");
+        System.out.println("Discount Rate: " + invoice.getDiscount());
+        System.out.println("Tax Rate: " + invoice.getTax());
+        System.out.println("Total: " + invoice.calculateTotal());
+    }
+}
+
+class InvoiceStorage {
+    public void saveToDatabase(Invoice invoice) {
+        // Database-saving logic here
+        System.out.println("Invoice saved to the database.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Book book = new Book("The Java Programming Language", "James Gosling", 2022, 49.99);
+        Invoice invoice = new Invoice(book, 2, 0.1, 0.05);
+
+        InvoicePrinter invoicePrinter = new InvoicePrinter();
+        InvoiceStorage invoiceStorage = new InvoiceStorage();
+
+        invoicePrinter.printInvoice(invoice);
+        invoiceStorage.saveToDatabase(invoice);
+    }
+}
+
+
+
+
+
+
+
+import java.util.UUID;
+
+class Book {
+    private String name;
+    private String authorName;
+    private int year;
+    private double price;
+    private UUID isbn;
+
+    public Book(String name, String authorName, int year, double price) {
+        this.name = name;
+        this.authorName = authorName;
+        this.year = year;
+        this.price = price;
+        this.isbn = UUID.randomUUID();
+    }
+
+    // Getters and setters for Book class
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public UUID getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(UUID isbn) {
+        this.isbn = isbn;
+    }
+}
+
+class Invoice {
+    private Book book;
+    private int quantity;
+    private double discount;
+    private double tax;
+
+    public Invoice(Book book, int quantity, double discount, double tax) {
+        this.book = book;
+        this.quantity = quantity;
+        this.discount = discount;
+        this.tax = tax;
+    }
+
+    // Getters and setters for Invoice class
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public double getTax() {
+        return tax;
+    }
+
+    public void setTax(double tax) {
+        this.tax = tax;
+    }
+}
+
+class InvoicePrinter {
+    public void printInvoice(Invoice invoice) {
+        System.out.println(invoice.getQuantity() + "x " + invoice.getBook().getName() + " " + invoice.getBook().getPrice() + "$");
+        System.out.println("Discount Rate: " + invoice.getDiscount());
+        System.out.println("Tax Rate: " + invoice.getTax());
+        System.out.println("Total: " + invoice.calculateTotal());
+    }
+}
+
+class InvoiceStorage {
+    public void saveToDatabase(Invoice invoice) {
+        // Database-saving logic here
+        System.out.println("Invoice saved to the database.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Book book = new Book("The Java Programming Language", "James Gosling", 2022, 49.99);
+        Invoice invoice = new Invoice(book, 2, 0.1, 0.05);
+
+        InvoicePrinter invoicePrinter = new InvoicePrinter();
+        invoicePrinter.printInvoice(invoice);
+
+        InvoiceStorage invoiceStorage = new InvoiceStorage();
+        invoiceStorage.saveToDatabase(invoice);
+    }
+}
+
+
