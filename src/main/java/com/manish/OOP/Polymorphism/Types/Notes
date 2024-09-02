@@ -1,0 +1,37 @@
+In Java polymorphism is mainly divided into two types:
+A> Compile-time main.Polymorphism (Overloading) - It is also known as static polymorphism.
+    This type of polymorphism is achieved by function overloading or operator overloading.
+
+        i. Function Overloading
+        ii. Operator Overloading
+
+Two or more methods can have the same name inside the same class if they accept different arguments.
+This feature is known as method overloading.
+Method overloading is achieved by either:
+    changing the number of arguments.
+    or changing the data type of arguments.
+It is not method overloading if we only change the return type of methods.
+There must be differences in the number of parameters.
+
+
+B> Runtime main.Polymorphism(Overriding) - It is also known as Dynamic Method Dispatch.
+    It is a process in which a function call to the overridden method is resolved at Runtime.
+    This type of polymorphism is achieved by Method Overriding.
+    Method overriding, on the other hand, occurs when a derived class has a definition for one of the member functions of the base class.
+    That base function is said to be overridden.
+
+    *At runtime when code is running at that particular time based upon the real object that is their in the memory during runTime
+    the method of that real object is called. Exactly opposite of the Compile-time main.Polymorphism see the ParentChild Folder.
+
+    *Can we know at compile time which method to call?
+    Ans: No, only at run time we know.
+
+    Types
+    i. Virtual functions
+
+* A method is called on object or on dataType at runtime?
+        it is always called on object, exactly opposite of the Compile-time main.Polymorphism.
+
+*Overriding Abstract Methods
+    In Java, abstract classes are created to be the superclass of other classes.
+    And, if a class contains an abstract method, it is mandatory to override it.

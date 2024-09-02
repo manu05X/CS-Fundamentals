@@ -1,0 +1,80 @@
+//https://www.baeldung.com/java-type-casting
+//https://www.studytonight.com/java-examples/java-object-type-casting
+//https://www.studytonight.com/java/
+//https://medium.com/@Saravanaprasath_Krishnamoorthy/java-oops-1dba3d8c499a
+//https://bindushrestha.medium.com/inheritance-and-object-casting-in-java-2cb926ae0d29
+//https://www.mygreatlearning.com/blog/type-casting-in-java/#:~:text=Objects%20of%20a%20class%20can,the%20sub%2Dclass%20object's%20properties.
+
+//https://www.sololearn.com/Discuss/2094575/what-is-logic-behind-parent-p-new-child-in-java
+above code discussion
+
+
+/*
+
+import java.util.ArrayList;
+
+class Character {
+  private int hp;
+  protected String type;
+  Character(){
+    type = "Character";
+  }
+  public void defend(){
+    System.out.println( type + " defends " );
+  }
+  public void attack(Character other) {
+
+    System.out.println( type + " attacks " + other.type );
+  }
+}
+
+class Swordsman extends Character {
+  Swordsman(){
+    type = "Swordsman";
+  }
+}
+
+class Magician extends Character {
+ Magician(){
+    type = "Magician";
+  }
+}
+
+class Slime extends Character {
+  // demo no type
+}
+
+class Globin extends Character {
+  Globin(){
+    type = "Globin";
+  }
+}
+
+class Game {
+  public static void main(String args[ ]) {
+
+    /* Setting up the ArrayList */
+
+    ArrayList<Character> characters = new ArrayList<Character>();
+
+    characters.add(new Swordsman());
+    characters.add(new Magician());
+    characters.add(new Slime());
+    characters.add(new Globin());
+
+    /* Accessing each element in the ArrayList invidually with get */
+
+    characters.get(0).defend();
+    characters.get(1).attack(characters.get(3));
+    characters.get(2).attack(characters.get(0)); // Note that Slime does not have its special type.
+
+    /* Looping over the ArrayList regardless of their individual child class */
+
+    for(Character character: characters) {
+      character.defend();
+    }
+
+  }
+}
+
+*/

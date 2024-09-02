@@ -1,0 +1,26 @@
+//https://www.programiz.com/java-programming/polymorphism
+
+//Compiler will only allow you to use/access the attributes and method that are present in the DATA TYPE of Variable
+// and not in the real OBJECT.
+// DataType Variable = new DataTypeOfObject()
+
+
+EX - A
+    /  \
+   B    C
+   A a = new C() // Can not access the attribute of C
+   C c = new C() // Can access the attribute of C and A also as it is child of A
+
+   HashMap hm = new HashMap() X not wrong but bad practice
+   Map hm = new HashMap() // is correct practice, this is more extensible
+   Map hm = new TreeMap()
+
+
+Compiler : It works on dataType of Variable;
+Compiler will only allow you to compile the code if you are accessing the attribute and method as per DATA TYPE of variable.
+    As compiler knows only data type of variable.
+
+   When the code runs the Overridden method of child will be called
+
+Runtime : It works on dataType of Object present in the memory during run time.
+
