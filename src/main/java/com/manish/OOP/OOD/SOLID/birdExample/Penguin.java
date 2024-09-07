@@ -1,6 +1,6 @@
 package com.manish.OOP.OOD.SOLID.birdExample;
 
-import main.OOD.SOLID.birdExample.Interface.Swimmable;
+import com.manish.OOP.OOD.SOLID.birdExample.Interface.Swimmable;
 
 public class Penguin extends Bird implements Swimmable {
     public Penguin(Integer weight, String colour, String size, String beakType, BirdType type) {

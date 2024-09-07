@@ -1,7 +1,7 @@
 package com.manish.OOP.OOD.SOLID.birdExample;
 
-import main.OOD.SOLID.birdExample.Interface.Flyable;
-import main.OOD.SOLID.birdExample.Interface.FlyingBehaviour;
+import com.manish.OOP.OOD.SOLID.birdExample.Interface.Flyable;
+import com.manish.OOP.OOD.SOLID.birdExample.Interface.FlyingBehaviour;
 
 public class Parrot extends Bird implements Flyable {
     private FlyingBehaviour flyingBehaviour;

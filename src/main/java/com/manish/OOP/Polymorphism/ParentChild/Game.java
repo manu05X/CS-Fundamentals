@@ -9,7 +9,7 @@ public class Game {
 
         /* Setting up the ArrayList */
 
-        ArrayList<java.lang.Character> characters = new ArrayList<java.lang.Character>();
+        ArrayList<Character> characters = new ArrayList<Character>();
 
         characters.add(new Swordsman());
         characters.add(new Magician());
@@ -24,7 +24,7 @@ public class Game {
 
         /* Looping over the ArrayList regardless of their individual child class */
 
-        for(java.lang.Character character: characters) {
+        for(Character character: characters) {
             character.defend();
         }
 

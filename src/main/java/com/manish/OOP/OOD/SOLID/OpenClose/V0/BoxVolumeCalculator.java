@@ -1,6 +1,6 @@
 package com.manish.OOP.OOD.SOLID.OpenClose.V0;
 
-import main.OOD.SOLID.OpenClose.V1.Cone;
+import com.manish.OOP.OOD.SOLID.OpenClose.V1.Cone;
 
 import java.util.ArrayList;
 import java.util.List;

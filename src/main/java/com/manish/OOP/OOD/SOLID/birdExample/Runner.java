@@ -1,7 +1,8 @@
 package com.manish.OOP.OOD.SOLID.birdExample;
 
-import main.OOD.SOLID.birdExample.Interface.Flyable;
-import main.OOD.SOLID.birdExample.Interface.Swimmable;
+
+import com.manish.OOP.OOD.SOLID.birdExample.Interface.Flyable;
+import com.manish.OOP.OOD.SOLID.birdExample.Interface.Swimmable;
 
 import java.util.List;
 

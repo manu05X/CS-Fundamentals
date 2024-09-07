@@ -1,6 +1,6 @@
 package com.manish.OOP.Polymorphism.ParentChild;
 
-class Character {
+public class Character {
     private int hp;
     protected String type;
     Character(){

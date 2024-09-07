@@ -1,6 +1,6 @@
 package com.manish.OOP.AccesModifyer.accessmodifiers2;
 
-import main.AccesModifyer.accessmodifiers1.Student;
+import com.manish.OOP.AccesModifyer.accessmodifiers1.Student;
 
 public class StudentChild extends Student {
     public StudentChild() {

@@ -1,7 +1,8 @@
 package com.manish.OOP.lld;
 
-import com.scaler.lld.scaler.Student;
-import com.scaler.lld.scaler.User;
+import com.manish.OOP.lld.scaler.Student;
+import com.manish.OOP.lld.scaler.User;
+
 
 import java.util.List;
 
