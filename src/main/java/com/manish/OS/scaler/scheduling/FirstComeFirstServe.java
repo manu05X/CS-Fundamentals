@@ -4,8 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import com.scaler.scheduling.models.IncomingProcess;
-import com.scaler.scheduling.models.ScheduledProcess;
+import com.manish.OS.scaler.scheduling.models.IncomingProcess;
+import com.manish.OS.scaler.scheduling.models.ScheduledProcess;
 
 public class FirstComeFirstServe {
 

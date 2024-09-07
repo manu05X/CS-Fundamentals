@@ -1,10 +1,9 @@
 package com.manish.OS.scaler;
 
-import com.scaler.threads.Printer;
+import com.manish.OS.scaler.threads.Printer;
 
 /**
  * Hello world!
- *
  */
 public class App {
 
