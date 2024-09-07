@@ -87,9 +87,9 @@ public class Singleton {
 }
 ```
 
-In this implementation, we have added the volatile keyword to the instance variable, which ensures that any changes made to the variable are immediately visible to all threads. We also use double-checked locking to ensure that only one instance of the Singleton class is created.
-The getInstance() method first checks if the instance variable is null without acquiring the lock on the Singleton class. If it is null, the method acquires the lock and then checks again to see if the instance variable is still null. If it is, the method creates a new instance of the Singleton class.
-By using double-checked locking and making the instance variable volatile, we can ensure that our Singleton class is thread-safe and can be safely used in a multi-threaded environment.
+In this implementation, we have added the volatile keyword to the instance variable, which ensures that any changes made to the variable are `immediately` visible to all threads. We also use `double-checked locking` to ensure that only one instance of the `Singleton class is created`.
+The `getInstance()` method first checks if the instance variable is null without acquiring the lock on the `Singleton class`. If it is null, the method acquires the lock and then checks again to see if the instance variable is still `null`. If it is, the method creates a new instance of the `Singleton class`.
+By using `double-checked locking` and making the instance `variable volatile`, we can ensure that our `Singleton class` is thread-safe and can be safely used in a `multi-threaded` environment.
 
 > Here are some scenarios where using the Singleton pattern can be helpful:
 >
@@ -586,7 +586,7 @@ Vehicle car = factory.createVehicle();
 
 #### Abstract Factory Design Patterns:
 
-The Abstract Factory pattern is used when we want to create families of related objects without specifying their concrete classes. It provides an interface for creating families of related objects, without specifying their concrete classes. The key idea behind the Abstract Factory pattern is to provide an abstract factory interface (or class) that defines a set of factory methods, one for each product type that can be produced. Each concrete factory class that implements the abstract factory interface is responsible for creating a family of related products.
+The `Abstract Factory pattern` is used when we want to create families of related objects without specifying their concrete classes. It provides an interface for creating families of related objects, without specifying their concrete classes. The key idea behind the Abstract Factory pattern is to provide an abstract factory interface (or class) that defines a set of factory methods, one for each product type that can be produced. Each concrete factory class that implements the abstract factory interface is responsible for creating a family of related products.
 
 ##### Example 1:
 
