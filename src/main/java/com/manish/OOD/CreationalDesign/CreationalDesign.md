@@ -135,12 +135,12 @@ By using `double-checked locking` and making the instance `variable volatile`, w
 
 > Here are some scenarios where using the Singleton pattern can be helpful:
 >
-> - Database Connection : When an application needs to connect to a database, it's often useful to use a Singleton to ensure that there is only one connection to the database throughout the application's lifetime.
-> - Configuration Management : In many applications, there is a need for a single source of configuration information that can be accessed from various parts of the application. A Singleton can be used to store this configuration data.
-> - Logging :  This ensures that all log messages are written to the same location and that there is only one instance of the logging system.
-> - Caching : There is only one instance of the cache and that all parts of the application can access the same cached data.
-> - Thread Pools : This ensures that there is only one instance of the thread pool and that all tasks are executed on the same pool of threads.
-> - Device Drivers : In many applications, it's necessary to interact with hardware devices in order to perform tasks. The Singleton pattern can be used to manage a device driver
+> - `Database Connection :` When an application needs to connect to a database, it's often useful to use a Singleton to ensure that there is only one connection to the database throughout the application's lifetime.
+> - `Configuration Management :` In many applications, there is a need for a single source of configuration information that can be accessed from various parts of the application. A Singleton can be used to store this configuration data.
+> - `Logging :`  This ensures that all log messages are written to the same location and that there is only one instance of the logging system.
+> - `Caching :` There is only one instance of the cache and that all parts of the application can access the same cached data.
+> - `Thread Pools :` This ensures that there is only one instance of the thread pool and that all tasks are executed on the same pool of threads.
+> - `Device Drivers :` In many applications, it's necessary to interact with hardware devices in order to perform tasks. The Singleton pattern can be used to manage a device driver
 
 1. **Database Connection:**
    When an application needs to connect to a database, it's often useful to use a Singleton to ensure that there is only one connection to the database throughout the application's lifetime.
