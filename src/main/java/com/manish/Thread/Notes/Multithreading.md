@@ -651,3 +651,520 @@ Both Executor and ExecutorService provide methods to submit tasks for execution 
 - Use Executor when you only need to execute tasks asynchronously without managing the thread pool's lifecycle.
 
 - Use ExecutorService when you need more control over the thread pool, such as managing its lifecycle, submitting tasks with results, and awaiting termination.
+
+### What is Producer-Consumer problem and how to resolve it?
+The `Producer-Consumer` problem is a classic synchronization problem in `concurrent programming`, where there are two types of threads: `producers` and `consumers`. 
+- Producers `generate data or items` 
+- Consumers `consume or process these items`.
+
+The challenge is to ensure that:
+- producers `do not produce items` when the `buffer is full`.
+- Consumers `do not consume items` when the `buffer is empty`. 
+- It requires efficient `coordination and synchronization` between producers and consumers to avoid `race condition`s and ensure proper resource management.
+
+`Solution :`
+One effective solution to this problem is using the `BlockingQueue` interface in Java, which provides a `thread-safe` queue implementation with `blocking operations`.
+
+**Real-World Use Case Example:**
+
+- Consider a scenario where a web server application `receives requests` from clients and `processes them concurrently`. 
+- Producers enqueue incoming requests into a `BlockingQueue`, and multiple `worker threads` (consumers) `dequeue requests` from the queue and process them. This ensures efficient request handling without the risk of `data corruption` or `race conditions`.
+
+```java
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ArrayBlockingQueue;
+
+public class ProducerConsumerExample {
+    private static final int BUFFER_SIZE = 10;
+    private static BlockingQueue<Integer> buffer = new ArrayBlockingQueue<>(BUFFER_SIZE);
+
+    public static void main(String[] args) {
+        Thread producerThread = new Thread(new Producer());
+        Thread consumerThread = new Thread(new Consumer());
+
+        producerThread.start();
+        consumerThread.start();
+    }
+
+    static class Producer implements Runnable {
+        public void run() {
+            try {
+                int item = 1;
+                while (true) {
+                    // Produce item
+                    buffer.put(item++);
+
+                    System.out.println("Produced item: " + (item - 1));
+                    Thread.sleep(1000); // Simulate production time
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
+
+    static class Consumer implements Runnable {
+        public void run() {
+            try {
+                while (true) {
+                    // Consume item
+                    int item = buffer.take();
+
+                    System.out.println("Consumed item: " + item);
+                    Thread.sleep(2000); // Simulate processing time
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
+}
+
+```
+#### ThreadLocal
+- ThreadLocal class helps in creating variables that can only be read and written by the same thread.
+- These variables are unique to each thread and are not shared among different threads.
+- it's particularly handy in scenarios where you need to maintain per-thread context or state, such as in web applications handling user sessions or database connections.
+- Improve `performance by avoiding synchronization` overhead in multithreaded environments.
+- Each thread holds its own copy of the variable, it's easy to accidentally retain references longer than necessary, leading to memory leaks.
+![img_2.png](img_2.png)
+
+#### What is threadLocal and what are the advantages of using ThreadLocal?
+ThreadLocal is a class in Java that provides thread-local variables. Each thread accessing a ThreadLocal variable has its own, independently initialized copy of the variable. ThreadLocal variables are typically used to store data that is specific to a particular thread and should not be shared among multiple threads.
+
+**Advantages of Using ThreadLocal:**
+
+`Thread Isolation:` ThreadLocal provides thread isolation by maintaining separate copies of variables for each thread. This prevents concurrent threads from accessing or modifying each other's data, enhancing thread safety and avoiding race conditions.
+
+`Thread Confinement:` ThreadLocal supports the concept of thread confinement, where data is confined to a specific thread's execution context. This helps in encapsulating thread-specific data and prevents the need for synchronization or locks when accessing the data.
+
+`Reduced Synchronization Overhead:` Since each thread has its own copy of ThreadLocal variables, there is no need for explicit synchronization mechanisms like locks or atomic operations when accessing these variables. This can lead to improved performance and scalability in multi-threaded applications.
+
+`Avoids Memory Leaks:` ThreadLocal variables are garbage collected along with the thread that owns them. This helps in preventing memory leaks that may occur when using shared resources across multiple threads, as the resources are automatically released when the thread terminates.
+
+`Contextual Data Storage:` ThreadLocal variables are often used to store contextual data related to the current thread's execution context. This can include user sessions, transaction contexts, request-specific data in web applications, and more. Using ThreadLocal makes it easy to access and manage such contextual data within the thread.
+
+**Real-World Use Case Example:**
+In a web application framework, ThreadLocal variables are commonly used to store user authentication information or request context data. For example, in a servlet-based web application, a ThreadLocal variable can be used to store the current HTTPServletRequest object, allowing components downstream to access request-specific information without passing it explicitly.
+
+By leveraging ThreadLocal, developers can ensure that each thread has access to its own instance of the data, eliminating the need for complex parameter passing or synchronization mechanisms. This improves code readability, simplifies concurrency management, and enhances overall application performance.
+
+```java
+
+public class ThreadLocalExample {
+    private static ThreadLocal<Integer> threadLocal = new ThreadLocal<>();
+
+    public static void main(String[] args) {
+        // Set thread-local value for main thread
+        threadLocal.set(100);
+
+        // Create and start a new thread
+        Thread thread = new Thread(() -> {
+            // Access thread-local value in the new thread
+            System.out.println("ThreadLocal value in new thread: " + threadLocal.get());
+        });
+        thread.start();
+    }
+}
+```
+#### Example1:
+```java
+public class Main {
+    public static void main(String[] args) {
+
+        // Creating a ThreadLocal instance to hold userId for each thread
+        ThreadLocal<Long> userIdThreadLocal = new ThreadLocal<>();
+
+        // Simulate users landing on the webpage with their user IDs
+        Long userId = 12345L;
+        Long userId1 = 56789L;
+
+        // Handle the first request in a new thread
+        Thread requestThread1 = new Thread(() -> {
+            System.out.println("Started thread for user: " + userId);
+            
+            // Set userId in ThreadLocal for this thread
+            userIdThreadLocal.set(userId);
+
+            // Process some logic here (e.g., simulate a database call)
+            // Simulate some work
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            
+            System.out.println("Completed logic for user: " + userId);
+            
+            // Good practice: Remove the ThreadLocal value after work is done
+            userIdThreadLocal.remove();
+            System.out.println("Removed ThreadLocal for user: " + userId);
+        });
+
+        // Handle the second request in another new thread
+        Thread requestThread2 = new Thread(() -> {
+            System.out.println("Started thread for user: " + userId1);
+            
+            // Set userId in ThreadLocal for this thread
+            userIdThreadLocal.set(userId1);
+
+            // Process some logic here (e.g., simulate a database call)
+            // Simulate some work
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            
+            System.out.println("Completed logic for user: " + userId1);
+            
+            // Good practice: Remove the ThreadLocal value after work is done
+            userIdThreadLocal.remove();
+            System.out.println("Removed ThreadLocal for user: " + userId1);
+        });
+
+        // Start both threads
+        requestThread1.start();
+        requestThread2.start();
+    }
+}
+
+```
+#### Explanation:
+- `ThreadLocal<Long> userIdThreadLocal`: This is used to store a userId specific to each thread. It ensures that each thread has its own isolated copy of the userId.
+- `Two Threads (requestThread1 and requestThread2)`: Each thread simulates a request with its own userId (12345L and 56789L) and processes the logic.
+- `userIdThreadLocal.set(userId)`: Each thread sets its own userId to the ThreadLocal to avoid sharing userId data between threads.
+- `Thread.sleep(200)`: This simulates some processing time (like a database call).
+- `userIdThreadLocal.remove()`: It's good practice to remove the value from the ThreadLocal when the thread finishes its work to prevent memory leaks.
+
+### Parent-Child thread
+- In some case we use Parent-Child thread, in that case we use InheritableThreadLocal.
+-  The InheritableThreadLocal allows the child threads to inherit values from their parent threads.
+
+```java
+public class Main {
+    public static void main(String[] args) {
+
+        // Creating a ThreadLocal instance to hold userId for each thread
+        ThreadLocal<Long> userIdThreadLocal = new ThreadLocal<>();
+        
+        // Simulate users landing on the webpage with their user IDs
+        Long userId = 12345L;
+        Long userId1 = 56789L;
+
+        // Handle the first request in a new thread
+        Thread requestThread1 = new Thread(() -> {
+            System.out.println("Started thread for user: " + userId);
+            
+            // Set userId in ThreadLocal for this thread
+            userIdThreadLocal.set(userId);
+
+            // Process some logic here (e.g., simulate a database call)
+            try {
+                Thread.sleep(200); // Simulate some work
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            System.out.println("Completed logic for user: " + userId);
+            
+            // Good practice: Remove the ThreadLocal value after work is done
+            userIdThreadLocal.remove();
+            System.out.println("Removed ThreadLocal for user: " + userId);
+        });
+
+        // Handle the second request in another new thread
+        Thread requestThread2 = new Thread(() -> {
+            System.out.println("Started thread for user: " + userId1);
+            
+            // Set userId in ThreadLocal for this thread
+            userIdThreadLocal.set(userId1);
+
+            // Process some logic here (e.g., simulate a database call)
+            try {
+                Thread.sleep(200); // Simulate some work
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            System.out.println("Completed logic for user: " + userId1);
+            
+            // Good practice: Remove the ThreadLocal value after work is done
+            userIdThreadLocal.remove();
+            System.out.println("Removed ThreadLocal for user: " + userId1);
+        });
+
+        // Start both threads
+        requestThread1.start();
+        requestThread2.start();
+
+        // Creating an InheritableThreadLocal to hold a String that can be inherited by child threads
+        InheritableThreadLocal<String> inheritableThreadLocal = new InheritableThreadLocal<>();
+
+        // Example of using InheritableThreadLocal and ThreadLocal in a new thread
+        Thread objThread3 = new Thread(() -> {
+            // Set values in ThreadLocal and InheritableThreadLocal
+            inheritableThreadLocal.set("Instagram");
+            userIdThreadLocal.set(12344557L);
+
+            // Create a child thread which inherits the value from InheritableThreadLocal
+            Thread childThread = new Thread(() -> {
+                System.out.println("InheritableThreadLocal value in child thread: " + inheritableThreadLocal.get());
+                System.out.println("ThreadLocal userId in child thread: " + userIdThreadLocal.get()); // This will be null since ThreadLocal is not inherited
+            });
+
+            // Start the child thread
+            childThread.start();
+
+            try {
+                childThread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            // Print the values in the parent thread
+            System.out.println("InheritableThreadLocal value in parent thread: " + inheritableThreadLocal.get());
+            System.out.println("ThreadLocal userId in parent thread: " + userIdThreadLocal.get());
+        });
+
+        // Start objThread3
+        objThread3.start();
+
+        // Wait for objThread3 to complete
+        try {
+            objThread3.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+```
+
+#### Explanation:
+- `ThreadLocal<Long> userIdThreadLocal`: This holds a `userId` specific to each thread. The value is not inherited by child threads.
+- `InheritableThreadLocal<String> inheritableThreadLocal`: This holds a value that can be inherited by child threads, unlike `ThreadLocal`.
+- `objThread3`: A thread that sets values in both `ThreadLocal` and `InheritableThreadLocal`, and then spawns a child thread.
+- `Child Thread`: It inherits the value of `inheritableThreadLocal` but not `userIdThreadLocal`, demonstrating the difference between `ThreadLocal` and `InheritableThreadLocal`.
+
+### What are Virtual Threads in Java 21?
+- Virtual Threads are `lightweight`, `user-mode` threads `managed` by the Java Virtual Machine (`JVM`). 
+- Unlike traditional OS threads (kernel threads), `virtual` threads are `managed entirely by the JVM` and can be `created and scheduled` more efficiently.
+
+- Virtual threads are `lightweight` compared to traditional `OS threads`, requiring fewer system resources for creation and management. This makes them `suitable` for applications with a `large number of concurrent tasks`.
+- Use virtual threads in `high-throughput concurrent` applications, especially those that consist of a great number of `concurrent tasks` that spend much of their time waiting. `Server applications` are examples of `high-throughput` applications because they typically handle many client requests that perform blocking `I/O operations` such as `fetching resources`.
+
+Virtual threads are not faster threads; they do not run code any faster than platform threads. They exist to provide scale (higher throughput), not speed (lower latency).
+
+```java
+ public static void main(String[] args) {
+                Thread virtualThread = Thread.startVirtualThread(() -> {
+                    System.out.println("Running task with virtual thread: "
+                            + Thread.currentThread().getName());
+                });
+
+                // Waiting for virtual threads to complete
+                try {
+                    virtualThread.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+```
+
+### What is the Fork/Join Framework in Java?
+It provides a high-level approach for parallelizing divide-and-conquer algorithms, where a problem is broken down into smaller subproblems that can be solved independently.
+
+##### Key Components in Fork/Join framework:
+
+- `ForkJoinPool`: It is a specialized implementation of ExecutorService designed for executing ForkJoinTasks. ForkJoinPool manages worker threads and distributes tasks across these threads for parallel execution.
+
+- `ForkJoinTask`: It represents a task that can be forked (split) into smaller subtasks and joined (combined) when completed. ForkJoinTask is an abstract class that can be extended to implement parallel algorithms. There are two main types of ForkJoinTasks: RecursiveTask, which returns a result, and RecursiveAction, which performs an action without returning a result.
+
+- `Work Stealing`: ForkJoinPool employs a work-stealing algorithm to balance the workload across worker threads dynamically. Each worker thread has its own deque (double-ended queue) of tasks. When a thread runs out of tasks, it can steal tasks from the tail of other threads' deques, helping to maintain high CPU utilization and reduce idle time.
+
+**Advantages:**
+
+- `Parallelism`: The Fork/Join Framework simplifies the development of parallel algorithms by abstracting away low-level thread management details. It allows developers to focus on the algorithm's logic rather than thread synchronization and coordination.
+- `Load Balancing`: ForkJoinPool automatically distributes tasks across available worker threads and balances the workload to maximize CPU utilization. This helps in achieving efficient parallel execution and reduces idle time.
+- `Scalability`: By leveraging multiple processor cores effectively, the Fork/Join Framework enables scalable parallel processing of large datasets or computationally intensive tasks.
+
+**Real-World Use Cases:**
+
+**Recursive Algorithms:** Fork/Join Framework is well-suited for parallelizing recursive algorithms such as quicksort, merge sort, matrix multiplication, and tree traversal.
+**Data Parallelism:** It can be used to parallelize data-parallel tasks such as image processing, matrix operations, and parallel reduction operations.
+**Concurrent Programming:** Fork/Join Framework is applicable in concurrent programming scenarios where tasks can be decomposed into smaller, independent units of work that can be executed in parallel.
+
+Below code demonstrates how to leverage the Fork/Join Framework to parallelize the computation of the sum of array elements, improving performance by utilizing multiple threads efficiently.
+
+```java
+import java.util.concurrent.RecursiveTask;
+import java.util.concurrent.ForkJoinPool;
+
+public class ForkJoinSumExample {
+    // Define a task to compute the sum of elements in a given range of an array
+    static class SumTask extends RecursiveTask<Integer> {
+        private static final int THRESHOLD = 10; // Threshold for splitting tasks
+        private int[] array;
+        private int start, end;
+
+        // Constructor to initialize the task with the array and range
+        public SumTask(int[] array, int start, int end) {
+            this.array = array;
+            this.start = start;
+            this.end = end;
+        }
+
+        // Override the compute() method to define the task logic
+        protected Integer compute() {
+            // If the range is small, compute the sum directly
+            if (end - start <= THRESHOLD) {
+                int sum = 0;
+                for (int i = start; i < end; i++)
+                    sum += array[i];
+                return sum;
+            } else {
+                // If the range is large, split the task into subtasks
+                int mid = (start + end) / 2;
+                SumTask leftTask = new SumTask(array, start, mid);
+                SumTask rightTask = new SumTask(array, mid, end);
+
+                // Fork the subtasks to execute in parallel
+                leftTask.fork();
+                rightTask.fork();
+
+                // Join the results of subtasks
+                return leftTask.join() + rightTask.join();
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+
+        // Create a ForkJoinPool with the default parallelism level
+        ForkJoinPool pool = ForkJoinPool.commonPool();
+
+        // Execute the main task and get the result
+        int result = pool.invoke(new SumTask(array, 0, array.length));
+
+        // Print the result
+        System.out.println("Sum: " + result);
+    }
+}
+
+```
+
+### Q. What Is the Purpose of the Wait, Notify and Notifyall Methods?
+The `wait()`, `notify()`, and `notifyAll()` methods in Java are used for `inter-thread communication`. They `allow threads to wait for a certain condition to be met` and then be notified when it is.
+
+**wait():**
+- `Purpose`: The wait() method is used to make a thread wait until another thread notifies it. It is typically called inside a synchronized block or method.
+- `Usage`: Threads call wait() when they need to wait for a condition to be satisfied before proceeding with their execution. For example, a consumer thread may wait for a producer thread to produce data.
+
+**notify():**
+- `Purpose`: The notify() method is used to wake up a single waiting thread that is waiting on the same object's monitor. It notifies one of the waiting threads to resume its execution.
+- `Usage`: Threads call notify() to signal other threads that a particular condition has been met or a resource is available for consumption. For example, a producer thread may notify a consumer thread when new data is available.
+
+notifyAll():
+- `Purpose`: The notifyAll() method is used to wake up all waiting threads that are waiting on the same object's monitor. It notifies all waiting threads to resume their execution.
+- `Usage`: Threads call notifyAll() when multiple threads are waiting for the same condition or resource. It ensures that all waiting threads are notified and can compete for the shared resource or condition. This method is generally used to prevent potential deadlock situations.
+
+**Important Points:**
+
+- `wait()`, `notify()`, and `notifyAll()` must be called from within a `synchronized block` or method to ensure proper thread coordination and avoid `race conditions`.
+- These methods are used to implement the classic `producer-consumer pattern`, where producers produce data and `notify consumers` when data is `available for consumption`.
+- It's important to use these methods carefully to prevent potential issues such as deadlock or livelock.
+
+```java
+public class WaitNotifyExample {
+    private static final Object lock = new Object(); // Object used as a monitor for synchronization
+    private static boolean condition = false; // Shared condition variable
+
+    public static void main(String[] args) {
+        // Consumer thread
+        Thread consumerThread = new Thread(() -> {
+            synchronized (lock) {
+                while (!condition) { // Wait until condition is true
+                    try {
+                        lock.wait(); // Wait for notification
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                // Condition is true, consume the resource
+                System.out.println("Consumer: Resource consumed");
+            }
+        });
+
+        // Producer thread
+        Thread producerThread = new Thread(() -> {
+            // Produce the resource
+            System.out.println("Producer: Resource produced");
+            synchronized (lock) {
+                condition = true; // Set condition to true
+                lock.notify(); // Notify waiting threads
+            }
+        });
+
+        // Start consumer and producer threads
+        consumerThread.start();
+        producerThread.start();
+    }
+}
+```
+
+### What Is the Purpose of the Thread.yield()?
+- The purpose of the `Thread.yield()` method in Java is to hint to the thread scheduler that the current thread is willing to relinquish its current use of the CPU. When a thread calls yield(), it suggests that the scheduler should move it from the running state back to the runnable state, allowing other threads of the same or higher priority to execute.
+
+- However, the exact behavior of Thread.yield() is platform-dependent and not guaranteed. It's up to the thread scheduler to decide whether to act on this hint or not, so it may not have any effect at all. Generally, Thread.yield() is used in scenarios where a thread needs to wait for some condition but doesn't want to block completely (like with sleep() or wait()), allowing other threads a chance to run.
+
+- The output of below can be different everytime you will run below code because the behavior of yield() is non-deterministic and platform dependent as well.
+
+```java
+Runnable r = () -> {
+            int counter = 0;
+            while (counter < 2) {
+                System.out.println(Thread.currentThread()
+                        .getName());
+                counter++;
+                Thread.yield();
+            }
+        };
+        new Thread(r).start();
+        new Thread(r).start();
+```
+### What is the purpose of Semaphore?
+- The purpose of Semaphore is to control access to a shared resource or a pool of resources by multiple threads concurrently. 
+- It provides a way to limit the number of threads that can access the resource simultaneously, thus preventing resource contention and managing concurrent access in a controlled manner.
+- It is a synchronization construct that controls access to a shared resource by using a counter. If the counter is greater than zero, access is allowed. If it is zero, access is denied. The counter keeps track of permits that allow access to the shared resource. To access the resource, a thread must acquire a permit from the semaphore. When the thread no longer needs access to the shared resource, it releases the permit, allowing another thread to acquire it.
+- In Java, the Semaphore class in the java.util.concurrent package implements this mechanism, so you don't have to implement your own semaphores.
+- In below code example, each thread acquires a permit using semaphore.acquire() before accessing the shared resource and releases the permit using semaphore.release() after completing its work.
+- As a result, only 2 threads are allowed to access the resource concurrently, while other threads wait for a permit to become available.
+
+```java
+import java.util.concurrent.Semaphore;
+
+public class SemaphoreExample {
+    private static final int NUM_THREADS = 5;
+    private static final Semaphore semaphore = new Semaphore(2); // Allow only 2 threads to access the resource simultaneously
+
+    public static void main(String[] args) {
+        // Create and start multiple threads
+        for (int i = 0; i < NUM_THREADS; i++) {
+            Thread thread = new Thread(() -> {
+                try {
+                    semaphore.acquire(); // Acquire permit
+                    System.out.println(Thread.currentThread().getName() + " is accessing the resource");
+                    Thread.sleep(1000); // Simulate resource usage
+                    System.out.println(Thread.currentThread().getName() + " released the resource");
+                    semaphore.release(); // Release permit
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+            thread.start();
+        }
+    }
+}
+```
