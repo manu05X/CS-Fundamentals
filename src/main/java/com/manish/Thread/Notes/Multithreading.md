@@ -624,27 +624,27 @@ scheduledThreadPool.schedule(() ->
 
 **Differences between them:**
 
-- **Lifecycle Management:**
+- `Lifecycle Management:`
 
-**Executor:** It does not provide methods for managing the lifecycle of the underlying thread pool. It only provides a way to execute tasks.
+`Executor:` It does not provide methods for managing the lifecycle of the underlying thread pool. It only provides a way to execute tasks.
 
-**ExecutorService:** It extends Executor and adds methods for managing the lifecycle of the thread pool, such as shutdown(), shutdownNow(), and awaitTermination().
+`ExecutorService:` It extends Executor and adds methods for managing the lifecycle of the thread pool, such as shutdown(), shutdownNow(), and awaitTermination().
 
-- **Task Submission and Execution:**
+- `Task Submission and Execution:`
 
-Both Executor and ExecutorService provide methods to submit tasks for execution (execute(Runnable command) in Executor, submit(Runnable task) and submit(Callable<T> task) in ExecutorService).
+Both Executor and ExecutorService provide methods to submit tasks for execution (execute(Runnable command) in Executor, submit(Runnable task) and submit(`Callable<T> task`) in ExecutorService).
 
-- **Task Result Handling:**
+- `Task Result Handling:`
 
-**Executor:** It does not provide a way to obtain the result of a task execution directly.
+`Executor:` It does not provide a way to obtain the result of a task execution directly.
 
-**ExecutorService:** It provides methods to submit tasks that return a Future representing the result of the task execution (submit(Callable<T> task)). It also allows for task result retrieval through the Future interface.
+`ExecutorService:` It provides methods to submit tasks that return a Future representing the result of the task execution (submit(Callable<T> task)). It also allows for task result retrieval through the Future interface.
 
-**Termination:**
+- `Termination:`
 
-**Executor:** It does not provide methods for terminating the thread pool.
+`Executor:` It does not provide methods for terminating the thread pool.
 
-**ExecutorService:** It provides methods to gracefully shut down the thread pool (shutdown()), forcibly shut down the thread pool (shutdownNow()), and await termination of all tasks (awaitTermination()).
+`ExecutorService:` It provides methods to gracefully shut down the thread pool (shutdown()), forcibly shut down the thread pool (shutdownNow()), and await termination of all tasks (`awaitTermination()`).
 
 #### Use Case Scenarios:
 
