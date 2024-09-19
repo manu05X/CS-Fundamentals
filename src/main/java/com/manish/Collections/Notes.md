@@ -9,3 +9,6 @@
 | **Generics Support**          | Supports generics for type-safe operations              | Does not directly support generics; operates on Collection types |
 | **Examples of Subinterfaces** | List, Set, Queue                                        | N/A (Utility class does not have subinterfaces)         |
 | **Usage Context**             | Used to define data structures                           | Used to perform common operations on collections        |
+
+
+Links : https://www.geeksforgeeks.org/collections-in-java-2/
