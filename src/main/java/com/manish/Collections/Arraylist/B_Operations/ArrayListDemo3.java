@@ -15,7 +15,7 @@ public class ArrayListDemo3 {
 
         list.set(1, 100);
 
-        System.out.println(list);
+        System.out.println(list); //[10, 100, 30, 40, 10]
 
         if (list.contains(30)) {
             System.out.println("List contains 30");
@@ -25,3 +25,10 @@ public class ArrayListDemo3 {
         System.out.println("Index of last occurence of 10 is " + list.lastIndexOf(10));
     }
 }
+
+/*
+[10, 100, 30, 40, 10]
+List contains 30
+Index of first occurence of 10 is 0
+Index of last occurence of 10 is 4
+ */

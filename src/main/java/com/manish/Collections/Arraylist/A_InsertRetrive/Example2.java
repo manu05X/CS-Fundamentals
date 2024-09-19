@@ -18,3 +18,10 @@ public class Example2 {
 
     }
 }
+
+/*
+OUTPUT:
+[1, 2, 3]
+The element at index two is 2
+The size of the List is  3
+ */

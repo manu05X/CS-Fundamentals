@@ -43,3 +43,12 @@ public class Example3 {
 
     }
 }
+
+/*
+OUTPUT:
+1> Using shorthand version of add() method : [1, 2, 3, 4]
+2> Initialization using : ArrayList<Type> obj = new ArrayList<Type>(Arrays.asList(Obj A, Obj B, Obj C, ....so on)) => [Hello, World, from, ArrayList]
+3> Initialization using : List<Type> obj = new ArrayList<>(List.of(Obj A, Obj B, Obj C, ....so on)); => [1, 2, 3, 4, 5, 6, 7, 8]
+4> Initialization using another Collection : List gfg = new ArrayList(collection); => [1, 2, 3, 4, 5, 6, 7, 8]
+5> Initialization using another Collection : ArrayList<Type> listName = Stream.of(e1, e2, ..., eN).collect(Collectors.toCollection(ArrayList::new)); => [9, 10, 11, 12, 13, 14, 15]
+ */

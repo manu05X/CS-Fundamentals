@@ -13,6 +13,6 @@ public class ArrayListDemo2 {
 
         list.replaceAll((element) -> element.toUpperCase());
 
-        System.out.println(list);
+        System.out.println(list); //[APPLE, BANANA]
     }
 }

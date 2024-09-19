@@ -45,6 +45,8 @@ public class ArrayListDemo3 {
         list.add(40);
         list.add(10);
 
+        System.out.println(list);
+
         Iterator<Integer> itr = list.iterator();
 
         while (itr.hasNext()) {

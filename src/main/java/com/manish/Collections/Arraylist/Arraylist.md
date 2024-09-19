@@ -10,6 +10,72 @@ Link : https://www.geeksforgeeks.org/arraylist-in-java/?ref=ml_lbp
 - ArrayList is not Synchronized. Its equivalent synchronized class in Java is Vector.
 
 
+## Using Iterator
+The iterator() method in ArrayList returns an Iterator type object. The Iterator interface declares the below methods that help with iterating an ArrayList.
+
+- hasNext() — This method returns true if there are more elements in the list; otherwise, it returns false.
+
+- next() — This method returns the next element in the list. Before calling next(), we should always call hasNext() to verify that there is an element; otherwise, NoSuchElementException will be thrown.
+
+- remove() — This method removes the last element returned by the iterator. It can be called only once per call to the next().
+
+- forEachRemaining(Consumer<? super E> action) — This method was introduced in Java 8. It performs the given action for each remaining element until all elements have been processed or the action throws an exception. This method’s benefit is that we do not need to check if there is a next element every time.
+
+```java
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+public class ArrayListDemo {
+
+	public static void main(String args[]) {
+		List<Integer> list = new ArrayList<>();
+		list.add(10);
+		list.add(20);
+		list.add(30);
+		list.add(40);
+		list.add(10);
+
+		Iterator<Integer> itr = list.iterator();
+
+		while(itr.hasNext()) {
+			System.out.println(itr.next());
+		}
+
+		// Iterating using forEachRemaining() method
+		System.out.println("Iterating using forEachRemaining() method");
+		Iterator<Integer> newItr = list.iterator();
+		newItr.forEachRemaining(element -> System.out.println(element));
+	}
+}
+```
+
+>If an element is added to the ArrayList after the iterator is created then also ConcurrentModificationException will be thrown.
+
+ ```java
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+
+public class ArrayListDemo {
+
+	public static void main(String args[]) {
+		List<Integer> list = new ArrayList<>();
+		list.add(34);
+		list.add(45);
+
+		Iterator<Integer> itr = list.iterator();
+		list.add(54);
+
+		while(itr.hasNext()) {
+			System.out.println(itr.next());	
+		}
+	}
+}
+```
+
+
 ## How to write implementation of the `compareTo()` method
 Let’s say you have a custom class, and you need to write the implementation of the `compareTo()` method.
 
