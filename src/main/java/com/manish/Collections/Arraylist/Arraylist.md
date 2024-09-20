@@ -74,7 +74,89 @@ public class ArrayListDemo {
 	}
 }
 ```
+## Comparable introduction
+Collections.sort() method sorts the given List in ascending order. But the question is, how does the sort() method decide which element is smaller and which one is larger?
 
+Each wrapper class(Integer, Double, or Long), String class, and Date class implements an interface called Comparable. This interface contains a compareTo(T o) method which is used by sorting methods to sort the Collection. This method returns a negative integer, zero, or a positive integer if this object is less than, equal to, or greater than the object passed as an argument.
+
+>If we use the Collections.sort(List<T> list) method to sort an ArrayList, then the class whose objects are stored in the ArrayList must implement the Comparable interface. If the ArrayList stores an Integer, a Long, or a String, then we don’t need to worry as these classes already implement the Comparable interface. But if the ArrayList stores a custom class object, then that class must implement the Comparable interface.
+
+In the below example, we have a custom class called Employee. We have stored some Employee objects in an ArrayList, and we need to sort it. The below example will not compile as the Employee class does not implement the Comparable interface.
+
+```java
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+class Employee {
+
+	String name;
+	int age;
+
+	public Employee(String name, int age) {
+		super();
+		this.name = name;
+		this.age = age;
+	}
+
+}
+
+public class ArrayListDemo {
+
+	public static void main(String args[]) {
+		List<Employee> list = new ArrayList<>();
+		list.add(new Employee("Jane", 29));
+		list.add(new Employee("Alex", 54));
+
+		Collections.sort(list);
+		System.out.println("ArrayList in asc order: " + list);
+	}
+}
+```
+
+In the below example, the Employee class implements the Comparable interface. The code will run successfully and will sort the Employee objects in ascending order of their age.
+```java
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class ArrayListDemo {
+
+	public static void main(String args[]) {
+		List<Employee> list = new ArrayList<>();
+		list.add(new Employee("Jane", 29));
+		list.add(new Employee("Alex", 54));
+		list.add(new Employee("Matt", 19));
+		list.add(new Employee("Roy", 72));
+
+		Collections.sort(list);
+		for(Employee emp : list) {
+			System.out.println("Employee Name: " + emp.name + ", Employee Age: " + emp.age);
+		}
+	}
+}
+
+
+class Employee implements Comparable<Employee> {
+
+    String name;
+    int age;
+
+    public Employee(String name, int age) {
+        super();
+        this.name = name;
+        this.age = age;
+    }
+
+    @Override
+    public int compareTo(Employee emp) {
+        //We will sort the employee based on age in ascending order
+        //returns a negative integer, zero, or a positive integer as this employee age
+        //is less than, equal to, or greater than the specified object.
+        return (this.age - emp.age);
+    }
+}
+```
 
 ## How to write implementation of the `compareTo()` method
 Let’s say you have a custom class, and you need to write the implementation of the `compareTo()` method.
@@ -191,7 +273,21 @@ public class MakeYearComparator implements Comparator<Vehicle>{
 
 The above code can be further simplified if we use lambda expressions instead of anonymous classes. Lambda expressions were introduced in Java 8.
 
-> Collections.sort(list, (o1, o2) -> o1.brand.compareTo(o2.brand));
+```java
+Collections.sort(list, (parameter1, parameter2) -> {
+// Lambda body: comparison logic goes here
+return comparison_result;
+});
+
+//Simplified (since it's a single statement, you can omit the {} and return):java
+        
+ Collections.sort(list, (o1, o2) -> o1.brand.compareTo(o2.brand));
+
+
+```
+
+
+> - Collections.sort(list, (o1, o2) -> o1.brand.compareTo(o2.brand));
 
 
 ```java

@@ -1,7 +1,6 @@
-package com.manish.Collections.Arraylist.E_Comparable.Example1;
+package com.manish.Collections.Arraylist.E_Comparable_Comparator.Example1;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 //The below example will not compile as the Employee class does not implement the Comparable interface.

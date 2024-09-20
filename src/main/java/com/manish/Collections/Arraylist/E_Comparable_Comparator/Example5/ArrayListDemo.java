@@ -1,8 +1,7 @@
-package com.manish.Collections.Arraylist.E_Comparable.Example5;
+package com.manish.Collections.Arraylist.E_Comparable_Comparator.Example5;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class ArrayListDemo {
@@ -22,6 +21,7 @@ public class ArrayListDemo {
 		for (Vehicle vehicle : list) {
 			System.out.println("Vehicle Brand: " + vehicle.brand + ", Vehicle Make: " + vehicle.makeYear);
 		}
+		//The lambda expression (o1, o2) -> o1.brand.compareTo(o2.brand) acts as the Comparator<? super Vehicle> that defines how to compare two Vehicle objects based on their brand.
 
 		System.out.println("");
 

@@ -1,4 +1,4 @@
-package com.manish.Collections.Arraylist.E_Comparable.Example3;
+package com.manish.Collections.Arraylist.E_Comparable_Comparator.Example3;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,4 +1,4 @@
-package com.manish.Collections.Arraylist.E_Comparable.Example1;
+package com.manish.Collections.Arraylist.E_Comparable_Comparator.Example1;
 
 class Employee {
 

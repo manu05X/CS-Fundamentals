@@ -1,4 +1,4 @@
-package com.manish.Collections.Arraylist.E_Comparable.Example4;
+package com.manish.Collections.Arraylist.E_Comparable_Comparator.Example4;
 
 public class Vehicle{
 
