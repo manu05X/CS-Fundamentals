@@ -41,6 +41,12 @@ public class Example3 {
         List<Integer> list4 = Stream.of(9,10,11,12,13,14,15).collect(Collectors.toCollection(ArrayList::new));
         System.out.println(list4);
 
+        System.out.print("6> Initialization without using Collection : List<Integer> list5 = List.of(value1,value2,value3,value4,value5); ");
+        List<Integer> list5 = List.of(9,10,11,12,13,14,15);
+        System.out.println(list5);
+
+
+
     }
 }
 
