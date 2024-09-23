@@ -1,4 +1,4 @@
-package CoreJava.Oops;
+package com.manish.Codes.CoreJava.Oops.MethodOverloadingExample;
 
 public class MethodOverloadingExample {
     // Method with one parameter

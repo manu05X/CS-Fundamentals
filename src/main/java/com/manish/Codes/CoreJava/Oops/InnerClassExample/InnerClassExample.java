@@ -1,4 +1,4 @@
-package CoreJava.Oops;
+package com.manish.Codes.CoreJava.Oops.InnerClassExample;
 
 // Outer class
 public class InnerClassExample {

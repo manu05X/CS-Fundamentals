@@ -1,4 +1,4 @@
-package CoreJava.Oops;
+package com.manish.Codes.CoreJava.Oops.ClassAndObjectsExample;
 
 public class ClassAndObjectsExample {
     // Fields of the class
