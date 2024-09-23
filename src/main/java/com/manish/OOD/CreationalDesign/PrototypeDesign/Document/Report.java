@@ -1,5 +1,6 @@
 package com.manish.OOD.CreationalDesign.PrototypeDesign.Document;
 
+// Concrete Prototype: Another concrete class that implements cloning.
 public class Report extends Document {
     private String author;
 
@@ -9,11 +10,5 @@ public class Report extends Document {
 
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    @Override
-    public String getText() {
-        String baseText = super.getText();
-        return baseText.replace("[author]", author);
     }
 }

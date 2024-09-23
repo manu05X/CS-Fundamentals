@@ -6,7 +6,7 @@ public class SleepThreadExample {
         Thread innerThread = new Thread(executeMe);
         innerThread.start();
         innerThread.join();
-        System.out.println("Main thread exiting.");
+        System.out.println("com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main thread exiting.");
     }
 
     static class ExecuteMe implements Runnable {

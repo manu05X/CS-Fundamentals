@@ -38,7 +38,7 @@ public class ThreadPool {
 
 /*
 // When an application needs to use a pool of threads to execute tasks, it's often useful to use a Singleton to manage the pool of threads. This ensures that there is only one instance of the thread pool and that all tasks are executed on the same pool of threads.
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
     public static void main(String[] args) {
         ThreadPool threadPool = ThreadPool.getInstance();
 

@@ -48,7 +48,7 @@ public class Logger {
 /*
 A Singleton can be used to implement a logging system that writes log messages to a file or database. This ensures that all log messages are written to the same location and that there is only one instance of the logging system.
 
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
     public static void main(String[] args) {
         Logger logger = Logger.getInstance();
 

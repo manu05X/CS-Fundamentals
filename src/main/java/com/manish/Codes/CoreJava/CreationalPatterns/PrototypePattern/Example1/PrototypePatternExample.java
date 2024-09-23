@@ -1,7 +1,7 @@
 package com.manish.Codes.CoreJava.CreationalPatterns.PrototypePattern.Example1;
 
 
-// Main class to test the Prototype pattern
+// com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main class to test the Prototype pattern
 public class PrototypePatternExample {
     public static void main(String[] args) {
         // Create a prototype registry

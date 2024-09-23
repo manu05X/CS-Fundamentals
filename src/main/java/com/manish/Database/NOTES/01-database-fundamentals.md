@@ -248,7 +248,7 @@ SELECT * FROM USERS WHERE age > 25 and age < 30;
 
 ### Relational Model
 
-Main features of the relational model are:
+com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main features of the relational model are:
 * **Relations** - Tables -Represent data as a collection of relations or tables
 * **Attributes** - Columns - Each entry in a relation can describe multiple values that are grouped as an attribute 
 * **Tuples** - Rows - Represent individual data points across multiple attributes

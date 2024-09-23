@@ -170,7 +170,7 @@ public <T> T[] toArray(T[] a) {
 }
 ```
 
-### What Are the Main Interfaces in Java Collections?
+### What Are the com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main Interfaces in Java Collections?
 Java Collections Framework provides several interfaces that define various types of collections. Here are the main interfaces
 in Java collections:
 

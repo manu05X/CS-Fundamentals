@@ -1,7 +1,7 @@
 package com.manish.OOD.BehavioralDesign.Observer.DBMS;
 
 
-// Main class to demonstrate the Observer Pattern in action
+// com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main class to demonstrate the Observer Pattern in action
 public class Main {
     public static void main(String[] args) {
         // Create a new database
@@ -27,7 +27,7 @@ DatabaseRecordObserver: Interface that any observer (e.g., CacheUpdater, UserNot
 CacheUpdater: Updates the cache when a record is updated.
 UserNotifier: Sends notifications when a record is updated.
 Database: Maintains a list of observers and notifies them when a record is updated.
-Main: Demonstrates adding observers to the database and updating a record, which triggers the observers.
+com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main: Demonstrates adding observers to the database and updating a record, which triggers the observers.
 
 
 When the updateRecord method is called on the Database object, it will notify all its observers that the record has been updated. The CacheUpdater and UserNotifier objects will receive the notification and perform their specific actions. In this example, the CacheUpdater will update the cache and print a message to the console, and the UserNotifier will send a notification to the user and print a message to the console.

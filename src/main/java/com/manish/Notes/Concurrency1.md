@@ -217,7 +217,7 @@ class SimpleRunnable implements Runnable {
 ```
 
 ```java
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
     public static void main(String[] args) {
         Thread t = new Thread(new SimpleRunnable());
         t.start();
@@ -324,9 +324,9 @@ public class NumberPrinter implements Runnable {
 }
 ```
 
-**Main.java**
+**com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main.java**
 ```java
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
     public static void main(String[] args) {
         for(int i=0; i<100;i++){
            Thread t = new Thread(new NumberPrinter(i));
@@ -459,7 +459,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
 
     // Task calculate Factorial of List of Numbers
     public static void main(String[] args) throws InterruptedException {
@@ -490,7 +490,7 @@ public class Main {
                 System.out.println("Couldn't complete calc in 2s");
             }
         }
-        System.out.println("Main is completed!");
+        System.out.println("com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main is completed!");
     }
 }
 ```
@@ -635,16 +635,16 @@ public class SimpleRunnableTwo implements Runnable {
     }
 }
 ```
-**Main**
+**com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main**
 ```java
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
     public static void main(String[] args) throws InterruptedException {
         Thread t1 = new Thread(new SimpleRunnable());
         t1.start();
 
         Thread.sleep(1000); //1ms pause
         System.out.println("T1 :"+ t1.getState()); //T1 is waiting state
-        System.out.println("Main :" + Thread.currentThread().getState());
+        System.out.println("com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main :" + Thread.currentThread().getState());
     }
 }
 ```
@@ -676,9 +676,9 @@ public class SimpleRunnable implements Runnable{
 }
 
 ```
-In Main, if you check the state of T1 after 2s it will be `TIMED WAITING`
+In com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main, if you check the state of T1 after 2s it will be `TIMED WAITING`
 ```java
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
     public static void main(String[] args) throws InterruptedException {
         Thread t1 = new Thread(new SimpleRunnable());
         t1.start();

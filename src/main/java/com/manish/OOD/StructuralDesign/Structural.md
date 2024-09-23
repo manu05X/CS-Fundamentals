@@ -1,8 +1,11 @@
 
 # Structural Design Patterns - Interview Notes
 
+- Structural design patterns are design patterns that deal with the `composition of classes` and `objects` to form **larger structure**s. 
+- They help to **simplify the relationships** between classes and objects, and make the code more `flexible and reusable`.
+
 ## 1. **Adapter Pattern**
-- **Purpose**: Bridges the gap between two incompatible interfaces, allowing them to work together.
+- **Purpose**: Bridges the gap between **two incompatible interfaces**, allowing them to `work together`.
 - **Use Cases**:
     - Integrating legacy systems with modern applications.
     - Using third-party libraries with different interfaces.
@@ -12,8 +15,54 @@
     - Adapting legacy database interfaces to a new application's interface.
 
 **Key Points**:
-- Involves an adapter class implementing the target interface and using the adaptee's methods.
-- Flexible and reusable across different systems.
+- **Target**: This is the interface that the client `expects or requires`. The client `interacts with objects` through this **interface**. 
+- **Adapter**: This is the class that **implements** the Target interface and `wraps an instance` of the Adaptee, making it `compatible with the client`. 
+- **Adaptee**: This is the existing class or interface that needs to be adapted to work with the client. It's the class that the Adapter adapts.
+
+
+```java
+// Target Interface
+public interface Square {
+    void draw();
+}
+// Adaptee Class
+public class Rectangle {
+  public void drawRectangle() {
+    System.out.println("Drawing a rectangle");
+  }
+}
+// Adapter Class
+public class RectangleAdapter implements Square {
+  private Rectangle rectangle;
+
+  public RectangleAdapter(Rectangle rectangle) {
+    this.rectangle = rectangle;
+  }
+
+  @Override
+  public void draw() {
+    rectangle.drawRectangle();
+  }
+}
+// Client Code
+public class Client {
+  public static void main(String[] args) {
+    // Create an instance of Rectangle (Adaptee)
+    Rectangle rectangle = new Rectangle();
+
+    // Create an adapter to adapt Rectangle to Square interface
+    Square squareAdapter = new RectangleAdapter(rectangle);
+
+    // Call draw method on the Square interface
+    squareAdapter.draw();
+  }
+}
+```
+
+### Use Case: Legacy System Integration
+A common use case for the Adapter pattern is when integrating new code with existing legacy systems or third-party libraries that have incompatible interfaces. For example:
+- **Database Adapter**: You have an application that interacts with a specific database using a proprietary interface. If you want to switch to a new database system with a different interface, you can use the Adapter pattern to create an adapter that translates the new database interface to the existing one used by your application.
+- **API Integration**: You're working with an external API that has a different interface than what your application expects. Instead of modifying your application's code to directly interact with the API, you can create an adapter that translates between the API's interface and the interface expected by your application.
 
 ---
 
@@ -30,27 +79,150 @@
 ---
 
 ## 3. **Composite Pattern**
-- **Purpose**: Treats individual objects and compositions of objects uniformly.
-- **Use Cases**:
-    - Hierarchical data structures like trees (e.g., file systems).
-    - GUI components where a composite element (like a panel) contains other components.
+- The Composite pattern is a structural design pattern that `allows you to compose objects into tree structures` to represent part-whole hierarchies. This pattern treats individual objects and compositions of objects uniformly. 
+- By implementing the Composite pattern, you can manipulate individual objects and compositions through a `common interface`, simplifying client code.
+
+**Purpose**: Treats individual objects and compositions of objects uniformly.
+
+**Use Cases:**
+- Hierarchical data structures like trees (e.g., file systems).
+- GUI components where a composite element (like a panel) contains other components.
 
 **Key Points**:
 - Components can be either individual objects or composites (groups).
 - Simplifies client code as it interacts with components uniformly.
+- Component: This is the base interface or abstract class for all objects in the composition. It defines the common operations that can be performed on both simple and complex objects.
+- Leaf: A Leaf is a basic, indivisible object in the composition. It implements the Component interface and provides its own behavior.
+- Composite: A Composite is an object that has children. It implements the Component interface and defines behavior for the components it contains, typically by delegating operations to its child components.
+
+**Structure**
+- **Component**: Declares the interface for objects in the composition and can include methods for managing child components.
+- **Leaf**: Represents the end objects of a composition. A leaf has no children.
+- **Composite**: Defines behavior for components that have children and implements methods to manage these children (e.g., adding, removing, and accessing children).
+
+**When to Use the Composite Pattern?**
+- **Hierarchical Structures**: When you have a part-whole hierarchy of objects and want to be able to treat individual objects and composites uniformly. This is common in scenarios like graphics (where shapes can be simple or composed of other shapes), file systems (where files and directories are treated uniformly), and organizational charts.
+- **Recursive Structures**: When your application has recursive structures that can be processed in a similar manner. For example, a tree structure where nodes can contain other nodes, or a menu system with sub-menus.
+- **Simplify Client Code**: When you want to simplify client code by allowing it to treat both individual objects and composites through a common interface without worrying about their differences.
+
+```java
+// Component
+interface FileSystemComponent {
+    void showDetails();
+}
+
+// Leaf
+class File implements FileSystemComponent {
+    private String name;
+
+    public File(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public void showDetails() {
+        System.out.println("File: " + name);
+    }
+}
+
+// Composite
+class Directory implements FileSystemComponent {
+    private String name;
+    private List<FileSystemComponent> components = new ArrayList<>();
+
+    public Directory(String name) {
+        this.name = name;
+    }
+
+    public void addComponent(FileSystemComponent component) {
+        components.add(component);
+    }
+
+    public void removeComponent(FileSystemComponent component) {
+        components.remove(component);
+    }
+
+    @Override
+    public void showDetails() {
+        System.out.println("Directory: " + name);
+        for (FileSystemComponent component : components) {
+            component.showDetails();
+        }
+    }
+}
+
+// Client code
+public class CompositePatternDemo {
+    public static void main(String[] args) {
+        FileSystemComponent file1 = new File("file1.txt");
+        FileSystemComponent file2 = new File("file2.txt");
+
+        Directory dir1 = new Directory("dir1");
+        Directory dir2 = new Directory("dir2");
+
+        dir1.addComponent(file1);
+        dir2.addComponent(file2);
+        dir1.addComponent(dir2);
+
+        dir1.showDetails();
+      
+        // Directory: dir1
+    	// File: file1.txt
+        // Directory: dir2
+        // File: file2.txt
+    }
+}
+```
+**Benefits**
+- **Simplifies client code**: Clients can treat individual objects and compositions uniformly.
+- **Flexible hierarchy**: You can easily add new kinds of components.
+- **Easier to manag**e: Centralized management of composite structures makes it easier to manage complex hierarchies.
+
+**Drawbacks**
+- **Overhead**: May introduce complexity by forcing you to manage a tree structure.
+- **Inappropriate for flat structures**: If the hierarchy isn't deep, using a composite might add unnecessary complexity.
+
+
 
 ---
 
 ## 4. **Decorator Pattern**
-- **Purpose**: Adds new responsibilities to objects dynamically without altering their structure.
+The Decorator pattern is a structural design pattern that **allows behavior to be added to individual objects**, dynamically, without affecting the behavior of other objects from the same class. It involves creating a set of decorator classes that are used to wrap concrete components, adding new functionality to them without altering their structure.
+- **Purpose**: Adds new responsibilities to objects dynamically without altering their structure. Composition-based design where each decorator wraps the original object.
+
 - **Use Cases**:
     - Adding functionalities like logging, security, caching.
     - Dynamic formatting of text (e.g., bold, italic in a text editor).
 
+
 **Key Points**:
-- Composition-based design where each decorator wraps the original object.
+- **Purpose**: The Decorator pattern is used to **add or modify** behavior of `individual objects at runtime`, without modifying their structure.
+- **Flexibility**: It provides more flexibility than static inheritance because decorators can be added or removed dynamically.
+- **Composition**: It promotes composition over inheritance, allowing you to compose objects with different behaviors at runtime.
+- **Single Responsibility Principle**: Each decorator class is responsible for adding a specific behavior, promoting the single responsibility principle.
 - Unlike inheritance, this pattern is dynamic and flexible.
 - Helps avoid feature-heavy base classes.
+
+
+####  How does the Decorator pattern differ from inheritance?
+The Decorator pattern and inheritance are two different mechanisms used in object-oriented programming for extending the behavior of classes, but they serve different purposes and have different implications.
+
+**Inheritance**
+- Inheritance is a mechanism in object-oriented programming that allows a class (subclass) to inherit properties and behavior from another class (superclass). Subclasses can extend the functionality of their superclass by adding new methods or overriding existing methods.
+
+**Key Points:**
+- **Purpose**: Inheritance is used to create a hierarchy of classes with shared behavior and attributes, promoting code reuse.
+- **Static**: Inheritance is static and determined at compile-time. Once a class hierarchy is defined, it cannot be changed at runtime.
+- **Coupling**: Inheritance creates a strong coupling between the superclass and its subclasses. Changes in the superclass can affect all subclasses.
+- **Single Inheritance**: Most object-oriented languages support single inheritance, meaning a subclass can inherit from only one superclass.
+
+**Differences**
+ - **Flexibility**: The Decorator pattern provides more flexibility than inheritance because decorators can be added or removed dynamically at runtime, whereas inheritance is static and determined at compile-time.
+ - **Single Responsibility Principle**: The Decorator pattern promotes the single responsibility principle by allowing individual decorators to add specific behavior, whereas inheritance can lead to classes with multiple responsibilities if subclasses override multiple methods from their superclass.
+ - **Coupling**: Inheritance creates a strong coupling between the superclass and its subclasses, while the Decorator pattern promotes loose coupling between components, as decorators are independent of the concrete components they decorate.
+ - **Composition vs. Inheritance**: The Decorator pattern promotes composition over inheritance. Instead of creating a complex class hierarchy through inheritance, you can compose objects with different behaviors dynamically using decorators.
+
+
 
 ---
 
@@ -61,8 +233,219 @@
     - API gateways that hide the complexity of backend services.
 
 **Key Points**:
-- Provides a single point of access to a system.
+- Provides a **single point of access** to a system.
 - Does not hide subsystem classes but simplifies access for clients.
+- **Complexity Management**: Facade simplifies interactions with a complex system by providing a single entry point and hiding the complexities of the underlying subsystems. 
+- **Abstraction Layer**: It provides an abstraction layer that decouples the client code from the detailed implementation of the subsystems, allowing for easier maintenance and changes. 
+- **Encapsulation**: Facade encapsulates the subsystems, preventing clients from directly interacting with them, which promotes loose coupling and reduces dependency between the client and the subsystems. 
+- **Consistency**: It ensures consistency in how clients interact with the subsystems by providing a uniform interface, regardless of the complexity of the underlying subsystems.
+
+
+```java
+// Complex Home Theater System
+public class DVDPlayer {
+    public void on() { /* Turn on DVD player */ }
+    public void play(String movie) { /* Play movie */ }
+    // Other methods...
+}
+
+public class Amplifier {
+    public void on() { /* Turn on amplifier */ }
+    public void setSurroundSound() { /* Set surround sound */ }
+    // Other methods...
+}
+
+public class Projector {
+    public void on() { /* Turn on projector */ }
+    public void setInput(String input) { /* Set input source */ }
+    // Other methods...
+}
+
+// Other subsystem classes...
+
+// Facade for Home Theater System
+public class HomeTheaterFacade {
+  private DVDPlayer dvdPlayer;
+  private Amplifier amplifier;
+  private Projector projector;
+
+  public HomeTheaterFacade(DVDPlayer dvdPlayer, Amplifier amplifier, Projector projector) {
+    this.dvdPlayer = dvdPlayer;
+    this.amplifier = amplifier;
+    this.projector = projector;
+  }
+
+  public void watchMovie(String movie) {
+    dvdPlayer.on();
+    amplifier.on();
+    amplifier.setSurroundSound();
+    projector.on();
+    projector.setInput("DVD");
+    dvdPlayer.play(movie);
+  }
+
+  // Other simplified methods...
+}
+
+// Client Code
+public class Client {
+  public static void main(String[] args) {
+    // Create subsystem objects
+    DVDPlayer dvdPlayer = new DVDPlayer();
+    Amplifier amplifier = new Amplifier();
+    Projector projector = new Projector();
+
+    // Create facade for home theater system
+    HomeTheaterFacade homeTheater = new HomeTheaterFacade(dvdPlayer, amplifier, projector);
+
+    // Use the facade to watch a movie
+    homeTheater.watchMovie("Inception");
+  }
+}
+```
+
+In this example, the Facade pattern provides a simplified interface (HomeTheaterFacade) for controlling the entire home theater system, hiding the complexities of individual subsystems (DVDPlayer, Amplifier, Projector). Clients can interact with the facade to perform common tasks, such as watching a movie, without needing to know the details of how each subsystem works. This simplifies client code and promotes encapsulation and abstraction.
+
+#### Example 2 : 
+
+```java
+// Complex subsystem interface
+interface MusicSource {
+    void play();   // Method to play music
+    void pause();  // Method to pause music
+    void stop();   // Method to stop music
+}
+
+// Concrete subsystems
+class CdPlayer implements MusicSource {
+    // Plays the CD
+    public void play() {
+        System.out.println("Playing CD...");
+    }
+
+    // Pauses the CD
+    public void pause() {
+        System.out.println("Pausing CD...");
+    }
+
+    // Stops the CD
+    public void stop() {
+        System.out.println("Stopping CD...");
+    }
+}
+
+class Mp3Player implements MusicSource {
+    // Plays MP3
+    public void play() {
+        System.out.println("Playing MP3...");
+    }
+
+    // Pauses MP3
+    public void pause() {
+        System.out.println("Pausing MP3...");
+    }
+
+    // Stops MP3
+    public void stop() {
+        System.out.println("Stopping MP3...");
+    }
+}
+
+class StreamingService implements MusicSource {
+    // Plays streaming music
+    public void play() {
+        System.out.println("Playing streaming music...");
+    }
+
+    // Pauses streaming music
+    public void pause() {
+        System.out.println("Pausing streaming music...");
+    }
+
+    // Stops streaming music
+    public void stop() {
+        System.out.println("Stopping streaming music...");
+    }
+}
+
+// Facade class
+class MusicPlayerFacade {
+    private MusicSource cdPlayer;
+    private MusicSource mp3Player;
+    private MusicSource streamingService;
+
+    // Constructor initializing the subsystems
+    public MusicPlayerFacade() {
+        this.cdPlayer = new CdPlayer();
+        this.mp3Player = new Mp3Player();
+        this.streamingService = new StreamingService();
+    }
+
+    // Simplified method to play CD using the facade
+    public void playCd() {
+        cdPlayer.play();
+    }
+
+    // Simplified method to pause CD using the facade
+    public void pauseCd() {
+        cdPlayer.pause();
+    }
+
+    // Simplified method to stop CD using the facade
+    public void stopCd() {
+        cdPlayer.stop();
+    }
+
+    // Simplified method to play MP3 using the facade
+    public void playMp3() {
+        mp3Player.play();
+    }
+
+    // Simplified method to pause MP3 using the facade
+    public void pauseMp3() {
+        mp3Player.pause();
+    }
+
+    // Simplified method to stop MP3 using the facade
+    public void stopMp3() {
+        mp3Player.stop();
+    }
+
+    // Simplified method to play streaming music using the facade
+    public void playStreamingMusic() {
+        streamingService.play();
+    }
+
+    // Simplified method to pause streaming music using the facade
+    public void pauseStreamingMusic() {
+        streamingService.pause();
+    }
+
+    // Simplified method to stop streaming music using the facade
+    public void stopStreamingMusic() {
+        streamingService.stop();
+    }
+}
+
+// Client code
+public class Client {
+    public static void main(String[] args) {
+        // Creating facade for music player system
+        MusicPlayerFacade musicPlayer = new MusicPlayerFacade();
+
+        // Using the facade to play CD
+        musicPlayer.playCd();
+
+        // Using the facade to play MP3
+        musicPlayer.playMp3();
+
+        // Using the facade to play streaming music
+        musicPlayer.playStreamingMusic();
+    }
+}
+
+```
+
 
 ---
 
@@ -88,6 +471,103 @@
 **Key Points**:
 - Proxies control access to objects by interposing between client and target object.
 - Can be used for resource management, security, and lazy initialization.
+
+
+#### What are the types of Proxies in the Proxy pattern?
+The Proxy pattern is a structural design pattern that provides a surrogate or placeholder for another object to control access to it. There are several types of proxies, each serving a different purpose. Here are the main types of proxies:
+
+1. **Virtual Proxy:**
+- Purpose: Controls access to a resource that is expensive to create.
+- Usage: When you want to delay the creation and initialization of an expensive object until it's actually needed.
+- Example: A virtual proxy might represent a large image file and only load the image from disk when it's actually displayed on the screen.
+
+2. **Remote Proxy:**
+- Purpose: Represents an object that exists in a different address space (typically on a different machine).
+- Usage: Used in distributed systems to hide the fact that an object resides in a different location, and to handle the complexities of communication between the client and the remote object.
+- Example: In a client-server application, a remote proxy could represent a service running on a remote server.
+
+3. **Protection (or Access) Proxy:**
+- Purpose: Controls access to the real object by checking permissions or other access criteria.
+- Usage: When you need to add an additional level of security, ensuring that only authorized clients can access the sensitive operations of an object.
+- Example: A protection proxy might be used to manage access to methods in a banking system, ensuring that only authenticated users can perform transactions.
+
+4. **Caching Proxy:**
+- Purpose: Provides temporary storage of results to avoid redundant operations and improve performance.
+- Usage: When you have operations that produce the same results for the same inputs, and you want to cache these results to reduce computation time or resource usage.
+- Example: A caching proxy might be used to store the results of a complex database query.
+
+5. **Smart Proxy:**
+- Purpose: Adds additional behavior when an object is accessed, such as reference counting or lazy initialization.
+- Usage: When you want to perform extra actions whenever an object is accessed.
+- Example: A smart proxy could manage the lifecycle of an object, ensuring that it is properly initialized and cleaned up, or it might track the number of active references to an object to implement automatic resource management.
+
+```java
+// Subject
+interface Image {
+    void display();
+}
+
+// RealSubject
+class RealImage implements Image {
+    private String filename;
+
+    public RealImage(String filename) {
+        this.filename = filename;
+        loadFromDisk();
+    }
+
+    private void loadFromDisk() {
+        System.out.println("Loading " + filename);
+    }
+
+    @Override
+    public void display() {
+        System.out.println("Displaying " + filename);
+    }
+}
+
+// Proxy
+class ProxyImage implements Image {
+    private String filename;
+    private RealImage realImage;
+
+    public ProxyImage(String filename) {
+        this.filename = filename;
+    }
+
+    @Override
+    public void display() {
+        if (realImage == null) {
+            realImage = new RealImage(filename);
+        }
+        realImage.display();
+    }
+}
+
+// Client code
+public class ProxyPatternDemo {
+    public static void main(String[] args) {
+        Image image = new ProxyImage("test_image.jpg");
+        // Image will be loaded from disk
+        image.display();
+        // Image will not be loaded from disk, as it is already cached
+        image.display();
+      
+      // Output:
+      // Loading test_image.jpg
+      // Displaying test_image.jpg
+      // Displaying test_image.jpg
+    }
+}
+```
+
+**Summary**
+- Virtual Proxy: Delays object creation and initialization.
+- Remote Proxy: Interfaces with objects in different address spaces.
+- Protection Proxy: Manages access permissions to an object.
+- Caching Proxy: Stores results of expensive operations for reuse.
+- Smart Proxy: Adds extra functionality when accessing an object.
+
 
 ---
 

@@ -7,10 +7,10 @@ public class HelloWorld {
         innerThread.start();
 
         // Interrupt innerThread after waiting for 5 seconds
-        System.out.println("Main thread sleeping at " + +System.currentTimeMillis() / 1000);
+        System.out.println("com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main thread sleeping at " + +System.currentTimeMillis() / 1000);
         Thread.sleep(5000);
         innerThread.interrupt();
-        System.out.println("Main thread exiting at " + +System.currentTimeMillis() / 1000);
+        System.out.println("com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main thread exiting at " + +System.currentTimeMillis() / 1000);
     }
 
     static class ExecuteMe implements Runnable {

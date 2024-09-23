@@ -42,7 +42,7 @@ class UserController {
     }
 }
 
-// Main class to demonstrate MVC pattern
+// com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main class to demonstrate MVC pattern
 public class MVCExample {
     public static void main(String[] args) {
         // Create a User model

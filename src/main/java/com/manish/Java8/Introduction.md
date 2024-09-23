@@ -45,5 +45,8 @@ x -> x * x
     int sum = x + y;
     return sum;
 }
+
+//https://gainjavaknowledge.medium.com/java-8-coding-interview-questions-9a80792cd68a
+// https://medium.com/@harendrakumarrajpoot5/top-50-java-collections-interview-questions-you-need-to-know-e55fcdc8dbfb
 ```
 

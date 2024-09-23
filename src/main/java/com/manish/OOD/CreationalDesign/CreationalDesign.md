@@ -47,7 +47,7 @@ public class Singleton {
 To use the Singleton class, you can simply call the getInstance() method to get the single instance of the class, and then call any methods on that instance. Here's an example of how to use the Singleton class:
 
 ```Java
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
    public static void main(String[] args) {
 
       Singleton singleton = Singleton.getInstance();
@@ -185,14 +185,29 @@ There are three subtypes of the Factory Design Pattern:
 
 In summary, the Factory Design Pattern provides a way to create objects without exposing the creation logic to the client. It promotes loose coupling by decoupling the client from the concrete classes, making the code more flexible and easier to maintain.
 
+> **When to Use the Factory Method Pattern**
+> - **Object Creation Complexity:** When the creation of an object involves complex logic that cannot be handled by a simple constructor. The factory method provides a single place to manage that complexity.
+> - **Decoupling:** When you want to decouple the client code from the actual classes of the objects it needs to create. This makes the client code more flexible and easier to extend.
+> - **Configuration and Flexibility:** When the system needs to be configured with one of multiple products dynamically. The factory method allows you to change the type of the created objects at runtime.
+> - **Product Families:** When you work with a family of products that share a common interface but have different implementations. The factory method lets you create a product without specifying the exact class of the object that will be created.
+
+
+
 #### Simple Factory Design Pattern:
+
+**Key Concepts**
+- **Creator Class**: This class declares the factory method, which returns objects of a Product class.
+- **Concrete Creator Class**: Subclasses that override the factory method to change the class of objects that will be created.
+- **Product Interface**: An interface or abstract class that defines the type of object the factory method will return.
+- **Concrete Product Class**: Concrete implementations of the Product interface.
+
 
 let's take the example of a pizza ordering system to explain the Simple Factory design pattern.
 
 In a pizza ordering system, we have different types of pizzas such as cheese pizza, pepperoni pizza, and veggie pizza. The Simple Factory pattern can be used to create instances of these pizzas.
 
 ```Java
-Example 1:
+//Example 1:
 // Product: Pizza interface
 public interface Pizza {
     public void prepare();
@@ -807,7 +822,7 @@ public class Car {
 }
 
 // Example usage
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
    public static void main(String[] args) {
       CarFactory factory = new LuxuryCarFactory();
       Car luxuryCar = new Car(factory);
@@ -1017,6 +1032,13 @@ Finally, we define an Application class that takes a concrete factory as a param
 - In simpler words, imagine that you want to build a house. You can use different builders for different parts of the house, such as a plumber to handle the pipes and a carpenter to build the doors. However, you need someone to coordinate all of the builders to create the final house. The Builder pattern provides this coordination.
 - In software development, you might want to create an object that has many different attributes. Instead of having one constructor that takes all the attributes as arguments, the Builder pattern allows you to create a separate builder class that sets each attribute separately. This makes the object creation more flexible and easier to understand.
 
+## Key Components
+- **Builder**: This is an interface or an abstract class that defines the steps required to construct a product.
+- **Concrete Builders**: These are classes that implement the Builder interface and provide specific implementations for constructing the product.
+- **Product**: This is the complex object that is being constructed.
+- **Director (optional)**: This is an optional class that oversees the construction process and coordinates the builders to construct the final product.
+
+
 #### Example 1:
 ```java
 public class Car {
@@ -1100,13 +1122,21 @@ Suppose you are developing an e-commerce application that allows users to place 
 Using the Builder pattern, you can create a `OrderBuilder` class that allows you to set each of these parameters separately, and then construct the final Order object using the build() method. Here's an example of how this might look in Java:
 
 ```java
-public class Order {
-    private List<Product> products;
-    private Address billingAddress;
-    private Address shippingAddress;
-    private double discount;
-    private double tax;
 
+import java.util.ArrayList;
+import java.util.List;
+
+// Product Class: This is the complex object that is being constructed.
+// It contains various fields, such as products, billing address, shipping address, discount, and tax.
+public class Order {
+    private List<Product> products;         // List of products in the order
+    private Address billingAddress;         // Billing address for the order
+    private Address shippingAddress;        // Shipping address for the order
+    private double discount;                // Discount applied to the order
+    private double tax;                     // Tax applied to the order
+
+    // Private constructor for creating an Order object using the Builder.
+    // This enforces the use of the Builder to create an Order.
     private Order(List<Product> products, Address billingAddress, Address shippingAddress,
                   double discount, double tax) {
         this.products = products;
@@ -1116,8 +1146,29 @@ public class Order {
         this.tax = tax;
     }
 
-    // getters and setters
+    // Getters for accessing the private fields of the order.
+    public List<Product> getProducts() {
+        return products;
+    }
 
+    public Address getBillingAddress() {
+        return billingAddress;
+    }
+
+    public Address getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public double getTax() {
+        return tax;
+    }
+
+    // Builder Class: This nested static class helps to construct an Order object step by step.
+    // It has methods for setting each property of the Order.
     public static class OrderBuilder {
         private List<Product> products;
         private Address billingAddress;
@@ -1125,43 +1176,199 @@ public class Order {
         private double discount;
         private double tax;
 
+        // Constructor initializes default values for the order fields.
         public OrderBuilder() {
             products = new ArrayList<>();
             discount = 0.0;
             tax = 0.0;
         }
 
+        // Method to add a product to the order.
         public OrderBuilder addProduct(Product product) {
             products.add(product);
             return this;
         }
 
+        // Method to set the billing address for the order.
         public OrderBuilder setBillingAddress(Address billingAddress) {
             this.billingAddress = billingAddress;
             return this;
         }
 
+        // Method to set the shipping address for the order.
         public OrderBuilder setShippingAddress(Address shippingAddress) {
             this.shippingAddress = shippingAddress;
             return this;
         }
 
+        // Method to apply a discount to the order.
         public OrderBuilder setDiscount(double discount) {
             this.discount = discount;
             return this;
         }
 
+        // Method to apply tax to the order.
         public OrderBuilder setTax(double tax) {
             this.tax = tax;
             return this;
         }
 
+        // Method to build the final Order object after all steps have been performed.
         public Order build() {
             return new Order(products, billingAddress, shippingAddress, discount, tax);
         }
     }
 }
+
+// Product Class: Represents the items being added to the order.
+// Each product has a name and price.
+public class Product {
+    private String name;
+    private double price;
+
+    // Constructor to initialize a product with its name and price.
+    public Product(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    // Getters and setters for accessing and modifying product properties.
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                '}';
+    }
+}
+
+// Address Class: Represents the address details such as street, city, state, and zip code.
+// This is used for both billing and shipping addresses in the order.
+public class Address {
+
+    private String street;
+    private String city;
+    private String state;
+    private String zipCode;
+
+    // Constructor to initialize an address with its details.
+    public Address(String street, String city, String state, String zipCode) {
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+    }
+
+    // Getters and setters for accessing and modifying the address properties.
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                '}';
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Create some products for the order.
+        Product product1 = new Product("Laptop", 1500.0);
+        Product product2 = new Product("Phone", 800.0);
+
+        // Create billing and shipping addresses for the order.
+        Address billingAddress = new Address("123 Main St", "New York", "NY", "10001");
+        Address shippingAddress = new Address("456 Elm St", "Los Angeles", "CA", "90001");
+
+        // Use the OrderBuilder to create an order by adding products and setting other details.
+        Order order = new Order.OrderBuilder()
+                .addProduct(product1)                          // Add first product
+                .addProduct(product2)                          // Add second product
+                .setBillingAddress(billingAddress)             // Set billing address
+                .setShippingAddress(shippingAddress)           // Set shipping address
+                .setDiscount(10.0)                             // Set discount
+                .setTax(5.0)                                   // Set tax
+                .build();                                      // Build the final order
+
+        // Print the order details to the console.
+        System.out.println("Order created with products: " + order.getProducts());
+        System.out.println("Billing Address: " + order.getBillingAddress());
+        System.out.println("Shipping Address: " + order.getShippingAddress());
+        System.out.println("Discount: " + order.getDiscount());
+        System.out.println("Tax: " + order.getTax());
+    }
+}
+
 ```
+### Key Components:
+
+**1. Product Class:**
+- Represents individual products with a name and price that are added to an order.
+
+**2. Address Class:**
+- Represents a customer's billing or shipping address with attributes like street, city, state, and zip code.
+
+**3. Order Class (Product):**
+- The complex object being constructed with fields for products, addresses, discount, and tax. It is immutable after construction since the constructor is private and only accessible via the `OrderBuilder`.
+
+**4. OrderBuilder Class (Builder):**
+- This class provides methods to add products, set addresses, and apply discounts/taxes. The `build()` method returns the final `Order` object.
+
+**5. Main Class (Driver):**
+- Demonstrates how to use the `OrderBuilder` to create an order by adding products, setting addresses, and applying discounts. Finally, it prints the order details.
+
+**6. Director (Optional):**
+- In this example, the director class is not explicitly used, but you could introduce a `SalesDirector` or similar class to manage the building of different types of orders.
+
 
 In this example, the Order class represents the object that we want to create. We have a separate Order.OrderBuilder class that sets each attribute of the Order object separately, and then constructs the final Order object using the Order.OrderBuilder.build() method.
 Here's an example of how we can use the Builder pattern to create an Order object:
@@ -1170,7 +1377,7 @@ Here's an example of how we can use the Builder pattern to create an Order objec
 Order order = new Order.OrderBuilder()
     .addProduct(new Product("iPhone", 999.99))
     .addProduct(new Product("MacBook", 1999.99))
-    .setBillingAddress(new Address("John Doe", "123 Main St", "Anytown", "CA", "12345"))
+    .setBillingAddress(new Address("John Doe", "123 com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main St", "Anytown", "CA", "12345"))
     .setShippingAddress(new Address("Jane Doe", "456 Elm St", "Anytown", "CA", "12345"))
     .setDiscount(100.0)
     .setTax(89.0)
@@ -1179,6 +1386,193 @@ Order order = new Order.OrderBuilder()
 
 In this example, we create an `OrderBuilder` object and use the `addProduct()`, `setBillingAddress()`, `setShippingAddress()`, `setDiscount()` and `setTax()` methods to set each attribute of the `Order` object separately. Finally, we call the `build()` method to create the final `Order` object.
 Using the Builder pattern in this way makes it easy to create complex objects with many optional parameters. It also makes the code more readable and easier to understand, because each parameter is set separately using a descriptive method name.
+
+### Example 3:
+
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+// Product Class
+public class Pizza {
+    private String dough;
+    private String sauce;
+    private List<String> toppings;
+
+    public Pizza() {
+        this.toppings = new ArrayList<>();
+    }
+
+    public void setDough(String dough) {
+        this.dough = dough;
+    }
+
+    public void setSauce(String sauce) {
+        this.sauce = sauce;
+    }
+
+    public void addTopping(String topping) {
+        this.toppings.add(topping);
+    }
+
+    // Getters for outputting pizza details
+    public String getDough() {
+        return dough;
+    }
+
+    public String getSauce() {
+        return sauce;
+    }
+
+    public List<String> getToppings() {
+        return toppings;
+    }
+}
+
+// Builder Interface
+interface PizzaBuilder {
+    void buildDough();
+    void buildSauce();
+    void buildToppings();
+    Pizza getPizza();
+}
+
+// Concrete Builder for Hawaiian Pizza
+class HawaiianPizzaBuilder implements PizzaBuilder {
+    private Pizza pizza;
+
+    public HawaiianPizzaBuilder() {
+        this.pizza = new Pizza();
+    }
+
+    @Override
+    public void buildDough() {
+        pizza.setDough("Pan crust");
+    }
+
+    @Override
+    public void buildSauce() {
+        pizza.setSauce("Tomato sauce");
+    }
+
+    @Override
+    public void buildToppings() {
+        pizza.addTopping("Ham");
+        pizza.addTopping("Pineapple");
+    }
+
+    @Override
+    public Pizza getPizza() {
+        return pizza;
+    }
+}
+
+// Concrete Builder for Spicy Pizza (Example of another pizza type)
+class SpicyPizzaBuilder implements PizzaBuilder {
+    private Pizza pizza;
+
+    public SpicyPizzaBuilder() {
+        this.pizza = new Pizza();
+    }
+
+    @Override
+    public void buildDough() {
+        pizza.setDough("Thin crust");
+    }
+
+    @Override
+    public void buildSauce() {
+        pizza.setSauce("Hot sauce");
+    }
+
+    @Override
+    public void buildToppings() {
+        pizza.addTopping("Pepperoni");
+        pizza.addTopping("Chili peppers");
+    }
+
+    @Override
+    public Pizza getPizza() {
+        return pizza;
+    }
+}
+
+// Director (Optional, manages the building process)
+class Chef {
+    private PizzaBuilder pizzaBuilder;
+
+    public void setPizzaBuilder(PizzaBuilder pizzaBuilder) {
+        this.pizzaBuilder = pizzaBuilder;
+    }
+
+    public Pizza getPizza() {
+        return pizzaBuilder.getPizza();
+    }
+
+    public void constructPizza() {
+        pizzaBuilder.buildDough();
+        pizzaBuilder.buildSauce();
+        pizzaBuilder.buildToppings();
+    }
+}
+
+// Driver Class
+public class Main {
+    public static void main(String[] args) {
+        // Create a director
+        Chef chef = new Chef();
+
+        // Create a specific builder (e.g., Hawaiian Pizza)
+        PizzaBuilder hawaiianPizzaBuilder = new HawaiianPizzaBuilder();
+
+        // Set the builder for the director
+        chef.setPizzaBuilder(hawaiianPizzaBuilder);
+
+        // Construct the pizza
+        chef.constructPizza();
+
+        // Get the constructed pizza
+        Pizza hawaiianPizza = chef.getPizza();
+
+        // Output details of the Hawaiian pizza
+        System.out.println("Hawaiian Pizza Details:");
+        System.out.println("Dough: " + hawaiianPizza.getDough()); // Dough: Pan crust
+        System.out.println("Sauce: " + hawaiianPizza.getSauce()); // Sauce: Tomato sauce
+        System.out.println("Toppings: " + hawaiianPizza.getToppings()); // Toppings: [Ham, Pineapple]
+
+        // Example of building another pizza (Spicy Pizza)
+        PizzaBuilder spicyPizzaBuilder = new SpicyPizzaBuilder();
+        chef.setPizzaBuilder(spicyPizzaBuilder);
+        chef.constructPizza();
+        Pizza spicyPizza = chef.getPizza();
+
+        // Output details of the Spicy pizza
+        System.out.println("\nSpicy Pizza Details:");
+        System.out.println("Dough: " + spicyPizza.getDough()); // Dough: Thin crust
+        System.out.println("Sauce: " + spicyPizza.getSauce()); // Sauce: Hot sauce
+        System.out.println("Toppings: " + spicyPizza.getToppings()); // Toppings: [Pepperoni, Chili peppers]
+    }
+}
+
+```
+### Key Points:
+**1. Pizza Class:**
+- A simple product class representing a pizza. It has fields for dough, sauce, and toppings with setters and getters for manipulating and accessing its state.
+
+**2. PizzaBuilder Interface:**
+- Defines the steps for building a pizza (i.e., `buildDough`, `buildSauce`, `buildToppings` and `getPizza`).
+
+**3. Concrete Builders:**
+- `HawaiianPizzaBuilder`: Implements the `PizzaBuilder` interface to create a Hawaiian pizza with specific dough, sauce, and toppings.
+- `SpicyPizzaBuilder`: Another example of a concrete builder for building a spicy pizza.
+
+**4. Chef Class (Director):**
+- The `Chef` class acts as a director that guides the building process. It uses a `PizzaBuilder` to construct pizzas by following the steps defined in the builder.
+
+**5. Main Class:**
+- Demonstrates how to use the builder pattern to construct different types of pizzas by setting specific builders (e.g., Hawaiian or Spicy), using the director to assemble them, and then retrieving and printing the pizza details.
+
+This approach ensures flexibility, as you can easily create different types of pizzas by implementing new concrete builders without modifying the core logic.
 
 #### Commonly used in scenarios:
 
@@ -1286,7 +1680,7 @@ public class Person {
 public static void main(String[] args) {
     Person person1 = new Person.Builder("John")
                         .age(30)
-                        .address("123 Main St")
+                        .address("123 com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main St")
                         .build();
     Person person2 = new Person.Builder("Mary")
                         .weight(60)
@@ -1555,11 +1949,11 @@ public class AddressBuilder {
    }
 }
 
-// Main.java
-public class Main {
+// com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main.java
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
    public static void main(String[] args) {
        Address address = new AddressBuilder()
-                           .setStreet("123 Main St")
+                           .setStreet("123 com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main St")
                            .setCity("Anytown")
                            .build();
 
@@ -1964,7 +2358,7 @@ public class DocumentManager {
    }
 }
 
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
    public static void main(String[] args) throws CloneNotSupportedException {
       DocumentManager documentManager = new DocumentManager();
       documentManager.addPrototype("memo", new Document());
@@ -1982,7 +2376,7 @@ public class Main {
 }
 ```
 
-In this example, the Document class is the abstract prototype that defines the interface for creating new documents. The Letter and Report classes are concrete prototypes that extend the Document class and provide their own implementation of the getText() method. The DocumentManager class is responsible for managing the prototypes and creating new documents based on existing prototypes. The Main class demonstrates how the application can create new Letter and Report objects by cloning the corresponding prototypes and modifying the recipient and author fields as needed.
+In this example, the Document class is the abstract prototype that defines the interface for creating new documents. The Letter and Report classes are concrete prototypes that extend the Document class and provide their own implementation of the getText() method. The DocumentManager class is responsible for managing the prototypes and creating new documents based on existing prototypes. The com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main class demonstrates how the application can create new Letter and Report objects by cloning the corresponding prototypes and modifying the recipient and author fields as needed.
 
 ### Registry Design Pattern:
 
@@ -2038,7 +2432,7 @@ private static Map<String, Employee> registry = new HashMap<>();
 
 }
 
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
 public static void main(String[] args) {
 Employee employee1 = new Employee("John Doe", 30, "Sales");
 Employee employee2 = new Employee("Jane Smith", 25, "Marketing");
@@ -2064,7 +2458,7 @@ Employee employee2 = new Employee("Jane Smith", 25, "Marketing");
 
 In this example, we have an Employee class that represents an employee with a name, age, and department. We also have an EmployeeRegistry class that acts as a registry of employees. It maintains a Map of employee IDs to Employee objects, and provides methods to add, retrieve, and remove employees from the registry.
 
-In the Main class, we create two Employee objects and add them to the registry using their IDs. We then retrieve the employees from the registry using their IDs and print out their details. We also remove one of the employees from the registry and attempt to retrieve it again to demonstrate that it has been removed.
+In the Pizza.Main class, we create two Employee objects and add them to the registry using their IDs. We then retrieve the employees from the registry using their IDs and print out their details. We also remove one of the employees from the registry and attempt to retrieve it again to demonstrate that it has been removed.
 
 This example demonstrates how the Registry pattern can be used to maintain a central registry of objects that can be shared and reused across the system.
 
@@ -2108,3 +2502,258 @@ private static final Map<Integer, Patient> registry = new HashMap<>();
 ```
 
 In this example, the PatientRegistry class acts as a centralized registry for all Patient objects in the system. The registry is implemented as a Map that maps patient IDs to patient objects. The registry provides several methods for adding, retrieving, and updating patient objects in the registry. Other classes in the system can use the registry to perform operations on patient objects without having to manage the objects themselves.
+
+
+## Prototype pattern
+- The Prototype pattern is a creational design pattern that allows you to create new objects `based on an existing instance` (prototype) through `cloning`. 
+- `Instead of creating new instances` using constructors, the Prototype pattern involves creating new objects by `copying an existing object`, known as the prototype.
+
+### Key Concepts
+- **Prototype Interface**: This interface declares a method for cloning itself. It can be an abstract class or interface.
+- **Concrete Prototype**: This is the class that implements the Prototype interface and provides the cloning functionality.
+- **Client**: The client is responsible for creating new objects by cloning the prototype.
+
+#### Example 1: 
+```java
+// Prototype Interface
+public interface Shape extends Cloneable {
+    Shape clone();
+    void draw();
+}
+
+// Concrete Prototype
+public class Circle implements Shape {
+    @Override
+    public Shape clone() {
+        return new Circle();
+    }
+
+    @Override
+    public void draw() {
+        System.out.println("Drawing a circle");
+    }
+}
+
+public class Rectangle implements Shape {
+    @Override
+    public Shape clone() {
+        return new Rectangle();
+    }
+
+    @Override
+    public void draw() {
+        System.out.println("Drawing a rectangle");
+    }
+}
+
+
+// Client Code
+public class Client {
+    public static void main(String[] args) {
+        Shape circlePrototype = new Circle();
+        Shape rectanglePrototype = new Rectangle();
+
+        // Create new shapes by cloning the prototypes
+        Shape clonedCircle = circlePrototype.clone();
+        Shape clonedRectangle = rectanglePrototype.clone();
+
+        // Draw the cloned shapes
+        clonedCircle.draw(); // Drawing a Circle
+        clonedRectangle.draw(); // Drawing a Rectangle
+    }
+}
+```
+
+### Advantages of the Prototype Pattern
+- **Reduced Subclassing**: The Prototype pattern allows you to create new objects by cloning an existing prototype, reducing the need for subclassing.
+- **Flexibility**: It provides a way to create new objects with varying configurations or states without compromising their common interface.
+- **Performance**: Cloning objects can be more efficient than creating new instances using constructors, especially for complex objects.
+- **Encapsulation**: Clients can create new objects without needing to know their concrete classes, promoting encapsulation.
+
+### Drawbacks
+- **Deep Copy Complexity**: If the prototype contains references to other objects, you need to implement deep copy logic to clone those objects recursively.
+- **Cloning Restrictions**: Not all objects in Java are cloneable. If a class does not implement the Cloneable interface, cloning will result in a CloneNotSupportedException.
+
+#### Example 2: 
+An example of the prototype pattern is creating an online quiz platform where there are different types of quizzes with different question sets, and each quiz type can have multiple instances with different sets of questions. In this scenario, instead of creating each quiz instance from scratch, we can create a prototype object for each quiz type with the default set of questions. When a new instance of a quiz is required, we can clone the prototype object and modify it with the required set of questions.
+
+
+```java
+public interface Quiz extends Cloneable {
+    public Quiz clone() throws CloneNotSupportedException;
+    public void setQuestions(String[] questions);
+    public void startQuiz();
+}
+
+public class ScienceQuiz implements Quiz {
+    private String[] questions;
+
+    public ScienceQuiz() {
+        // default set of questions for Science quiz
+        this.questions = new String[] {"What is the largest planet in our solar system?",
+                "What is the smallest planet in our solar system?",
+                "What is the most abundant gas in Earth's atmosphere?"};
+    }
+
+    public Quiz clone() throws CloneNotSupportedException {
+        ScienceQuiz cloned = new ScienceQuiz();
+        cloned.setQuestions(this.questions.clone());
+        return cloned;
+    }
+
+    public void setQuestions(String[] questions) {
+        this.questions = questions;
+    }
+
+    public void startQuiz() {
+        System.out.println("Starting Science Quiz with questions:");
+        for (String question : this.questions) {
+            System.out.println(question);
+        }
+    }
+}
+
+public class QuizApp {
+    public static void main(String[] args) throws CloneNotSupportedException {
+        // create a prototype Science quiz object
+        Quiz scienceQuizPrototype = new ScienceQuiz();
+
+        // create a new Science quiz instance by cloning the prototype object
+        Quiz scienceQuizInstance1 = scienceQuizPrototype.clone();
+        scienceQuizInstance1.setQuestions(new String[] {"What is the speed of light?",
+                "What is the smallest particle in an element?",
+                "What is the equation for gravitational force?"});
+        scienceQuizInstance1.startQuiz();
+
+        // create another Science quiz instance by cloning the prototype object
+        Quiz scienceQuizInstance2 = scienceQuizPrototype.clone();
+        scienceQuizInstance2.setQuestions(new String[] {"What is the unit of electric charge?",
+                "What is the boiling point of water?",
+                "What is the process of converting solid directly to gas?"});
+        scienceQuizInstance2.startQuiz();
+    }
+}
+```
+
+- In this example, the Quiz interface defines the clone, setQuestions, and startQuiz methods that are implemented by the ScienceQuiz class. The ScienceQuiz class implements the clone method to create a new instance of the ScienceQuiz object and set the questions based on the current object's questions. The startQuiz method displays the questions on the console.
+
+- The QuizApp class creates a prototype object of the ScienceQuiz class and then creates two new instances of the Science quiz by cloning the prototype object and setting the questions. The output of the program shows the questions for each quiz instance.
+
+
+
+#### Example 3: 
+```java
+// Prototype Interface: This abstract class declares the method for cloning itself.
+public abstract class Document implements Cloneable {  
+   private String text;
+
+   public String getText() {
+      return text;
+   }
+
+   public void setText(String text) {
+      this.text = text;
+   }
+
+   @Override
+   public Object clone() throws CloneNotSupportedException {
+      return super.clone();
+   }
+}
+
+// Concrete Prototype: This is a concrete class extending Document, which can be cloned.
+public class Letter extends Document {  
+   private String recipient;
+
+   public String getRecipient() {
+      return recipient;
+   }
+
+   public void setRecipient(String recipient) {
+      this.recipient = recipient;
+   }
+
+   // Adding an author field to use in the clone process.
+   public void setAuthor(String author) {
+      // Implement author handling logic for letter
+   }
+}
+
+// Concrete Prototype: Another concrete class that implements cloning.
+public class Report extends Document {  
+   private String author;
+
+   public String getAuthor() {
+      return author;
+   }
+
+   public void setAuthor(String author) {
+      this.author = author;
+   }
+}
+
+// Client: Manages prototypes and uses the clone method to create copies of them.
+public class DocumentManager {  
+   private Map<String, Document> prototypes = new HashMap<>();
+
+   public DocumentManager() {
+      // Preloading prototype objects
+      Letter letter = new Letter();
+      letter.setText("Dear [recipient],\n\nSincerely,\n[author]");
+      prototypes.put("letter", letter);
+
+      Report report = new Report();
+      report.setText("This is a report written by [author]");
+      prototypes.put("report", report);
+   }
+
+   // Adding a prototype
+   public void addPrototype(String key, Document prototype) {
+      prototypes.put(key, prototype);
+   }
+
+   // Removing a prototype
+   public void removePrototype(String key) {
+      prototypes.remove(key);
+   }
+
+   // Cloning the prototype object
+   public Document clone(String key) throws CloneNotSupportedException {
+      return (Document) prototypes.get(key).clone();
+   }
+}
+
+// Client: Demonstrates cloning the prototypes and using the cloned objects.
+public class Main {  
+   public static void main(String[] args) throws CloneNotSupportedException {
+      DocumentManager documentManager = new DocumentManager();
+      documentManager.addPrototype("memo", new Document());  // Adding an abstract prototype (not useful in this case)
+
+      // Cloning a letter prototype and setting specific details
+      Document letter = documentManager.clone("letter");
+      ((Letter) letter).setRecipient("John Doe");
+      ((Letter) letter).setAuthor("Jane Smith");
+
+      // Cloning a report prototype and setting specific details
+      Document report = documentManager.clone("report");
+      ((Report) report).setAuthor("Bob Johnson");
+
+      // Displaying the cloned documents' texts
+      System.out.println(letter.getText());
+      System.out.println(report.getText());
+   }
+}
+
+```
+
+### Breakdown of Tagged Roles:
+**1. Prototype Interface:**
+- Document (abstract class) — Defines the clone() method for cloning itself.
+
+**2. Concrete Prototype:**
+- Letter — A concrete implementation of Document that supports cloning.
+- Report — Another concrete implementation of Document that supports cloning.
+
+**3. Client:**
+- DocumentManager — Manages prototypes and handles cloning requests.
+- Main — Demonstrates the creation of new objects by cloning the prototypes.

@@ -44,7 +44,7 @@ class ProxyImage implements Image {
     }
 }
 
-// Main class to test the Proxy pattern
+// com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main class to test the Proxy pattern
 public class ProxyPatternExample {
     public static void main(String[] args) {
         Image image = new ProxyImage("test_10mb.jpg"); // Output: Loading test_10mb.jpg

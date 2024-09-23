@@ -55,7 +55,7 @@ public class DatabaseConnection {
 /*
 //When an application needs to connect to a database, it's often useful to use a Singleton to ensure that there is only one connection to the database throughout the application's lifetime.
 
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
     public static void main(String[] args) {
         DatabaseConnection dbConnection = DatabaseConnection.getInstance();
         Connection connection = dbConnection.getConnection();

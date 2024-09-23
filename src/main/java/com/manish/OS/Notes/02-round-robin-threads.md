@@ -246,7 +246,7 @@ class NumberPrinter implements Runnable {
 ```
 
 ```java
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
     public static void main(String[] args) {
         NumberPrinter numberPrinter = new NumberPrinter();
         Thread thread = new Thread(numberPrinter);
@@ -275,7 +275,7 @@ class NumberPrinter implements Runnable {
 ```
 
 ```java
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
     public static void main(String[] args) {
         for (int i = 1; i <= 10; i++) {
             NumberPrinter numberPrinter = new NumberPrinter(i);

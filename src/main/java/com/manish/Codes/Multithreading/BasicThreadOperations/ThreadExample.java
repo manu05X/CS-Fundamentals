@@ -11,7 +11,7 @@ class MyThread extends Thread {
     }
 }
 
-// Main class to test MyThread
+// com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main class to test MyThread
 public class ThreadExample {
     public static void main(String[] args) {
         // Create an instance of MyThread

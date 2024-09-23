@@ -1,6 +1,6 @@
 package com.manish.OOD.StructuralDesign.AdapterPattern.GoogleCalendar;
 
-// Main class to demonstrate the adapter pattern
+// com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main class to demonstrate the adapter pattern
 public class Main {
     public static void main(String[] args) {
         // Google Calendar example

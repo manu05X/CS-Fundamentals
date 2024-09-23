@@ -54,7 +54,7 @@ class RedShapeDecorator2 extends ShapeDecorator {
     }
 }
 
-// Main class to test the Decorator pattern
+// com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main class to test the Decorator pattern
 public class DecoratorPatternExample {
     public static void main(String[] args) {
         Shape2 circle = new Circle2();

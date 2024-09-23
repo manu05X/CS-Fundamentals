@@ -486,9 +486,9 @@ public class Subtracter implements Runnable{
     }
 }
 ```
-**Main.java**
+**com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main.java**
 ```java
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
     public static void main(String[] args) throws InterruptedException {
 
         InventorCounter ic = new InventorCounter();
@@ -534,9 +534,9 @@ public class SharedResource {
 }
 ```
 
-**Main.java**
+**com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main.java**
 ```java
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
     public static void main(String[] args) {
         SharedResource sharedResource = new SharedResource();
         System.out.println("Shared Resource Created, Flag Value " + sharedResource.getFlag());

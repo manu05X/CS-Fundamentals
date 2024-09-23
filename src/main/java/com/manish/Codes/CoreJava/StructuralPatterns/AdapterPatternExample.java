@@ -58,7 +58,7 @@ class AudioPlayer implements MediaPlayer {
     }
 }
 
-// Main class to test the Adapter pattern
+// com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main class to test the Adapter pattern
 public class AdapterPatternExample {
     public static void main(String[] args) {
         AudioPlayer audioPlayer = new AudioPlayer();

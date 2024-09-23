@@ -1,6 +1,6 @@
 package com.manish.OOD.StructuralDesign.AdapterPattern.Database;
 
-// Main class to demonstrate usage
+// com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main class to demonstrate usage
 public class Main {
     public static void main(String[] args) {
         // Create an instance of the legacy database implementation

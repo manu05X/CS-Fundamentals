@@ -1,6 +1,6 @@
 package com.manish.OOD.CreationalDesign.FactoryDesign.FactoryMethod.Character;
 
-// Main class to test the factory method pattern
+// com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main class to test the factory method pattern
 public class Game {
     public static void main(String[] args) {
         // Creating factories for different character types

@@ -57,7 +57,7 @@ class UserDAOImpl implements UserDAO {
     }
 }
 
-// Main class to demonstrate DAO pattern
+// com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main class to demonstrate DAO pattern
 public class DAOExample {
     public static void main(String[] args) {
         // Example usage of DAO pattern

@@ -11,7 +11,7 @@ class MyRunnable implements Runnable {
     }
 }
 
-// Main class to test MyRunnable
+// com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main class to test MyRunnable
 public class RunnableExample {
     public static void main(String[] args) {
         // Create an instance of MyRunnable

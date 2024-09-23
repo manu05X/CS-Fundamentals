@@ -165,7 +165,7 @@
 ### 21. Implement a generic method in Java that counts the number of occurrences of a specific element in an array.
 
 ```java
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
     public static <T> int countOccurrences(T[] array, T element) {
         int count = 0;
         for (T e : array) {
@@ -227,7 +227,7 @@ public class Pair<LEFT, RIGHT> {
 ### 23. Write a Java program that uses reflection to create an instance of a class dynamically and invokes one of its methods.
 
 ```java
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
     public static void main(String[] args) throws Exception {
         Class<?> clazz = Class.forName("java.util.Date");
         Object object = clazz.getDeclaredConstructor().newInstance();
@@ -259,7 +259,7 @@ class Test {
 ### 25. Write Java code to create a generic method that swaps two elements in an array.
 
 ```java
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
    public static <T> void swap(T[] array, int i, int j) {
       T temp = array[i];
       array[i] = array[j];
@@ -319,7 +319,7 @@ public class Person {
 
 ```java
 
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
     public static void main(String[] args) throws Exception {
         Class<?> clazz = Class.forName("java.util.Date");
         Method[] methods = clazz.getDeclaredMethods();
@@ -332,6 +332,12 @@ public class Main {
     }
 }
 ```
+
+---
+
+String Interview Q&A in Java : https://medium.com/@harendrakumarrajpoot5/string-interview-q-a-in-java-08b1f8e7199c
+OOPS : https://medium.com/@harendrakumarrajpoot5/java-oop-cheat-sheet-a-quick-guide-to-object-oriented-programming-in-java-c1a2cc864bfb
+Spring Boot : https://medium.com/@harendrakumarrajpoot5/interview-16-qa-on-spring-boot-0627dd976c21
 
 ---
 

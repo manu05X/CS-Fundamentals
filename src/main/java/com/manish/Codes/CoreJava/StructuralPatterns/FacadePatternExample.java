@@ -53,7 +53,7 @@ class Square implements Shape3 {
     }
 }
 
-// Main class to test the Facade pattern
+// com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main class to test the Facade pattern
 public class FacadePatternExample {
     public static void main(String[] args) {
         ShapeMaker shapeMaker = new ShapeMaker();

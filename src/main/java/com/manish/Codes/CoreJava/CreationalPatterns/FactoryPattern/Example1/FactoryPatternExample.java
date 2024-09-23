@@ -1,6 +1,6 @@
 package com.manish.Codes.CoreJava.CreationalPatterns.FactoryPattern.Example1;
 
-// Main class to test the Factory pattern
+// com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main class to test the Factory pattern
 public class FactoryPatternExample {
     public static void main(String[] args) {
         ShapeFactory shapeFactory = new ShapeFactory();

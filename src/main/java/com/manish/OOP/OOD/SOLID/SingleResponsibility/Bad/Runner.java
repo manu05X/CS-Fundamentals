@@ -62,7 +62,7 @@ class Invoice {
     }
 }
 
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
     public static void main(String[] args) {
         Book book = new Book("The Java Programming Language", "James Gosling", 2022, 49.99);
         Invoice invoice = new Invoice(book, 2, 0.1, 0.05);
@@ -126,7 +126,7 @@ class Invoice {
     }
 }
 
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
     public static void main(String[] args) {
         Book book = new Book("The Java Programming Language", "James Gosling", 2022, 49.99);
         Invoice invoice = new Invoice(book, 2, 0.1, 0.05);

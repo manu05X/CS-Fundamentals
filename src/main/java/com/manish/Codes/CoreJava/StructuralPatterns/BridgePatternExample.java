@@ -49,7 +49,7 @@ class Circle extends Shape {
     }
 }
 
-// Main class to test the Bridge pattern
+// com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main class to test the Bridge pattern
 public class BridgePatternExample {
     public static void main(String[] args) {
         Shape redCircle = new Circle(100, 100, 10, new RedCircle());

@@ -293,9 +293,9 @@ public class Consumer implements Runnable{
 }
 ```
 
-**Main.java**
+**com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main.java**
 ```java
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
     public static void main(String[] args) {
         //Shared Object
         Queue<Object> q = new ConcurrentLinkedQueue<>();

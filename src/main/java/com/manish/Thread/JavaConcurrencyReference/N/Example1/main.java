@@ -4,7 +4,7 @@ import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
 /**
- * Main thread that demonstrates how to use CyclicBarrier.
+ * com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main thread that demonstrates how to use CyclicBarrier.
  */
 public class main {
     public static void main (String args[]) {

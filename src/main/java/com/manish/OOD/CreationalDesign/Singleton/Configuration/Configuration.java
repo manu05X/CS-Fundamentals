@@ -47,7 +47,7 @@ public class Configuration {
 
 /*
 //In many applications, there is a need for a single source of configuration information that can be accessed from various parts of the application. A Singleton can be used to store this configuration data.
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
     public static void main(String[] args) {
         Configuration config = Configuration.getInstance();
 

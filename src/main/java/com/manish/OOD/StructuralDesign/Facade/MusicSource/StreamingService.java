@@ -1,17 +1,17 @@
 package com.manish.OOD.StructuralDesign.Facade.MusicSource;
 
 class StreamingService implements MusicSource {
-    @Override
+    // Plays streaming music
     public void play() {
         System.out.println("Playing streaming music...");
     }
 
-    @Override
+    // Pauses streaming music
     public void pause() {
         System.out.println("Pausing streaming music...");
     }
 
-    @Override
+    // Stops streaming music
     public void stop() {
         System.out.println("Stopping streaming music...");
     }

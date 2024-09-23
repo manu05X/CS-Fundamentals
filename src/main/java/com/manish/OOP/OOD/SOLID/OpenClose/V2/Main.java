@@ -29,7 +29,7 @@ The Cone class represents a cone with dimensions radius and height. It has a cal
 
 The BoxVolumeCalculator class is modified to handle a list of objects (shapes) where each shape can be either a Box or a Cone. The calculateTotalVolume() method checks the type of each shape and calculates its volume accordingly.
 
-The Main class demonstrates creating instances of both Box and Cone, adding them to the calculator, and calculating the total volume.
+The com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main class demonstrates creating instances of both Box and Cone, adding them to the calculator, and calculating the total volume.
 
 This design allows you to easily add more shapes in the future without modifying the existing classes. It adheres to the Open/Closed Principle, allowing the system to be open for extension and closed for modification.
 * */

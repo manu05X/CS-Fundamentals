@@ -1,5 +1,7 @@
 package com.manish.OOD.CreationalDesign.BuilderDesign.Example2;
 
+// Address Class: Represents the address details such as street, city, state, and zip code.
+// This is used for both billing and shipping addresses in the order.
 public class Address {
 
     private String street;
@@ -7,6 +9,7 @@ public class Address {
     private String state;
     private String zipCode;
 
+    // Constructor to initialize an address with its details.
     public Address(String street, String city, String state, String zipCode) {
         this.street = street;
         this.city = city;
@@ -14,7 +17,7 @@ public class Address {
         this.zipCode = zipCode;
     }
 
-    // getters and setters
+    // Getters and setters for accessing and modifying the address properties.
     public String getStreet() {
         return street;
     }
@@ -57,4 +60,3 @@ public class Address {
                 '}';
     }
 }
-

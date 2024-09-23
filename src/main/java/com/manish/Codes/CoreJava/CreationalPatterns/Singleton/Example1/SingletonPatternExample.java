@@ -1,6 +1,6 @@
 package com.manish.Codes.CoreJava.CreationalPatterns.Singleton.Example1;
 
-// Main class to test the Singleton pattern
+// com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main class to test the Singleton pattern
 public class SingletonPatternExample {
     public static void main(String[] args) {
         // Get the only object available

@@ -66,7 +66,7 @@ class CompanyDirectory implements Employee {
     }
 }
 
-// Main class to test the Composite pattern
+// com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main class to test the Composite pattern
 public class CompositePatternExample {
     public static void main(String[] args) {
         Developer dev1 = new Developer(100, "John Doe", "Pro Developer");

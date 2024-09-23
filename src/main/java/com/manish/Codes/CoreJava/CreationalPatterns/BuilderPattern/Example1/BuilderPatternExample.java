@@ -1,6 +1,6 @@
 package com.manish.Codes.CoreJava.CreationalPatterns.BuilderPattern.Example1;
 
-// Main class to test the Builder pattern
+// com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main class to test the Builder pattern
 public class BuilderPatternExample {
     public static void main(String[] args) {
         // Create a Computer object using the Builder

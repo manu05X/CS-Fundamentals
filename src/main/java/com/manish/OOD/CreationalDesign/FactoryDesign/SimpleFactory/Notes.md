@@ -20,6 +20,157 @@ The Simple Factory Pattern encapsulates the object creation logic within a singl
    Uses the factory class to create the product by passing parameters.
 
 ### Examples
+
+**Pizza Store and Pizza Factory Analogy**
+- **Step 1: Ordering the Pizza**
+   - You walk into a Pizza Store and place an order for the type of pizza you want, such as cheese or pepperoni.
+   - In the code, this is represented by calling pizzaStore.orderPizza("cheese"); where the customer orders a "cheese" pizza.
+
+- **Step 2: Waiter Takes the Order to the Kitchen (Factory)**
+  - After taking your order, the waiter passes the order to the Pizza Factory (which acts as the kitchen), where pizzas are actually prepared.
+  - This is represented in the code by creating an instance of PizzaStore with the PizzaFactory inside: PizzaStore(pizzaFactory);.
+
+- **Step 3: Chef Checks the Order Type** 
+  - In the kitchen, the chef checks which type of pizza was ordered (cheese, pepperoni, or veggie). The chef ensures the requested pizza is available and can be made.
+  - In the code, this happens when the factory checks if (type.equals("cheese")) to match the pizza type.
+  
+- **Step 4: Pizza is Prepared in the Kitchen (Factory)**
+  - Once the chef confirms the type of pizza, the pizza is prepared in the oven. The specific type of pizza (CheesePizza, PepperoniPizza, VeggiePizza) is created based on your order.
+  - This corresponds to the code where the factory creates the appropriate pizza object: pizza = new CheesePizza();.
+
+- **Step 5: Waiter Receives the Pizza from the Kitchen** 
+  - After the pizza is prepared, it is handed over to the waiter, who will take it to your table.
+  - In the code, this is the moment when the PizzaFactory returns the pizza object to the PizzaStore: return pizza;.
+
+- **Step 6: Pizza is Served to the Customer** 
+  - Finally, the waiter brings your pizza to the table, and you can enjoy your meal.
+
+- This corresponds to the code where the PizzaStore returns the final pizza to the main method, and the pizza’s preparation, baking, cutting, and boxing are displayed as output on the command line.
+
+```java
+// Product: Pizza interface
+public interface Pizza {
+    public void prepare();
+    public void bake();
+    public void cut();
+    public void box();
+}
+
+// Concrete Product: CheesePizza class
+public class CheesePizza implements Pizza {
+    @Override
+    public void prepare() {
+        System.out.println("Preparing cheese pizza");
+    }
+
+    @Override
+    public void bake() {
+        System.out.println("Baking cheese pizza");
+    }
+
+    @Override
+    public void cut() {
+        System.out.println("Cutting cheese pizza");
+    }
+
+    @Override
+    public void box() {
+        System.out.println("Boxing cheese pizza");
+    }
+}
+
+// Concrete Product: PepperoniPizza class
+public class PepperoniPizza implements Pizza {
+    @Override
+    public void prepare() {
+        System.out.println("Preparing pepperoni pizza");
+    }
+
+    @Override
+    public void bake() {
+        System.out.println("Baking pepperoni pizza");
+    }
+
+    @Override
+    public void cut() {
+        System.out.println("Cutting pepperoni pizza");
+    }
+
+    @Override
+    public void box() {
+        System.out.println("Boxing pepperoni pizza");
+    }
+}
+
+// Concrete Product: VeggiePizza class
+public class VeggiePizza implements Pizza {
+    @Override
+    public void prepare() {
+        System.out.println("Preparing veggie pizza");
+    }
+
+    @Override
+    public void bake() {
+        System.out.println("Baking veggie pizza");
+    }
+
+    @Override
+    public void cut() {
+        System.out.println("Cutting veggie pizza");
+    }
+
+    @Override
+    public void box() {
+        System.out.println("Boxing veggie pizza");
+    }
+}
+
+// Simple Factory: PizzaFactory class
+public class PizzaFactory {
+    public Pizza createPizza(String type) {
+        Pizza pizza = null;
+        if (type.equals("cheese")) {
+            pizza = new CheesePizza();
+        } else if (type.equals("pepperoni")) {
+            pizza = new PepperoniPizza();
+        } else if (type.equals("veggie")) {
+            pizza = new VeggiePizza();
+        }
+        return pizza;
+    }
+}
+
+// Client: PizzaStore class
+public class PizzaStore {
+    PizzaFactory pizzaFactory;
+
+    public PizzaStore(PizzaFactory pizzaFactory) {
+        this.pizzaFactory = pizzaFactory;
+    }
+
+    public Pizza orderPizza(String type) {
+        Pizza pizza = pizzaFactory.createPizza(type);
+        pizza.prepare();
+        pizza.bake();
+        pizza.cut();
+        pizza.box();
+        return pizza;
+    }
+
+    public static void main(String[] args) {
+        PizzaFactory pizzaFactory = new PizzaFactory();
+        PizzaStore pizzaStore = new PizzaStore(pizzaFactory);
+
+        pizzaStore.orderPizza("cheese");
+        pizzaStore.orderPizza("pepperoni");
+        pizzaStore.orderPizza("veggie");
+    }
+}
+```
+
+
+
+
 #### Structure:
 
 1. **Product Interface (`Vehicle`):**

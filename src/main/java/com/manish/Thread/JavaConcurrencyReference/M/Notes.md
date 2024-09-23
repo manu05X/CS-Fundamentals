@@ -76,7 +76,7 @@ public class Master extends Thread
 /**
  * The main thread that executes both the threads in a particular order
  */
-public class Main
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main
 {
     public static void main(String[] args) throws InterruptedException
     {

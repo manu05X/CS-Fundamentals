@@ -8,9 +8,129 @@ Behavioral design patterns address common issues related to object interaction a
 
 ### 1. Observer Pattern
 
-- Defines a one-to-many dependency between objects.
-- When one object (subject) changes its state, all dependents (observers) are notified and updated automatically.
+- Defines a `one-to-many` dependency **between objects**.
+- When one object (subject) **changes its state**, all dependents (observers) are **notified and updated automatically**.
 - **Use case:** UI frameworks where multiple elements need to react to changes in one part of the system (e.g., event listeners in GUIs).
+
+**Key Concepts**
+1. **Subject**: The object that holds the state and is monitored by observers. It provides methods to attach, detach, and notify observers.
+2. **Observer**: The objects that are notified when the subject's state changes. They implement an update method to handle updates from the subject.
+
+
+**Implementation Steps in Java**
+
+1. **Define the Subject Interface**: This interface includes methods for attaching, detaching, and notifying observers.
+2. **Implement the Subject**: Create a concrete class that maintains a list of observers and implements the subject interface.
+3. **Define the Observer Interface**: This interface declares the update method that will be called when the subject's state changes.
+4. **Implement the Observers**: Create concrete observer classes that implement the observer interface and define the update method.
+
+
+Example
+
+Here is a simple example demonstrating the Observer pattern in Java:
+
+Step 1: Define the Subject Interface
+
+```java
+// Step 1: Define the Subject Interface
+import java.util.ArrayList;
+import java.util.List;
+
+interface Subject {
+    void attach(Observer o);
+    void detach(Observer o);
+    void notifyObservers();
+}
+
+// Step 2: Implement the Subject
+class ConcreteSubject implements Subject {
+  private List<Observer> observers = new ArrayList<>();
+  private String state;
+
+  public String getState() {
+    return state;
+  }
+
+  public void setState(String state) {
+    this.state = state;
+    notifyObservers();
+  }
+
+  @Override
+  public void attach(Observer o) {
+    observers.add(o);
+  }
+
+  @Override
+  public void detach(Observer o) {
+    observers.remove(o);
+  }
+
+  @Override
+  public void notifyObservers() {
+    for (Observer o : observers) {
+      o.update();
+    }
+  }
+}
+// Step 3: Define the Observer Interface
+interface Observer {
+  void update();
+}
+// Step 4: Implement the Observers
+class ConcreteObserver implements Observer {
+  private String name;
+  private ConcreteSubject subject;
+
+  public ConcreteObserver(String name, ConcreteSubject subject) {
+    this.name = name;
+    this.subject = subject;
+    this.subject.attach(this);
+  }
+
+  @Override
+  public void update() {
+    System.out.println("Observer " + name + " notified. New state is: " + subject.getState());
+  }
+}
+// Step 5: Client Code to Demonstrate the Observer Pattern
+public class ObserverPatternDemo {
+  public static void main(String[] args) {
+    ConcreteSubject subject = new ConcreteSubject();
+
+    ConcreteObserver observer1 = new ConcreteObserver("Observer 1", subject);
+    ConcreteObserver observer2 = new ConcreteObserver("Observer 2", subject);
+
+    subject.setState("State 1");
+    subject.setState("State 2");
+
+    subject.detach(observer1);
+
+    subject.setState("State 3");
+
+    // Output:
+    // Observer Observer 1 notified. New state is: State 1
+    // Observer Observer 2 notified. New state is: State 1
+    // Observer Observer 1 notified. New state is: State 2
+    // Observer Observer 2 notified. New state is: State 2
+    // Observer Observer 2 notified. New state is: State 3
+  }
+}
+```
+
+**Explanation**
+
+1. Subject Interface: Subject interface declares methods for attaching, detaching, and notifying observers.
+
+2. ConcreteSubject Class: This class implements Subject and maintains a list of observers. It updates the observers whenever its state changes.
+
+3. Observer Interface: Observer interface declares the update method that observers must implement.
+
+4. ConcreteObserver Class: This class implements Observer and defines the update method to perform actions when notified by the subject.
+
+5. Client Code: Demonstrates creating a subject and multiple observers, changing the subject's state, and observing the notification process.
+
+---
 
 ### 2. Strategy Pattern
 
@@ -153,7 +273,7 @@ public class ShoppingCart {
         return context.calculateShippingCost(totalPrice);
     }
 }
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
     public static void main(String[] args) {
         // Create some products
         Product product1 = new Product("Product 1", 10.0);
@@ -246,7 +366,7 @@ public class GoogleMaps {
 }
 
 //Here's how you can use these classes to calculate the best route on Google Maps using different settings:
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
     public static void main(String[] args) {
         // Create a Google Maps instance with the default calculator (fastest route)
         GoogleMaps maps = new GoogleMaps(new FastestRouteCalculator());
@@ -274,7 +394,7 @@ public class Main {
 }
 ```
 
-#### EExample 3:
+#### Example 3:
 
 Let's say we have a mobile application that needs to send push notifications to its users. The application needs to support multiple platforms such as iOS, Android, and Windows. Each platform has its own way of sending push notifications. We can use the Strategy Pattern to implement this functionality.
 
@@ -346,7 +466,7 @@ public class MobileApp {
 }
 
 // Here's how you can use these classes to send push notifications to users on different platforms:
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
     public static void main(String[] args) {
         // Create a mobile app instance with the default push notification strategy (iOS)
         MobileApp app = new MobileApp(new IOSPushNotificationStrategy());

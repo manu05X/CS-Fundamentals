@@ -2,7 +2,7 @@ package com.manish.Thread.Practice.Example2;
 
 import com.manish.Thread.Practice.Example1.MyThread;
 
-//public class Main {
+//public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
 //    public static void main(String[] args) {
 //        //create instance of MyRunnable
 //        MyRunnable myRunnable = new MyRunnable();

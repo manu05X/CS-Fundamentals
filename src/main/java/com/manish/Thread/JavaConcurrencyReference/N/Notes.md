@@ -38,9 +38,9 @@ class Task implements Runnable {
 
 
 /**
- * Main thread that demonstrates how to use CyclicBarrier.
+ * com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main thread that demonstrates how to use CyclicBarrier.
  */
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
     public static void main (String args[]) {
 
         //Creating CyclicBarrier with 3 parties i.e. 3 Threads needs to call await()

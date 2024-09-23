@@ -1,15 +1,18 @@
 package com.manish.OOD.CreationalDesign.BuilderDesign.Example2;
 
+// Product Class: Represents the items being added to the order.
+// Each product has a name and price.
 public class Product {
     private String name;
     private double price;
 
+    // Constructor to initialize a product with its name and price.
     public Product(String name, double price) {
         this.name = name;
         this.price = price;
     }
 
-    // getters and setters
+    // Getters and setters for accessing and modifying product properties.
     public String getName() {
         return name;
     }
@@ -34,4 +37,3 @@ public class Product {
                 '}';
     }
 }
-

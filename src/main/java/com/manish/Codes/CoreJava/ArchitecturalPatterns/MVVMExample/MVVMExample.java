@@ -3,7 +3,7 @@ package com.manish.Codes.CoreJava.ArchitecturalPatterns.MVVMExample;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-// Main class to demonstrate MVVM pattern
+// com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main class to demonstrate MVVM pattern
 public class MVVMExample {
     public static void main(String[] args) {
         // Create a UserModel

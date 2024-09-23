@@ -54,7 +54,7 @@ class ShapeFactory {
     }
 }
 
-// Main class to test the Flyweight pattern
+// com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main class to test the Flyweight pattern
 public class FlyweightPatternExample {
     private static final String colors[] = {"Red", "Green", "Blue", "White", "Black"};
 

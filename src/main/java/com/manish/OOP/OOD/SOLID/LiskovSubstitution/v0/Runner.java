@@ -16,7 +16,7 @@ public class Runner {
 
 
 /*
-// Example usage in Main class
+// Example usage in com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main class
 public class Runner {
     public static void main(String[] args) {
         // Creating a generic Vehicle
@@ -49,5 +49,5 @@ The Vehicle class has attributes such as brand, model, year, and speed, along wi
 
 The Car class is a subclass of Vehicle and has an additional attribute numberOfDoors. It inherits the attributes and methods from the Vehicle class and can have its own specific attributes and methods.
 
-The Main class demonstrates creating instances of both the generic Vehicle class and the specific Car class and performing operations such as accelerating and braking.
+The com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main class demonstrates creating instances of both the generic Vehicle class and the specific Car class and performing operations such as accelerating and braking.
 */

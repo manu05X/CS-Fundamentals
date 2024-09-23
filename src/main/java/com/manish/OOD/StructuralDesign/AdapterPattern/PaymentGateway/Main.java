@@ -1,6 +1,6 @@
 package com.manish.OOD.StructuralDesign.AdapterPattern.PaymentGateway;
 
-// Main class to demonstrate the Adapter Pattern
+// com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main class to demonstrate the Adapter Pattern
 public class Main {
     public static void main(String[] args) {
         // Using PayPal through its adapter

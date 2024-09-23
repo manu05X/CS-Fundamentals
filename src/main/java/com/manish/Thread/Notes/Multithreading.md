@@ -32,7 +32,7 @@ class MyThread extends Thread {
     }
 }
 
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
     public static void main(String[] args) {
         // Create an instance of MyThread
         MyThread myThread = new MyThread();
@@ -52,7 +52,7 @@ class MyRunnable implements Runnable {
     }
 }
 
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
     public static void main(String[] args) {
         // Create an instance of MyRunnable
         MyRunnable myRunnable = new MyRunnable();
@@ -239,7 +239,7 @@ class RunnableImpl implements Runnable {
 
 public void run()
 {
-	System.out.println("Hello World from a different thread than Main");
+	System.out.println("Hello World from a different thread than com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main");
 }
 }
 public class RunnableExample{
@@ -769,7 +769,7 @@ public class ThreadLocalExample {
 ```
 #### Example1:
 ```java
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
     public static void main(String[] args) {
 
         // Creating a ThreadLocal instance to hold userId for each thread
@@ -842,7 +842,7 @@ public class Main {
 -  The InheritableThreadLocal allows the child threads to inherit values from their parent threads.
 
 ```java
-public class Main {
+public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
     public static void main(String[] args) {
 
         // Creating a ThreadLocal instance to hold userId for each thread
