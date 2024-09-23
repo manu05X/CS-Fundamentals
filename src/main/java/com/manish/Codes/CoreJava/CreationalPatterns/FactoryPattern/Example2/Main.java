@@ -14,6 +14,18 @@ public class Main {
 
 
 /*
+1> Pizza Store         2> Pizza Factory (Kitchen)
+
+Way to order a pizza.
+1> We go to store and order the pizza of desire type . [ pizzaStore.orderPizza("cheese");]
+2> The waiter will take the order and go to kitchen i.e to chef.[PizzaStore(pizzaFactory);]
+3> Chef will check if the type matches with the availability type . [if (type.equals("cheese"))]
+4> Now if match is correct it is created in the oven. [created in the constructor of concrete class[CheesePizza] i.e  pizza = new CheesePizza();]
+5> This is return to waiter. [return pizza form factory class to store]
+6> The waiter will bring the order to your table. [return pizza form store to main and i.e output on cli]
+
+
+
 Summary:
 Creator Class: PizzaFactory
 Concrete Creator Class: PizzaStore
