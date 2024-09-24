@@ -3,7 +3,7 @@ package com.manish.OOD.BehavioralDesign.Observer.DBMS;
 import java.util.ArrayList;
 import java.util.List;
 
-// Class representing the database
+//2. Class representing the database
 public class Database {
     private List<DatabaseRecordObserver> observers = new ArrayList<>();
 

@@ -1,6 +1,6 @@
 package com.manish.OOD.BehavioralDesign.Observer.DBMS;
 
-// Class representing a database record
+//1. Class representing a database record
 public class DatabaseRecord {
     private int id;
     private String name;

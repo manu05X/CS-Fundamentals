@@ -1,6 +1,6 @@
 package com.manish.OOD.BehavioralDesign.Observer.DBMS;
 
-// Observer that sends notifications when a record is updated
+//4. Observer that sends notifications when a record is updated
 public class UserNotifier implements DatabaseRecordObserver {
     @Override
     public void onRecordUpdated(DatabaseRecord record) {
