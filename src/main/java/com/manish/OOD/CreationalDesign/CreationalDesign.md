@@ -856,7 +856,7 @@ public class Car {
 }
 
 // Example usage
-public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
+public class Main {
    public static void main(String[] args) {
       CarFactory factory = new LuxuryCarFactory();
       Car luxuryCar = new Car(factory);
