@@ -1,5 +1,10 @@
 Collections
 ---
+
+![img_1.png](img_1.png)
+
+
+
 ### What are the differences between Collection and Collections in Java?
 In Java, Collection and Collections are often confused due to their similar names, but they serve different purposes and have distinct functionalities:
 
