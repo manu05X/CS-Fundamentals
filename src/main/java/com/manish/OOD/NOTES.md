@@ -5,6 +5,8 @@ Design patterns are reusable solutions to common software development problems. 
 ![img_1.png](images/img_1.png)
 
 
+![img_1.png](img_1.png)
+
 ## How to approach a design problem:
 
 ## Overview: (1-2mins)
@@ -60,6 +62,10 @@ A few questions: repeat the same as above.
 
 
 6. The model represents entities/data that are used to store in DB via repository.
+
+
+link : https://blog.bytebytego.com/p/ep17-design-patterns-cheat-sheet
+
 
 
 
