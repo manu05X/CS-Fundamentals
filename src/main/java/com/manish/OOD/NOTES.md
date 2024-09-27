@@ -6,6 +6,7 @@ Design patterns are reusable solutions to common software development problems. 
 
 
 ![img_1.png](img_1.png)
+![img_2.png](img_2.png)
 
 ## How to approach a design problem:
 
