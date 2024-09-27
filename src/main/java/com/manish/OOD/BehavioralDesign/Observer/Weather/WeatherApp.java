@@ -14,6 +14,7 @@ public class WeatherApp {
         // Simulating weather change
         weatherStation.setWeather("Sunny");
 
+        weatherStation.setWeather("Rainfall");
         // Output:
         // Phone Display: Weather updated - Sunny
         // TV Display: Weather updated - Sunny
