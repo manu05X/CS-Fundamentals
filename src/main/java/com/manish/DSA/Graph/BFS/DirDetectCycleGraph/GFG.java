@@ -4,6 +4,10 @@ import java.util.*;
 import java.lang.*;
 import java.io.*;
 
+/*
+Cycle Detection in Directed Graph using Kahn's Algorithm
+ */
+
 class GFG {
     public static void main(String[] args) throws IOException {
         BufferedReader br =

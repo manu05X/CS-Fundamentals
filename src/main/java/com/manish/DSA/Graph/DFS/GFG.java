@@ -22,38 +22,35 @@ class GFG {
                 adj.get(u).add(v);
                 adj.get(v).add(u);
             }
-            Solution obj = new Solution();
-            ArrayList<Integer> ans = obj.dfsOfGraph(V, adj);
+
+            ArrayList<Integer> ans = new ArrayList<>();
+            ans = dfsOfGraph(V, adj);
             for (int i = 0; i < ans.size(); i++)
                 System.out.print(ans.get(i) + " ");
             System.out.println();
         }
     }
-}
-// } Driver Code Ends
 
+    private static ArrayList<Integer> dfsOfGraph(int V, ArrayList<ArrayList<Integer>> adj){
+        ArrayList<Integer> ans = new ArrayList<>();
+        boolean[] visited = new boolean[V];
 
-class Solution {
-    // Function to return a list containing the DFS traversal of the graph.
-    public ArrayList<Integer> dfsOfGraph(int V, ArrayList<ArrayList<Integer>> adj) {
-        // Code here
-        ArrayList<Integer> dfsStore = new ArrayList<>();
-        boolean vis[] = new boolean[V + 1];
-        
         for(int i = 0; i < V; i++){
-            if(vis[i] == false){
-                dfs(i, vis, adj, dfsStore);
+            if(visited[i] == false){
+                dfsTraversal(i,visited,adj, ans);
             }
         }
-        return dfsStore;
+        return ans;
     }
-    public void dfs(int node, boolean vis[], ArrayList<ArrayList<Integer>> adj, ArrayList<Integer> dfsStore){
-        dfsStore.add(node);
-        vis[node] = true;
-        
-        for(Integer i : adj.get(node)){
-            if(vis[i] == false){
-                dfs(i, vis, adj, dfsStore);
+
+    private static void dfsTraversal(int currVertex, boolean[] vis, ArrayList<ArrayList<Integer>> adj, ArrayList<Integer> ans){
+        ans.add(currVertex);
+        vis[currVertex] = true;
+
+        // traversing the neighbour
+        for(Integer u : adj.get(currVertex)){
+            if(vis[u] == false){
+                dfsTraversal(u,vis,adj,ans);
             }
         }
     }
