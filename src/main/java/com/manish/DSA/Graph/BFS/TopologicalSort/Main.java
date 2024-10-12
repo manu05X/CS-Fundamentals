@@ -1,4 +1,4 @@
-package com.manish.DSA.Graph.Basic.TopologicalSort;// { Driver Code Starts
+package com.manish.DSA.Graph.BFS.TopologicalSort;// { Driver Code Starts
 import java.util.*;
 import java.io.*;
 import java.lang.*;

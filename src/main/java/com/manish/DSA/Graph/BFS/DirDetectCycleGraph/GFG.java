@@ -41,37 +41,36 @@ class GFG {
 
 
 class Solution {
-    // Function to check if the directed graph has a cycle using BFS (Kahn's Algorithm)
+    // Function to detect cycle in a directed graph.
     public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
-        int[] inDegree = new int[V]; // Array to store in-degrees of all vertices
+        // code here
+        int[] inDegree = new int[V];  // To store in-degree of each vertex
 
-        // Calculate in-degrees of all vertices
+        // Step 1: Calculate in-degree for each vertex
         for (int i = 0; i < V; i++) {
             for (int neighbor : adj.get(i)) {
                 inDegree[neighbor]++;
             }
         }
 
-        // Queue for vertices with in-degree 0
+        // Step 2: Initialize the queue with all vertices having in-degree 0
         Queue<Integer> queue = new LinkedList<>();
-        
-        // Enqueue all vertices with in-degree 0
         for (int i = 0; i < V; i++) {
             if (inDegree[i] == 0) {
                 queue.add(i);
             }
         }
 
-        int visitedCount = 0; // Count of vertices processed in the topological sort
-
-        // Process the vertices in topological order
+        // Count of vertices processed in the topological sort
+        int index = 0;
+        // Step 3: Process vertices
         while (!queue.isEmpty()) {
-            int vertex = queue.poll();
-            visitedCount++;
-
-            // Decrease the in-degree of all adjacent vertices
-            for (int neighbor : adj.get(vertex)) {
+            int curr = queue.poll();  // Get the front element from the queue
+            index++;
+            // Step 4: Decrease in-degree of all neighbors
+            for (int neighbor : adj.get(curr)) {
                 inDegree[neighbor]--;
+
                 // If in-degree becomes 0, add it to the queue
                 if (inDegree[neighbor] == 0) {
                     queue.add(neighbor);
@@ -79,8 +78,11 @@ class Solution {
             }
         }
 
-        // If the visited count doesn't match the number of vertices, there is a cycle
-        return visitedCount != V;
+        // Step 5: Check if there was a cycle
+        if(index == V)
+            return false;
+        else
+            return true; // cycle in graph if index != V
     }
 }
 
