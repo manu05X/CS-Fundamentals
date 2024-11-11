@@ -4,7 +4,7 @@ public class Dog extends Animal {
     Dog() {
     }
 
-    public void displayInfo() {
+    public void display() {
         super.displayInfo();
         System.out.println("I am a dog.");
     }
