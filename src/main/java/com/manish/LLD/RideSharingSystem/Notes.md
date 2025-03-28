@@ -107,85 +107,86 @@ Application should allow user onboarding.
 ```mermaid
 classDiagram
     class User {
-        -String userId
-        -String name
-        -String gender
-        -int age
-        -String email
-        -String phone
-        -List~Vehicle~ vehicles
-        -int ridesOffered
-        -int ridesTaken
-        +addVehicle()
-        +incrementRidesOffered()
-        +incrementRidesTaken()
+        - String userId
+        - String name
+        - String gender
+        - int age
+        - String email
+        - String phone
+        - List<Vehicle> vehicles
+        - int ridesOffered
+        - int ridesTaken
+        + addVehicle()
+        + incrementRidesOffered()
+        + incrementRidesTaken()
     }
 
     class Vehicle {
-        -String vehicleId
-        -String ownerId
-        -String make
-        -String model
-        -String licensePlate
-        -String color
-        -int capacity
+        - String vehicleId
+        - String ownerId
+        - String make
+        - String model
+        - String licensePlate
+        - String color
+        - int capacity
     }
 
     class Ride {
-        -String rideId
-        -String driverId
-        -String vehicleId
-        -String source
-        -String destination
-        -int availableSeats
-        -Date startTime
-        -Date endTime
-        -RideStatus status
-        -List~RideBooking~ bookings
-        +bookRide()
-        +endRide()
+        - String rideId
+        - String driverId
+        - String vehicleId
+        - String source
+        - String destination
+        - int availableSeats
+        - Date startTime
+        - Date endTime
+        - RideStatus status
+        - List<RideBooking> bookings
+        + bookRide()
+        + endRide()
     }
 
     class RideBooking {
-        -String bookingId
-        -String rideId
-        -String passengerId
-        -int seatsBooked
-        -Date bookingTime
+        - String bookingId
+        - String rideId
+        - String passengerId
+        - int seatsBooked
+        - Date bookingTime
     }
 
     class RideManager {
-        -Map~String, User~ users
-        -Map~String, Vehicle~ vehicles
-        -Map~String, Ride~ rides
-        -Map~String, List~RideBooking~~ rideBookings
-        +addUser()
-        +addVehicle()
-        +offerRide()
-        +selectRide()
-        +endRide()
-        +printRideStats()
+        - Map<String, User> users
+        - Map<String, Vehicle> vehicles
+        - Map<String, Ride> rides
+        - Map<String, List<RideBooking>> rideBookings
+        + addUser()
+        + addVehicle()
+        + offerRide()
+        + selectRide()
+        + endRide()
+        + printRideStats()
     }
 
-    interface RideSelectionStrategy {
-        <<interface>>
-        +selectRide(List~Ride~, String preferredVehicle)
+    class RideSelectionStrategy {
+        + selectRide(List<Ride>, String preferredVehicle)
     }
 
     class PreferredVehicleStrategy {
-        +selectRide(List~Ride~, String preferredVehicle)
+        + selectRide(List<Ride>, String preferredVehicle)
     }
 
     class MostVacantStrategy {
-        +selectRide(List~Ride~, String preferredVehicle)
+        + selectRide(List<Ride>, String preferredVehicle)
     }
 
-    enum RideStatus {
+    class RideStatus {
+        <<enumeration>>
         ACTIVE
         COMPLETED
     }
 
-    enum SelectionStrategy {
+    class SelectionStrategy {
+        <<enumeration>>
         PREFERRED_VEHICLE
         MOST_VACANT
     }
@@ -202,6 +203,7 @@ classDiagram
     RideSelectionStrategy <|-- MostVacantStrategy
     RideManager --> RideSelectionStrategy : uses
     Ride --> RideStatus : has
+
 ```
 
 ### Database Schema
