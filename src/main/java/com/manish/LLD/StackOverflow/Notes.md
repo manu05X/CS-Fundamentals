@@ -367,3 +367,41 @@ In the provided LLD (Low-Level Design), the Database class uses Java Collections
 3. Large Datasets that can't fit in memory 
 4. Advanced Querying (JOINs, aggregation)
 5. Production Environment
+---
+### What is a Facade?
+A Facade is a design pattern that provides a simplified interface to a complex subsystem (a set of classes, libraries, or APIs). 
+It:
+1. Hides complexity – Clients interact with a single interface instead of managing multiple components.
+- Instead of forcing clients to:
+  - Manually store posts in a `List<Post>`
+  - Track tags in a `Map<Integer, List<Tag>>`
+  - Manage votes in a `List<Vote>`
+2. Hides Low-Level Data Structures
+   - Clients don’t need to know about:
+   ```
+    private List<Post> posts;  
+    private Map<Integer, List<Tag>> questionTags;  
+   ```
+   - They interact with high-level methods like addAnswer() or getPopularTags().
+3. Centralizes Access
+   - All data operations (CRUD, search, voting) go through Database, making it the single entry point for persistence logic.
+
+4. Mimics a Real Database’s Role
+- Even though it uses in-memory collections, it behaves like a database abstraction layer, similar to:
+  - Spring’s JpaRepository 
+  - ORMs like Hibernate
+
+5. Decouples code – Changes in the subsystem don’t affect client code. 
+6. Organizes workflows – Coordinates interactions between subsystems behind the scenes.
+---
+
+### When to Replace the Facade
+- If the system grows, you might:
+  - Split it into smaller facades (e.g., `PostStore`, `UserManager`). 
+  - Use real databases (e.g., replace `List<Post>` with `JpaRepository<Post, Long>`).
+---
+
+### The Database facade:
+- ✅ Reduces complexity for clients. 
+- ✅ Decouples business logic from storage details.
+- ✅ Mimics real-world database abstractions.
