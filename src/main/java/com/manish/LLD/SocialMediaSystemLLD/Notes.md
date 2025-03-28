@@ -1148,3 +1148,138 @@ sequenceDiagram
         API Gateway-->>UserDevice: New posts
     end
 ```
+
+# **System Design Deep Dive**
+
+## **Data Modeling & Storage**
+### **1. Optimizing Schema for Time-Range Queries**
+- Redesign the post schema to support efficient time-based filtering while maintaining geospatial indexing.
+- **Strategy:** Use a **compound index** on `(timestamp, location)` for efficient queries like “show posts from last hour within 5km.”
+
+### **2. Database Choice for Friend Graph**
+- Evaluate **Neo4j vs. SQL vs. Cassandra** for storing and querying friend connections.
+- **Approach:** Use **Neo4j** for fast **3-hop queries**, while SQL suits transactional consistency and Cassandra scales reads.
+
+### **3. Indexing Multimedia Posts with Location Metadata**
+- Efficiently store and query videos/images with location tags at scale.
+- **Solution:** Use **Cloud Storage + NoSQL DB** with metadata indexing and **CDN caching** for quick retrieval.
+
+---
+
+## **Real-Time Systems**
+### **1. WebSocket Protocol for Mobile Clients**
+- Minimize battery usage while maintaining **<3s feed update latency**.
+- **Optimization:** Adaptive WebSocket keep-alive with **event-driven push updates**.
+
+### **2. Read-After-Write Consistency for Global Users**
+- Ensure posts appear instantly to users after creation.
+- **Tradeoffs:** Use **quorum reads** for consistency vs. **eventual consistency with timeline ordering**.
+
+### **3. Handling Conflicting Location Updates**
+- Address cases where two devices send simultaneous updates for the same user.
+- **Solution:** Use **Vector Clocks or CRDTs** to resolve conflicts without data loss.
+
+---
+
+## **Scaling Challenges**
+### **1. Dynamic Repartitioning for Hot Geographies**
+- Handle cases where certain areas (e.g., Manhattan) become **10x hotter**.
+- **Solution:** **Shard rebalancing** with **dynamic geo-hashing**.
+
+### **2. Managing "Morning Rush Hour" Traffic**
+- 80% of users update locations within a **30-minute window**.
+- **Mitigation:** Predictive scaling with **auto-scaling event-based triggers**.
+
+### **3. Preventing Spam from Rogue Users**
+- A user accidentally sending **1000 location updates/sec**.
+- **Approach:** **Rate-limiting + anomaly detection** at edge servers.
+
+---
+
+## **Caching Strategies**
+### **1. Cache Invalidation for Frequent Location Updates**
+- Prevent **thundering herd** problems due to location changes.
+- **Solution:** Use **Bloom Filters + Probabilistic Expiry**.
+
+### **2. Predictive Caching for Frequent Travelers**
+- Optimize caching for users who cross the same **5km boundary daily**.
+- **Strategy:** **Pre-caching nearby regions** based on movement history.
+
+---
+
+## **Failure Handling**
+### **1. Recovering from Geospatial Index Corruption**
+- What happens if the **index fails during peak traffic?**
+- **Solution:** Switch to **degraded mode** with **last-known locations**.
+
+### **2. Database Recovery from Complete Failure**
+- **Minimal user impact** if the post database is lost.
+- **Approach:** **Multi-region backups + Event replay system**.
+
+---
+
+## **Advanced Distributed Systems**
+### **1. Leaderless Replication for Location Updates**
+- Ensure availability despite **regional outages**.
+- **Solution:** **CRDT-based replication** for **conflict-free updates**.
+
+### **2. Blue/Green Deployment of Location Pipeline**
+- Deploy location services **without data loss**.
+- **Technique:** **Dual-write system** + **dark traffic validation**.
+
+---
+
+## **Mobile-Specific Challenges**
+### **1. Handling Feed Updates in Background Mode**
+- Ensure updates reach **dozing mobile devices**.
+- **Solution:** **WorkManager / Background Fetch** optimizations.
+
+### **2. Syncing Feed State After 24-Hour Offline Period**
+- Efficiently restore data after a **long offline period**.
+- **Approach:** **Differential Sync Markers** to fetch only changed data.
+
+---
+
+## **Analytics & Monitoring**
+### **1. Tracking "Posts Viewed per km²" in Real-Time**
+- Monitor engagement **without overloading the system**.
+- **Optimization:** **Approximate streaming algorithms**.
+
+### **2. Detecting "Location Spoofing Hotspots"**
+- Prevent **fraudulent location manipulation**.
+- **Detection:** Use **velocity clustering anomalies**.
+
+---
+
+## **Privacy & Compliance**
+### **1. GDPR Right-to-Be-Forgotten for Location Data**
+- How to **delete user data while keeping feed integrity**?
+- **Solution:** **Cryptographic erasure** instead of physical deletion.
+
+---
+
+## **Bonus Architecture Questions**
+### **1. Real-Time Visibility of Posts in Moving Vehicles**
+- Users at **100km/h** should see nearby posts in real-time.
+- **Solution:** **Doppler effect compensation with S2 Geometry**.
+
+### **2. Supporting IoT Location Updates (1km Accuracy)**
+- Handle IoT devices with **less precise location tracking**.
+- **Approach:** **Multi-precision spatial indexing**.
+
+### **3. Ephemeral Posts that Disappear Beyond 5km**
+- Implement location-bound posts that auto-expire.
+- **Solution:** **Geofence-triggered expiration policies**.
+
+---
+
+## **Best Practices for System Design**
+- **Quantify tradeoffs:** ("Increases write latency by 20ms but reduces storage by 40%")
+- **Use modern technologies:** ("We'd use **S2 Geometry** instead of **Geohash**")
+- **Plan for failures:** ("If this fails, we'd trigger the **fallback path**...")
+- **Ensure security:** ("Maintaining **zero-trust architecture** by...")
+
+---
+
+
+
