@@ -855,6 +855,464 @@ stateDiagram-v2
     user --> content: userPosts
     content --> user: notifyAction
 ```
+---
+
+```java
+import java.util.*;
+import java.time.*;
+
+// Enums
+enum FriendRequestStatus {
+    PENDING, ACCEPTED, REJECTED
+}
+
+enum PrivacySetting {
+    PUBLIC, FRIENDS, PRIVACY_LIST
+}
+
+enum NotificationType {
+    FRIEND_REQUEST, MESSAGE, COMMENT, LIKE, SHARE
+}
+
+enum GroupRole {
+    MEMBER, ADMIN
+}
+
+// Classes
+class Member {
+    private String memberId;
+    private String email;
+    private String passwordHash;
+    private LocalDateTime dateJoined;
+    private LocalDateTime lastLogin;
+    private boolean isActive;
+    private Profile profile;
+    
+    // Constructor, getters, setters
+}
+
+class Profile {
+    private String profileId;
+    private Member member;
+    private String firstName;
+    private String lastName;
+    private String headline;
+    private String summary;
+    private String profilePictureUrl;
+    private String location;
+    private List<WorkExperience> workExperiences;
+    private List<Education> educations;
+    
+    // Constructor, getters, setters
+}
+
+class WorkExperience {
+    private String workExperienceId;
+    private Profile profile;
+    private String companyName;
+    private String position;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private String description;
+    private boolean isCurrent;
+    
+    // Constructor, getters, setters
+}
+
+class Education {
+    private String educationId;
+    private Profile profile;
+    private String institution;
+    private String degree;
+    private String fieldOfStudy;
+    private int startYear;
+    private int endYear;
+    
+    // Constructor, getters, setters
+}
+
+class FriendRequest {
+    private String requestId;
+    private Member sender;
+    private Member receiver;
+    private FriendRequestStatus status;
+    private LocalDateTime createdAt;
+    
+    // Constructor, getters, setters
+}
+
+class Connection {
+    private String connectionId;
+    private Member member1;
+    private Member member2;
+    private LocalDateTime createdAt;
+    
+    // Constructor, getters, setters
+}
+
+class Follow {
+    private String followId;
+    private Member follower;
+    private Member following;
+    private LocalDateTime createdAt;
+    
+    // Constructor, getters, setters
+}
+
+class Group {
+    private String groupId;
+    private Member creator;
+    private String name;
+    private String description;
+    private LocalDateTime createdAt;
+    private List<GroupMember> members;
+    
+    // Constructor, getters, setters
+}
+
+class GroupMember {
+    private String groupMemberId;
+    private Group group;
+    private Member member;
+    private LocalDateTime joinedAt;
+    private GroupRole role;
+    
+    // Constructor, getters, setters
+}
+
+class Page {
+    private String pageId;
+    private Member creator;
+    private String name;
+    private String description;
+    private LocalDateTime createdAt;
+    private List<PageFollower> followers;
+    private List<Recommendation> recommendations;
+    
+    // Constructor, getters, setters
+}
+
+class PageFollower {
+    private String pageFollowerId;
+    private Page page;
+    private Member member;
+    private LocalDateTime followedAt;
+    
+    // Constructor, getters, setters
+}
+
+class Post {
+    private String postId;
+    private Member author;
+    private String content;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private PrivacySetting privacySetting;
+    private List<Comment> comments;
+    private List<Like> likes;
+    private List<Share> shares;
+    private List<PrivacyList> privacyLists;
+    
+    // Constructor, getters, setters
+}
+
+class PrivacyList {
+    private String privacyListId;
+    private Member creator;
+    private String name;
+    private LocalDateTime createdAt;
+    private List<Member> members;
+    
+    // Constructor, getters, setters
+}
+
+class Comment {
+    private String commentId;
+    private Post post;
+    private Member author;
+    private String content;
+    private LocalDateTime createdAt;
+    private Comment parentComment;
+    private List<Like> likes;
+    private List<Comment> replies;
+    
+    // Constructor, getters, setters
+}
+
+class Like {
+    private String likeId;
+    private Member member;
+    private Post post;
+    private Comment comment;
+    private LocalDateTime createdAt;
+    
+    // Constructor, getters, setters
+}
+
+class Share {
+    private String shareId;
+    private Member member;
+    private Post post;
+    private LocalDateTime sharedAt;
+    private String sharedContent;
+    
+    // Constructor, getters, setters
+}
+
+class Message {
+    private String messageId;
+    private Member sender;
+    private Member receiver;
+    private String content;
+    private LocalDateTime sentAt;
+    private LocalDateTime readAt;
+    private boolean isRead;
+    
+    // Constructor, getters, setters
+}
+
+class Recommendation {
+    private String recommendationId;
+    private Member giver;
+    private Member receiver;
+    private Page page;
+    private String content;
+    private LocalDateTime createdAt;
+    
+    // Constructor, getters, setters
+}
+
+class Notification {
+    private String notificationId;
+    private Member recipient;
+    private Member sender;
+    private NotificationType type;
+    private String referenceId;
+    private String message;
+    private LocalDateTime createdAt;
+    private boolean isRead;
+    
+    // Constructor, getters, setters
+}
+
+class Search {
+    public List<Member> searchMembers(String query) {
+        // Implementation
+        return new ArrayList<>();
+    }
+    
+    public List<Group> searchGroups(String query) {
+        // Implementation
+        return new ArrayList<>();
+    }
+    
+    public List<Page> searchPages(String query) {
+        // Implementation
+        return new ArrayList<>();
+    }
+    
+    public List<Post> searchPosts(String query) {
+        // Implementation
+        return new ArrayList<>();
+    }
+}
+
+// Service Classes
+class MemberService {
+    public Member registerMember(String email, String password) {
+        // Implementation
+        return null;
+    }
+    
+    public Profile updateProfile(Member member, Profile profile) {
+        // Implementation
+        return null;
+    }
+    
+    public void addWorkExperience(Profile profile, WorkExperience workExperience) {
+        // Implementation
+    }
+    
+    public void addEducation(Profile profile, Education education) {
+        // Implementation
+    }
+}
+
+class ConnectionService {
+    public FriendRequest sendFriendRequest(Member sender, Member receiver) {
+        // Implementation
+        return null;
+    }
+    
+    public void respondToFriendRequest(FriendRequest request, boolean accept) {
+        // Implementation
+    }
+    
+    public void followMember(Member follower, Member following) {
+        // Implementation
+    }
+    
+    public List<Member> getConnections(Member member) {
+        // Implementation
+        return new ArrayList<>();
+    }
+    
+    public List<Member> getFollowers(Member member) {
+        // Implementation
+        return new ArrayList<>();
+    }
+}
+
+class GroupService {
+    public Group createGroup(Member creator, String name, String description) {
+        // Implementation
+        return null;
+    }
+    
+    public void joinGroup(Member member, Group group) {
+        // Implementation
+    }
+    
+    public void leaveGroup(Member member, Group group) {
+        // Implementation
+    }
+}
+
+class PageService {
+    public Page createPage(Member creator, String name, String description) {
+        // Implementation
+        return null;
+    }
+    
+    public void followPage(Member member, Page page) {
+        // Implementation
+    }
+    
+    public Recommendation addRecommendation(Member giver, Page page, String content) {
+        // Implementation
+        return null;
+    }
+}
+
+class PostService {
+    public Post createPost(Member author, String content, PrivacySetting privacySetting) {
+        // Implementation
+        return null;
+    }
+    
+    public Comment addComment(Member author, Post post, String content) {
+        // Implementation
+        return null;
+    }
+    
+    public Like likePost(Member member, Post post) {
+        // Implementation
+        return null;
+    }
+    
+    public Share sharePost(Member member, Post post, String sharedContent) {
+        // Implementation
+        return null;
+    }
+    
+    public void addPostToPrivacyList(Post post, PrivacyList privacyList) {
+        // Implementation
+    }
+}
+
+class MessageService {
+    public Message sendMessage(Member sender, Member receiver, String content) {
+        // Implementation
+        return null;
+    }
+    
+    public List<Message> getConversation(Member member1, Member member2) {
+        // Implementation
+        return new ArrayList<>();
+    }
+}
+
+class NotificationService {
+    public void sendNotification(Member recipient, Member sender, NotificationType type, String referenceId, String message) {
+        // Implementation
+    }
+    
+    public List<Notification> getUnreadNotifications(Member member) {
+        // Implementation
+        return new ArrayList<>();
+    }
+    
+    public void markAsRead(Notification notification) {
+        // Implementation
+    }
+}
+
+class PrivacyService {
+    public PrivacyList createPrivacyList(Member creator, String name) {
+        // Implementation
+        return null;
+    }
+    
+    public void addMemberToPrivacyList(PrivacyList privacyList, Member member) {
+        // Implementation
+    }
+}
+
+// Main Application
+public class SocialNetworkApp {
+    private MemberService memberService;
+    private ConnectionService connectionService;
+    private GroupService groupService;
+    private PageService pageService;
+    private PostService postService;
+    private MessageService messageService;
+    private NotificationService notificationService;
+    private PrivacyService privacyService;
+    private Search search;
+    
+    public SocialNetworkApp() {
+        // Initialize services
+        memberService = new MemberService();
+        connectionService = new ConnectionService();
+        groupService = new GroupService();
+        pageService = new PageService();
+        postService = new PostService();
+        messageService = new MessageService();
+        notificationService = new NotificationService();
+        privacyService = new PrivacyService();
+        search = new Search();
+    }
+    
+    public static void main(String[] args) {
+        SocialNetworkApp app = new SocialNetworkApp();
+        // Example usage
+        Member member1 = app.memberService.registerMember("user1@example.com", "password123");
+        Member member2 = app.memberService.registerMember("user2@example.com", "password456");
+        
+        // Update profiles
+        Profile profile1 = new Profile();
+        profile1.setFirstName("John");
+        profile1.setLastName("Doe");
+        app.memberService.updateProfile(member1, profile1);
+        
+        // Send friend request
+        FriendRequest request = app.connectionService.sendFriendRequest(member1, member2);
+        app.connectionService.respondToFriendRequest(request, true);
+        
+        // Create post
+        Post post = app.postService.createPost(member1, "Hello world!", PrivacySetting.PUBLIC);
+        
+        // Add comment
+        app.postService.addComment(member2, post, "Nice post!");
+        
+        // Search
+        List<Member> results = app.search.searchMembers("John");
+    }
+}
+```
+
+
+
 
 ---
 ### How the real-time feed is updated in a radius of 5KM for a user of other users that they are connected with if that user is constantly moving in car?
