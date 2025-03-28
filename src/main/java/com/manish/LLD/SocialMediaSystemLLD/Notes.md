@@ -855,3 +855,296 @@ stateDiagram-v2
     user --> content: userPosts
     content --> user: notifyAction
 ```
+
+---
+### How the real-time feed is updated in a radius of 5KM for a user of other users that they are connected with if that user is constantly moving in car?
+
+# **Real-Time Location-Based Social Feed System Design**
+
+## **Step 1: Clarify Requirements (2-3 mins)**
+
+### **Questions to Ask:**
+- "Should we show posts only from connected users, or all nearby users?"
+- "What's the acceptable latency for feed updates while moving?"
+- "Are there privacy controls for location sharing?"
+
+### **Assumptions:**
+- Only posts from connected users will be shown.
+- Maximum feed freshness is 10 seconds at highway speeds.
+- Users must opt-in to location sharing.
+
+---
+
+## **Step 2: High-Level Design (5 mins)**
+
+### **Key Components:**
+1. **User Service** (Manages authentication, connections, and preferences)
+2. **Location Service** (Real-time GPS updates and geofencing logic)
+3. **Feed Service** (Fetches and prioritizes relevant posts)
+4. **Post Service** (Stores and retrieves user posts)
+5. **Notification Service** (Alerts users about new posts or interactions)
+6. **Privacy & Permissions Module** (Handles opt-in location sharing)
+
+### **Data Flow:**
+1. User shares location → Location Service updates position
+2. Feed Service fetches posts from connected users near the location
+3. Post Service retrieves content and applies sorting/filtering
+4. Updates are pushed to the user with a 10-second freshness guarantee
+
+### **Scalability Considerations:**
+- **Caching**: Use Redis to cache frequently accessed posts.
+- **Streaming Updates**: Utilize WebSockets for real-time feed updates.
+- **Rate Limiting**: Implement API rate limits to prevent abuse.
+
+---
+
+## **Next Steps**
+- Define database schema for users, posts, and locations.
+- Choose technology stack for real-time updates (Kafka, WebSockets, etc.).
+- Implement prototype for testing feed latency and scalability.
+
+```mermaid
+flowchart TD
+    A[Mobile App] --> B[Location Updates]
+    B --> C[Geospatial Index]
+    C --> D[Feed Generation]
+    D --> E[Real-time Delivery]
+    E --> A
+```
+### Step 3: Deep Dive Components
+
+1. Location Tracking System
+```java
+// Adaptive polling based on speed
+public void updateLocation(User user, Location newLoc) {
+    // Store in Redis Geospatial Index
+    redis.geoadd("user:locations", newLoc.lng, newLoc.lat, user.id);
+    
+    // Calculate next update interval (5-15s)
+    int interval = Math.max(5000, 15000 - (newLoc.speed * 200));
+    scheduler.scheduleUpdate(user.id, interval);
+}
+```
+2. Geospatial Query
+
+```shell
+-- PostgreSQL with PostGIS
+SELECT posts.* FROM posts
+JOIN user_locations ON posts.user_id = user_locations.user_id
+WHERE ST_DWithin(
+    user_locations.location::geography,
+    ST_MakePoint(?, ?)::geography,
+    5000 -- 5KM radius
+)
+AND EXISTS (
+    SELECT 1 FROM connections 
+    WHERE (user1 = ? AND user2 = posts.user_id)
+    OR (user2 = ? AND user1 = posts.user_id)
+)
+ORDER BY posts.created_at DESC
+LIMIT 50;
+```
+
+3. Real-time Feed Assembly
+
+```java
+import java.util.List;
+import java.util.Set;
+
+public class FeedService {
+
+    private final LocationService locationService;
+    private final ConnectionService connectionService;
+    private final SpatialIndex spatialIndex;
+    private final PostService postService;
+    private final CacheService cacheService;
+
+    public FeedService(LocationService locationService, ConnectionService connectionService,
+                       SpatialIndex spatialIndex, PostService postService, CacheService cacheService) {
+        this.locationService = locationService;
+        this.connectionService = connectionService;
+        this.spatialIndex = spatialIndex;
+        this.postService = postService;
+        this.cacheService = cacheService;
+    }
+
+    public List<Post> getFeed(String userId) {
+        // Get current location
+        Location currentLoc = locationService.getLocation(userId);
+
+        // Get connected users in 5KM radius
+        Set<String> connectedUsers = connectionService.getConnectedUsers(userId);
+        Set<String> nearbyUsers = spatialIndex.radiusQuery(currentLoc, 5000, connectedUsers);
+
+        // Fetch their posts
+        List<Post> posts = postService.getLatestPosts(nearbyUsers);
+
+        // Cache for 10 seconds with motion prediction
+        Location futureLoc = predictNextLocation(currentLoc);
+        cacheService.set("feed:" + userId, posts, 10, futureLoc);
+
+        return posts;
+    }
+
+    private Location predictNextLocation(Location currentLoc) {
+        // Dummy implementation: Extend this with actual motion prediction logic
+        return new Location(currentLoc.getLatitude() + 0.001, currentLoc.getLongitude() + 0.001);
+    }
+}
+
+/*----------------------------------*/
+
+import java.util.List;
+import java.util.Set;
+
+interface LocationService {
+    Location getLocation(String userId);
+}
+
+interface ConnectionService {
+    Set<String> getConnectedUsers(String userId);
+}
+
+interface SpatialIndex {
+    Set<String> radiusQuery(Location center, int radius, Set<String> userIds);
+}
+
+interface PostService {
+    List<Post> getLatestPosts(Set<String> userIds);
+}
+
+interface CacheService {
+    void set(String key, List<Post> value, int ttl, Location futureLocation);
+}
+
+class Location {
+    private final double latitude;
+    private final double longitude;
+
+    public Location(double latitude, double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() { return latitude; }
+    public double getLongitude() { return longitude; }
+}
+
+class Post {
+    private String content;
+    private String authorId;
+    private long timestamp;
+
+    // Constructor, Getters, and Setters
+}
+
+
+```
+4. Step4 : Optimization Strategies
+```java
+public Location predictNextLocation(Location current, Vector velocity) {
+    return new Location(
+        current.lat + (velocity.y * PREDICTION_SECONDS),
+        current.lng + (velocity.x * PREDICTION_SECONDS)
+    );
+}
+```
+2. Hierarchical Geohashing
+```java
+Original Geohash: u4pruyd
+5KM Coverage: 
+- u4pruy (parent)
+- Adjacent: u4pruy, u4prub, u4pru6...
+```
+
+3. Connection-Aware Caching
+
+```py
+# Cache key incorporates location + connections
+def get_cache_key(user_id, location):
+    connections = connection_service.get_connected(user_id)
+    geo_part = geohash.encode(location, precision=6)
+    return f"feed:{geo_part}:{hash(tuple(sorted(connections))}"
+```
+
+5. Step 5: Failure Handling
+   - Scenario: User loses network in tunnel
+   
+```java
+fun handleOfflineScenario() {
+    val cachedFeed = cache.getLastFeed()
+    val predictedPosts = predictPostsBasedOnRoute()
+    showHybridFeed(cachedFeed + predictedPosts)
+    
+    // Queue location updates for when online
+    queueOfflineLocations()
+}
+
+```
+
+# **Step 6: Metrics to Monitor**
+
+### **1. Location Update Latency**
+- Measures the delay in processing real-time location updates.
+- **Target:** P99 < 500ms
+- **Action:** Optimize GPS polling frequency and reduce backend processing time.
+
+### **2. Feed Freshness**
+- Ensures users receive timely updates on their feed.
+- **Target:** 95% of updates delivered within 10 seconds.
+- **Action:** Use WebSockets for real-time updates and optimize data fetching.
+
+### **3. Cache Hit Ratio**
+- Tracks efficiency of caching layer for post retrieval.
+- **Target:** > 80% cache hit rate.
+- **Action:** Implement Redis for frequently accessed data and optimize cache eviction strategies.
+
+### **4. Mobile Battery Impact**
+- Measures power consumption of location updates and feed polling.
+- **Target:** Minimal battery drain (mA consumption/hour).
+- **Action:** Optimize GPS polling frequency, reduce unnecessary background processes, and implement adaptive update rates.
+
+---
+
+## **Next Steps**
+- Set up monitoring dashboards using Prometheus & Grafana.
+- Define alerts for anomalies in latency, freshness, and cache performance.
+- Run A/B tests to optimize update frequency vs. battery consumption.
+
+### Example Interview Dialogue:
+- Interviewer: "How would you handle sudden location jumps from GPS drift?"
+- You: "We'd implement a speed threshold filter - if new locations imply impossible velocities (>200km/h), we'd use the last plausible location and trigger a GPS recalibration on the device while serving slightly stale data."
+
+
+### Digram
+```mermaid
+sequenceDiagram
+    participant UserDevice
+    participant API Gateway
+    participant LocationService
+    participant FeedService
+    participant PubSub
+    participant Cache
+    participant Database
+
+    UserDevice->>API Gateway: POST /location (lat, lng, speed)
+    API Gateway->>LocationService: Update location
+    LocationService->>Database: Store location
+    LocationService->>PubSub: Publish location_update event
+    
+    loop Every 5-15 sec (adaptive)
+        UserDevice->>API Gateway: GET /feed/updates
+        API Gateway->>FeedService: Get nearby posts
+        FeedService->>LocationService: Get current location
+        FeedService->>Cache: Check geohash:5km_radius
+        alt Cache hit
+            Cache-->>FeedService: Return cached posts
+        else Cache miss
+            FeedService->>Database: Query posts (geospatial query)
+            Database-->>FeedService: Return posts
+            FeedService->>Cache: Store with geohash
+        end
+        FeedService-->>API Gateway: Feed data
+        API Gateway-->>UserDevice: New posts
+    end
+```
