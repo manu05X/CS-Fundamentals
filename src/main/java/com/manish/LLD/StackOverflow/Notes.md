@@ -273,16 +273,17 @@ classDiagram
     }
 
     class Database {
-        - static Database instance
-        - List<User> users
-        - List<Post> posts
-        - List<Vote> votes
-        - Map<Integer, List<Tag>> questionTags
-        + getInstance() Database
-        + addQuestion()
-        + searchQuestions()
-        + getPopularTags()
+        -static Database instance
+        -List~User~ users
+        -List~Post~ posts
+        -List~Vote~ votes
+        -Map~Integer,List~Tag~~ questionTags
+        +getInstance() Database
+        +addQuestion()
+        +searchQuestions()
+        +getPopularTags()
     }
+
 
     %% Relationships
     Member "1" *-- "0..*" Question : posts
