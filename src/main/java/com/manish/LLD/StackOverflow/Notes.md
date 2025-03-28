@@ -277,7 +277,7 @@ classDiagram
         -List~User~ users
         -List~Post~ posts
         -List~Vote~ votes
-        -Map~Integer,List~Tag~~ questionTags
+        -Map~Integer,List of Tag~ questionTags
         +getInstance() Database
         +addQuestion()
         +searchQuestions()
