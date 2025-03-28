@@ -143,6 +143,170 @@ question.
 - Questions and Tags (through question_tags)
 - Users and Badges (through user_badges)
 
+```mermaid
+classDiagram
+    direction TB
+
+    %% User Hierarchy
+    class User {
+        <<abstract>>
+        -int userId
+        -String username
+        -String email
+        -UserRole role
+        +canPost() bool
+        +canVote() bool
+        +canComment() bool
+    }
+
+    class Guest {
+        +register(String password) bool
+    }
+
+    class Member {
+        -int reputation
+        -List~Badge~ badges
+        +postQuestion()
+        +postAnswer()
+        +postComment()
+        +vote()
+        +flagPost()
+        +addBounty()
+    }
+
+    class Moderator {
+        +closeQuestion()
+        +reopenQuestion()
+        +undeleteQuestion()
+    }
+
+    class Admin {
+        +promoteToModerator()
+    }
+
+    User <|-- Guest
+    User <|-- Member
+    Member <|-- Moderator
+    Moderator <|-- Admin
+
+    %% Post Hierarchy
+    class Post {
+        <<abstract>>
+        -int postId
+        -int userId
+        -String content
+        -PostType postType
+        -LocalDateTime createdAt
+        -LocalDateTime updatedAt
+        -boolean isDeleted
+        +getContent()
+        +setContent()
+    }
+
+    class Question {
+        -String title
+        -boolean isClosed
+        -List~Answer~ answers
+        -List~Comment~ comments
+        -List~Tag~ tags
+        +addAnswer()
+        +addComment()
+        +addTag()
+    }
+
+    class Answer {
+        -int questionId
+        -boolean isAccepted
+        -List~Comment~ comments
+    }
+
+    class Comment {
+        -int parentPostId
+    }
+
+    Post <|-- Question
+    Post <|-- Answer
+    Post <|-- Comment
+
+    %% Supporting Classes
+    class Vote {
+        -int voteId
+        -int postId
+        -int userId
+        -VoteType voteType
+        -LocalDateTime createdAt
+    }
+
+    class Flag {
+        -int flagId
+        -int postId
+        -int userId
+        -String reason
+        -FlagStatus status
+    }
+
+    class Badge {
+        -int badgeId
+        -String name
+        -String description
+    }
+
+    class Tag {
+        -int tagId
+        -String name
+        -String description
+    }
+
+    class Bounty {
+        -int bountyId
+        -int questionId
+        -int userId
+        -int amount
+        -LocalDateTime expiresAt
+    }
+
+    class Notification {
+        -int notificationId
+        -int userId
+        -String content
+        -boolean isRead
+    }
+
+    class Database {
+        -static Database instance
+        -List~User~ users
+        -List~Post~ posts
+        -List~Vote~ votes
+        -Map~Integer,List~Tag~~ questionTags
+        +getInstance() Database
+        +addQuestion()
+        +searchQuestions()
+        +getPopularTags()
+    }
+
+    %% Relationships
+    Member "1" *-- "0..*" Question : posts
+    Member "1" *-- "0..*" Answer : posts
+    Member "1" *-- "0..*" Comment : posts
+    Member "1" *-- "0..*" Vote : casts
+    Member "1" *-- "0..*" Flag : creates
+    Member "1" *-- "0..*" Bounty : offers
+
+    Question "1" *-- "0..*" Answer : has
+    Question "1" *-- "0..*" Comment : has
+    Question "1" *-- "0..*" Tag : taggedWith
+    Answer "1" *-- "0..*" Comment : has
+
+    Database "1" *-- "0..*" User : manages
+    Database "1" *-- "0..*" Post : stores
+    Database "1" *-- "0..*" Vote : tracks
+    Database "1" *-- "0..*" Tag : maintains
+
+    Member "1" *-- "0..*" Badge : earns
+
+```
+
+
 ---
 ## Key Features Implemented
 1. User System: Guest, Member, Moderator, Admin hierarchy with appropriate permissions 
