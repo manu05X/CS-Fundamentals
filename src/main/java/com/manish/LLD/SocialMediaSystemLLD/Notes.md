@@ -734,7 +734,7 @@ stateDiagram-v2
         Active --> Connected: sendRequest()\nacceptRequest()
         Active --> Following: followUser()
         
-        state Connected {
+        state FriendRequest {
             [*] --> RequestSent
             RequestSent --> Connected: requestAccepted()
             RequestSent --> Rejected: requestRejected()
@@ -756,14 +756,6 @@ stateDiagram-v2
         Published --> Archived: archive()
     }
 
-    state FriendRequest {
-        [*] --> Pending
-        Pending --> Accepted: accept()
-        Pending --> Rejected: reject()
-        Accepted --> [*]: connectionEstablished
-        Rejected --> [*]: requestClosed
-    }
-
     state Notification {
         [*] --> Unread
         Unread --> Read: view()
@@ -781,6 +773,8 @@ stateDiagram-v2
 
     Registered --> [*]: deactivateAccount()
     ProfileComplete --> [*]: deactivateAccount()
+
+
 ```
 1. **User States**:
     - Guest → Registered (Upon account creation)
