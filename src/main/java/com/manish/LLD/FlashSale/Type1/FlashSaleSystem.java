@@ -2,49 +2,136 @@ package com.manish.LLD.FlashSale.Type1;
 
 import com.manish.LLD.FlashSale.Type1.model.*;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.*;
 
+/*
 public class FlashSaleSystem {
-    private Map<String, Product> products = new ConcurrentHashMap<>();
-    private Map<String, FlashSale> flashSales = new ConcurrentHashMap<>();
-    private Map<String, Inventory> inventories = new ConcurrentHashMap<>();
-    private Map<String, User> users = new ConcurrentHashMap<>();
-    private List<Order> orders = new CopyOnWriteArrayList<>();
-    private Map<String, Lock> productLocks = new ConcurrentHashMap<>();
+    private ConcurrencyControlStrategy concurrencyControlStrategy;
+    private InventoryManager inventoryManager;
+    private OrderProcessingStrategy orderProcessingStrategy;
 
-    public FlashSaleSystem() {
-        initializeData();
+    public FlashSaleSystem(ConcurrencyControlStrategy concurrencyControlStrategy, OrderProcessingStrategy orderProcessingStrategy) {
+        this.concurrencyControlStrategy = concurrencyControlStrategy;
+        this.orderProcessingStrategy = orderProcessingStrategy;
+        this.inventoryManager = InventoryManager.getInstance();
     }
 
-    private void initializeData() {
-        Product p1 = new Product("p1", "Smartphone", "Latest model", new BigDecimal("999.99"), "Electronics");
-        Product p2 = new Product("p2", "Laptop", "High performance", new BigDecimal("1499.99"), "Electronics");
+    // Method to switch the concurrency control strategy at runtime
+    public void setConcurrencyControlStrategy(ConcurrencyControlStrategy strategy) {
+        this.concurrencyControlStrategy = strategy;
+    }
 
-        products.put(p1.getProductId(), p1);
-        products.put(p2.getProductId(), p2);
+    // Method to switch the order processing strategy at runtime
+    public void setOrderProcessingStrategy(OrderProcessingStrategy strategy) {
+        this.orderProcessingStrategy = strategy;
+    }
 
-        inventories.put(p1.getProductId(), new Inventory(p1.getProductId(), 100));
-        inventories.put(p2.getProductId(), new Inventory(p2.getProductId(), 50));
+    public void processOrder(Order order) throws InterruptedException {
+        concurrencyControlStrategy.acquireLock();
+        try {
+            orderProcessingStrategy.processOrder(order, inventoryManager);
+        } finally {
+            concurrencyControlStrategy.releaseLock();
+        }
+    }
 
-        FlashSale fs = new FlashSale("fs1", LocalDateTime.now().plusMinutes(1), LocalDateTime.now().plusMinutes(31), FlashSaleStatus.UPCOMING);
-        fs.addProduct(new FlashSaleProduct("fp1", "fs1", "p1", new BigDecimal("999.99"), new BigDecimal("799.99"), 10, 2));
-        fs.addProduct(new FlashSaleProduct("fp2", "fs1", "p2", new BigDecimal("1499.99"), new BigDecimal("1199.99"), 5, 1));
+    public static void main(String[] args) throws InterruptedException {
+        Product product1 = new Product(1, "Product1");
+        Product product2 = new Product(2, "Product2");
 
-        flashSales.put(fs.getFlashSaleId(), fs);
+        InventoryManager inventoryManager = InventoryManager.getInstance();
+        inventoryManager.updateInventory(product1, 100);
+        inventoryManager.updateInventory(product2, 50);
 
-        users.put("u1", new User("u1", "Alice", "alice@example.com"));
-        users.put("u2", new User("u2", "Bob", "bob@example.com"));
+        // Create the FlashSaleSystem with default strategies
+        ConcurrencyControlStrategy concurrencyControlStrategy = new TwoPhaseLockingStrategy();
+        OrderProcessingStrategy orderProcessingStrategy = new DefaultOrderProcessingStrategy();
+        FlashSaleSystem flashSaleSystem = new FlashSaleSystem(concurrencyControlStrategy, orderProcessingStrategy);
 
-        productLocks.put("p1", new ReentrantLock());
-        productLocks.put("p2", new ReentrantLock());
+        // Create orders
+        Order order1 = new FlashSaleOrder(product1, 80);
+        Order order2 = new FlashSaleOrder(product2, 60);
+
+        // Process orders
+        flashSaleSystem.processOrder(order1);
+        flashSaleSystem.processOrder(order2);
+    }
+}
+
+ */
+
+public class FlashSaleSystem {
+    private ConcurrencyControlStrategy concurrencyControlStrategy;
+    private InventoryManager inventoryManager;
+    private OrderProcessingStrategy orderProcessingStrategy;
+
+    public FlashSaleSystem(ConcurrencyControlStrategy concurrencyControlStrategy, OrderProcessingStrategy orderProcessingStrategy) {
+        this.concurrencyControlStrategy = concurrencyControlStrategy;
+        this.orderProcessingStrategy = orderProcessingStrategy;
+        this.inventoryManager = InventoryManager.getInstance();
+    }
+
+    public void setConcurrencyControlStrategy(ConcurrencyControlStrategy strategy) {
+        this.concurrencyControlStrategy = strategy;
+    }
+
+    public void setOrderProcessingStrategy(OrderProcessingStrategy strategy) {
+        this.orderProcessingStrategy = strategy;
+    }
+
+    public void processOrder(Order order) {
+        TransactionManager transactionManager = new TransactionManager();
+        transactionManager.beginTransaction();
+        try {
+            Transaction transaction = new Transaction(1,order);
+
+            if (concurrencyControlStrategy.validateTransaction(transaction)) {
+                transactionManager.commitTransaction();
+            } else {
+                System.out.println("Transaction validation failed");
+                transactionManager.rollbackTransaction();
+            }
+        } catch (Exception e) {
+            System.out.println("Exception occurred: " + e.getMessage());
+            transactionManager.rollbackTransaction();
+        }
     }
 
     public static void main(String[] args) {
-        FlashSaleSystem system = new FlashSaleSystem();
-        system.flashSales.get("fs1").setStatus(FlashSaleStatus.ACTIVE);
+        // Initialize products
+        Product product1 = new Product(1, "Product1");
+        Product product2 = new Product(2, "Product2");
+
+        // Get InventoryManager instance and add stock
+        InventoryManager inventoryManager = InventoryManager.getInstance();
+        inventoryManager.updateInventory(product1, 100);
+        inventoryManager.updateInventory(product2, 50);
+
+        // Initialize concurrency control and order processing strategies
+        ConcurrencyControlStrategy concurrencyControlStrategy = new OptimisticConcurrencyControlStrategy();
+        OrderProcessingStrategy orderProcessingStrategy = new DefaultOrderProcessingStrategy();
+
+        // Initialize Flash Sale System
+        FlashSaleSystem flashSaleSystem = new FlashSaleSystem(concurrencyControlStrategy, orderProcessingStrategy);
+
+        // Create and process orders
+        Order order1 = new FlashSaleOrder(product1, 80);
+        Order order2 = new FlashSaleOrder(product2, 60);
+
+        flashSaleSystem.processOrder(order1);
+        flashSaleSystem.processOrder(order2);
     }
 }
+
+
+/*
+Why This Fix Works?
+✅ Ensures Interface Compliance → Implements acquireLock() and releaseLock(), avoiding compilation errors.
+✅ Optimized for OCC → Leaves locking methods empty since OCC does not require explicit locks.
+✅ Validates Transaction Properly → Ensures that product availability is checked before committing.
+
+Now your code should compile and work correctly! 🚀 Let me know if you need further improvements!
+
+ */
