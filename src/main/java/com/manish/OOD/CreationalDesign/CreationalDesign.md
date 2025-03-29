@@ -390,6 +390,57 @@ In your code, this definition is clearly justified as follows:
  */
 
 ```
+### Diagram
+```mermaid
+classDiagram
+    class Pizza {
+        <<interface>>
+        +prepare()
+        +bake()
+        +cut()
+        +box()
+    }
+
+    class CheesePizza {
+        +prepare()
+        +bake()
+        +cut()
+        +box()
+    }
+
+    class PepperoniPizza {
+        +prepare()
+        +bake()
+        +cut()
+        +box()
+    }
+
+    class VeggiePizza {
+        +prepare()
+        +bake()
+        +cut()
+        +box()
+    }
+
+    class PizzaFactory {
+        +createPizza(String type) Pizza
+    }
+
+    class PizzaStore {
+        -pizzaFactory: PizzaFactory
+        +PizzaStore(PizzaFactory)
+        +orderPizza(String type) Pizza
+    }
+
+    Pizza <|-- CheesePizza
+    Pizza <|-- PepperoniPizza
+    Pizza <|-- VeggiePizza
+
+    PizzaStore --> PizzaFactory
+    PizzaStore --> Pizza
+    PizzaFactory --> Pizza
+```
+
 
 #### Refined Pizza Store and Pizza Factory Analogy
 **Step 1: Customer Orders a Pizza**
@@ -481,6 +532,43 @@ car.drive();
 truck.drive();
 motorcycle.drive();
 ```
+### Diagram
+```mermaid
+classDiagram
+    class Vehicle {
+        <<interface>>
+        +drive()
+    }
+
+    class Car {
+        +drive()
+    }
+
+    class Truck {
+        +drive()
+    }
+
+    class Motorcycle {
+        +drive()
+    }
+
+    class VehicleFactory {
+        +createVehicle(String type) Vehicle
+    }
+
+    class Main {
+        +main(String[] args)
+    }
+
+    Vehicle <|-- Car
+    Vehicle <|-- Truck
+    Vehicle <|-- Motorcycle
+
+    VehicleFactory ..> Vehicle : creates
+    Main ..> VehicleFactory : uses
+    Main ..> Vehicle : uses
+```
+
 
 #### Example 3:
 
@@ -548,6 +636,47 @@ public class Client {
 }
 ```
 
+### Diagram
+
+```mermaid
+classDiagram
+    class Order {
+        <<abstract>>
+        +generateInvoice()*
+    }
+
+    class PhysicalOrder {
+        +generateInvoice()
+    }
+
+    class DigitalOrder {
+        +generateInvoice()
+    }
+
+    class ServiceOrder {
+        +generateInvoice()
+    }
+
+    class OrderFactory {
+        +createOrder(String type) Order
+    }
+
+    class Client {
+        +main(String[] args)
+    }
+
+    Order <|-- PhysicalOrder
+    Order <|-- DigitalOrder
+    Order <|-- ServiceOrder
+
+    OrderFactory ..> Order : creates
+    Client ..> OrderFactory : uses
+    Client ..> Order : uses
+```
+
+
+
+---
 ## Factory Method Design Pattern:
 
 Suppose we have a game where players can choose different types of characters to play with, such as a warrior, a mage, or a rogue. Each character has its own set of attributes and abilities. We want to create these characters dynamically at runtime using a factory method pattern
@@ -668,6 +797,76 @@ public class Game {
 }
 
 ```
+### Diagram
+```mermaid
+classDiagram
+    class Character {
+        <<abstract>>
+        -String name
+        -int health
+        -int strength
+        -int agility
+        -int intelligence
+        +Character(name, health, strength, agility, intelligence)
+        +display()*
+        +attack()*
+    }
+
+    class Warrior {
+        +Warrior(name, health, strength, agility, intelligence)
+        +display()
+        +attack()
+    }
+
+    class Mage {
+        +Mage(name, health, strength, agility, intelligence)
+        +display()
+        +attack()
+    }
+
+    class Rogue {
+        +Rogue(name, health, strength, agility, intelligence)
+        +display()
+        +attack()
+    }
+
+    class CharacterFactory {
+        <<interface>>
+        +createCharacter(name)*
+    }
+
+    class WarriorFactory {
+        +createCharacter(name)
+    }
+
+    class MageFactory {
+        +createCharacter(name)
+    }
+
+    class RogueFactory {
+        +createCharacter(name)
+    }
+
+    class Game {
+        +main(args)
+    }
+
+    Character <|-- Warrior
+    Character <|-- Mage
+    Character <|-- Rogue
+
+    CharacterFactory <|.. WarriorFactory
+    CharacterFactory <|.. MageFactory
+    CharacterFactory <|.. RogueFactory
+
+    WarriorFactory --> Warrior : creates
+    MageFactory --> Mage : creates
+    RogueFactory --> Rogue : creates
+
+    Game ..> CharacterFactory : uses
+    Game ..> Character : uses
+```
+
 
 #### Difference between Simple Factory & Factory Method:
 
@@ -879,6 +1078,111 @@ In summary, the Car class acts as a composite object that encapsulates the car's
 It promotes the use of the Abstract Factory design pattern by decoupling the car's creation logic from the specific implementations of its components.        
  */
 ```
+
+### Diagram
+```mermaid
+classDiagram
+    %% Abstract Factory and Concrete Factories
+    class CarFactory {
+        <<interface>>
+        +createEngine() Engine
+        +createWheels() Wheels
+        +createSeats() Seats
+    }
+
+    class LuxuryCarFactory {
+        +createEngine() Engine
+        +createWheels() Wheels
+        +createSeats() Seats
+    }
+
+    class SportsCarFactory {
+        +createEngine() Engine
+        +createWheels() Wheels
+        +createSeats() Seats
+    }
+
+    %% Abstract Products and Concrete Products
+    class Engine {
+        <<interface>>
+        +design()*
+    }
+
+    class LuxuryEngine {
+        +design()
+    }
+
+    class SportsEngine {
+        +design()
+    }
+
+    class Wheels {
+        <<interface>>
+        +design()*
+    }
+
+    class LuxuryWheels {
+        +design()
+    }
+
+    class SportsWheels {
+        +design()
+    }
+
+    class Seats {
+        <<interface>>
+        +design()*
+    }
+
+    class LuxurySeats {
+        +design()
+    }
+
+    class SportsSeats {
+        +design()
+    }
+
+    %% Client Classes
+    class Car {
+        -engine: Engine
+        -wheels: Wheels
+        -seats: Seats
+        +Car(factory: CarFactory)
+        +design()
+    }
+
+    class Main {
+        +main(args)
+    }
+
+    %% Relationships
+    CarFactory <|.. LuxuryCarFactory
+    CarFactory <|.. SportsCarFactory
+
+    LuxuryCarFactory --> LuxuryEngine : creates
+    LuxuryCarFactory --> LuxuryWheels : creates
+    LuxuryCarFactory --> LuxurySeats : creates
+
+    SportsCarFactory --> SportsEngine : creates
+    SportsCarFactory --> SportsWheels : creates
+    SportsCarFactory --> SportsSeats : creates
+
+    Engine <|-- LuxuryEngine
+    Engine <|-- SportsEngine
+    Wheels <|-- LuxuryWheels
+    Wheels <|-- SportsWheels
+    Seats <|-- LuxurySeats
+    Seats <|-- SportsSeats
+
+    Car o--> Engine
+    Car o--> Wheels
+    Car o--> Seats
+    Car ..> CarFactory : depends on
+
+    Main ..> CarFactory : uses
+    Main ..> Car : uses
+```
+
 
 Here’s a categorized breakdown of the classes in your Abstract Factory pattern implementation for car creation:
 
@@ -1096,6 +1400,155 @@ public class LinuxClient {
     }
 }
 ```
+### Diagram
+
+```mermaid
+classDiagram
+    %% Abstract Factory and Concrete Factories
+    class GUIFactory {
+        <<interface>>
+        +createButton() Button
+        +createTextBox() TextBox
+        +createLabel() Label
+    }
+
+    class WindowsGUIFactory {
+        +createButton() Button
+        +createTextBox() TextBox
+        +createLabel() Label
+    }
+
+    class MacOSGUIFactory {
+        +createButton() Button
+        +createTextBox() TextBox
+        +createLabel() Label
+    }
+
+    class LinuxGUIFactory {
+        +createButton() Button
+        +createTextBox() TextBox
+        +createLabel() Label
+    }
+
+    %% Abstract Products and Concrete Products
+    class Button {
+        <<interface>>
+        +paint()*
+    }
+
+    class WindowsButton {
+        +paint()
+    }
+
+    class MacOSButton {
+        +paint()
+    }
+
+    class LinuxButton {
+        +paint()
+    }
+
+    class TextBox {
+        <<interface>>
+        +paint()*
+    }
+
+    class WindowsTextBox {
+        +paint()
+    }
+
+    class MacOSTextBox {
+        +paint()
+    }
+
+    class LinuxTextBox {
+        +paint()
+    }
+
+    class Label {
+        <<interface>>
+        +paint()*
+    }
+
+    class WindowsLabel {
+        +paint()
+    }
+
+    class MacOSLabel {
+        +paint()
+    }
+
+    class LinuxLabel {
+        +paint()
+    }
+
+    %% Client Classes
+    class Application {
+        -button: Button
+        -textBox: TextBox
+        -label: Label
+        +Application(factory: GUIFactory)
+        +paint()
+    }
+
+    class WindowsClient {
+        +main(args)
+    }
+
+    class MacOSClient {
+        +main(args)
+    }
+
+    class LinuxClient {
+        +main(args)
+    }
+
+    %% Relationships
+    GUIFactory <|.. WindowsGUIFactory
+    GUIFactory <|.. MacOSGUIFactory
+    GUIFactory <|.. LinuxGUIFactory
+
+    WindowsGUIFactory --> WindowsButton : creates
+    WindowsGUIFactory --> WindowsTextBox : creates
+    WindowsGUIFactory --> WindowsLabel : creates
+
+    MacOSGUIFactory --> MacOSButton : creates
+    MacOSGUIFactory --> MacOSTextBox : creates
+    MacOSGUIFactory --> MacOSLabel : creates
+
+    LinuxGUIFactory --> LinuxButton : creates
+    LinuxGUIFactory --> LinuxTextBox : creates
+    LinuxGUIFactory --> LinuxLabel : creates
+
+    Button <|-- WindowsButton
+    Button <|-- MacOSButton
+    Button <|-- LinuxButton
+
+    TextBox <|-- WindowsTextBox
+    TextBox <|-- MacOSTextBox
+    TextBox <|-- LinuxTextBox
+
+    Label <|-- WindowsLabel
+    Label <|-- MacOSLabel
+    Label <|-- LinuxLabel
+
+    Application o--> Button
+    Application o--> TextBox
+    Application o--> Label
+    Application ..> GUIFactory : depends on
+
+    WindowsClient ..> WindowsGUIFactory : uses
+    WindowsClient ..> Application : uses
+
+    MacOSClient ..> MacOSGUIFactory : uses
+    MacOSClient ..> Application : uses
+
+    LinuxClient ..> LinuxGUIFactory : uses
+    LinuxClient ..> Application : uses
+```
+
+
+
 Here’s a categorized breakdown of the classes in your Abstract Factory pattern implementation:
 
 **Creator Class**
