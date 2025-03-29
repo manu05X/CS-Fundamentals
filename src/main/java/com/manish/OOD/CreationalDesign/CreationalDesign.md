@@ -1917,6 +1917,82 @@ public class Main {
 }
 
 ```
+
+### Diagram
+```mermaid
+classDiagram
+    class Order {
+        -products: List~Product~
+        -billingAddress: Address
+        -shippingAddress: Address
+        -discount: double
+        -tax: double
+        +getProducts() List~Product~
+        +getBillingAddress() Address
+        +getShippingAddress() Address
+        +getDiscount() double
+        +getTax() double
+        +OrderBuilder: Builder
+    }
+
+    class OrderBuilder {
+        -products: List~Product~
+        -billingAddress: Address
+        -shippingAddress: Address
+        -discount: double
+        -tax: double
+        +OrderBuilder()
+        +addProduct(Product) OrderBuilder
+        +setBillingAddress(Address) OrderBuilder
+        +setShippingAddress(Address) OrderBuilder
+        +setDiscount(double) OrderBuilder
+        +setTax(double) OrderBuilder
+        +build() Order
+    }
+
+    class Product {
+        -name: String
+        -price: double
+        +Product(String, double)
+        +getName() String
+        +setName(String)
+        +getPrice() double
+        +setPrice(double)
+        +toString() String
+    }
+
+    class Address {
+        -street: String
+        -city: String
+        -state: String
+        -zipCode: String
+        +Address(String, String, String, String)
+        +getStreet() String
+        +setStreet(String)
+        +getCity() String
+        +setCity(String)
+        +getState() String
+        +setState(String)
+        +getZipCode() String
+        +setZipCode(String)
+        +toString() String
+    }
+
+    class Main {
+        +main(String[])
+    }
+
+    Order ..> OrderBuilder : creates
+    OrderBuilder --> Order : builds
+    Order "1" *-- "*" Product : contains
+    Order "1" --> "1" Address : billing
+    Order "1" --> "1" Address : shipping
+    Main ..> Product : uses
+    Main ..> Address : uses
+    Main ..> OrderBuilder : uses
+```
+
+
 ### Key Components:
 
 **1. Product Class:**
@@ -2123,6 +2199,82 @@ public class Main {
 }
 
 ```
+### Diagram
+
+```mermaid
+classDiagram
+    %% Pizza Product Class
+    class Pizza {
+        -dough: String
+        -sauce: String
+        -toppings: List~String~
+        +Pizza()
+        +setDough(String)
+        +setSauce(String)
+        +addTopping(String)
+        +getDough() String
+        +getSauce() String
+        +getToppings() List~String~
+    }
+
+    %% Builder Interface
+    class PizzaBuilder {
+        <<interface>>
+        +buildDough()*
+        +buildSauce()*
+        +buildToppings()*
+        +getPizza() Pizza*
+    }
+
+    %% Concrete Builders
+    class HawaiianPizzaBuilder {
+        -pizza: Pizza
+        +HawaiianPizzaBuilder()
+        +buildDough()
+        +buildSauce()
+        +buildToppings()
+        +getPizza() Pizza
+    }
+
+    class SpicyPizzaBuilder {
+        -pizza: Pizza
+        +SpicyPizzaBuilder()
+        +buildDough()
+        +buildSauce()
+        +buildToppings()
+        +getPizza() Pizza
+    }
+
+    %% Director Class
+    class Chef {
+        -pizzaBuilder: PizzaBuilder
+        +setPizzaBuilder(PizzaBuilder)
+        +getPizza() Pizza
+        +constructPizza()
+    }
+
+    %% Client Class
+    class Main {
+        +main(String[])
+    }
+
+    %% Relationships
+    PizzaBuilder <|.. HawaiianPizzaBuilder
+    PizzaBuilder <|.. SpicyPizzaBuilder
+
+    HawaiianPizzaBuilder --> Pizza : builds
+    SpicyPizzaBuilder --> Pizza : builds
+
+    Chef o--> PizzaBuilder : uses
+    Chef ..> Pizza : returns
+
+    Main ..> Chef : uses
+    Main ..> HawaiianPizzaBuilder : uses
+    Main ..> SpicyPizzaBuilder : uses
+```
+
+
+
 ### Key Points:
 **1. Pizza Class:**
 - A simple product class representing a pizza. It has fields for dough, sauce, and toppings with setters and getters for manipulating and accessing its state.
@@ -2781,6 +2933,112 @@ Car car = new Car.Builder()
 }
 ```
 
+### Diagram
+```mermaid
+classDiagram
+    class Car {
+        -engine: Engine
+        -chassis: Chassis
+        -wheels: List~Wheel~
+        +getEngine() Engine
+        +getChassis() Chassis
+        +getWheels() List~Wheel~
+        +Builder: Builder
+    }
+
+    class Car.Builder {
+        -engine: Engine
+        -chassis: Chassis
+        -wheels: List~Wheel~
+        +withEngine(Engine) Builder
+        +withChassis(Chassis) Builder
+        +withWheels(Wheel) Builder
+        +build() Car
+    }
+
+    class Engine {
+        -type: String
+        +getType() String
+        +Builder: Builder
+    }
+
+    class Engine.Builder {
+        -type: String
+        +withType(String) Builder
+        +build() Engine
+    }
+
+    class Chassis {
+        -color: String
+        +getColor() String
+        +Builder: Builder
+    }
+
+    class Chassis.Builder {
+        -color: String
+        +withColor(String) Builder
+        +build() Chassis
+    }
+
+    class Wheel {
+        -size: int
+        +getSize() int
+        +Builder: Builder
+    }
+
+    class Wheel.Builder {
+        -size: int
+        +withSize(int) Builder
+        +build() Wheel
+    }
+
+    %% Relationships
+    Car --> Engine : has
+    Car --> Chassis : has
+    Car --> Wheel : has *
+
+    Car ..> Car.Builder : creates
+    Car.Builder --> Car : builds
+
+    Engine ..> Engine.Builder : creates
+    Engine.Builder --> Engine : builds
+
+    Chassis ..> Chassis.Builder : creates
+    Chassis.Builder --> Chassis : builds
+
+    Wheel ..> Wheel.Builder : creates
+    Wheel.Builder --> Wheel : builds
+
+    %% Usage in main()
+    class Main {
+        +main()
+    }
+
+    Main ..> Car.Builder : uses
+    Main ..> Engine.Builder : uses
+    Main ..> Chassis.Builder : uses
+    Main ..> Wheel.Builder : uses
+```
+
+### Sequence Diagram
+```mermaid
+sequenceDiagram
+    participant Main
+    participant Chef
+    participant HawaiianPizzaBuilder
+    participant Pizza
+
+    Main->>HawaiianPizzaBuilder: new()
+    Main->>Chef: setPizzaBuilder(HawaiianPizzaBuilder)
+    Chef->>HawaiianPizzaBuilder: buildDough()
+    Chef->>HawaiianPizzaBuilder: buildSauce()
+    Chef->>HawaiianPizzaBuilder: buildToppings()
+    Main->>Chef: getPizza()
+    Chef->>HawaiianPizzaBuilder: getPizza()
+    HawaiianPizzaBuilder-->>Chef: Pizza
+    Chef-->>Main: Pizza
+```
+
 In this example, we have a Car class with a builder and three component classes (Engine, Chassis, and Wheel) with their respective builders. The Car builder allows us to build a car by specifying its components using their respective builders.
 
 # Prototype Design Pattern:
@@ -2926,7 +3184,7 @@ public class DocumentManager {
    }
 }
 
-public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
+public class Main {
    public static void main(String[] args) throws CloneNotSupportedException {
       DocumentManager documentManager = new DocumentManager();
       documentManager.addPrototype("memo", new Document());
@@ -2942,6 +3200,58 @@ public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
       System.out.println(report.getText());
    }
 }
+```
+
+### Class Diagram
+
+```mermaid
+classDiagram
+    %% Abstract Base Class
+    class Document {
+        <<abstract>>
+        -text: String
+        +getText() String
+        +setText(String)
+        +clone() Object
+    }
+
+    %% Concrete Document Types
+    class Letter {
+        -recipient: String
+        +getRecipient() String
+        +setRecipient(String)
+    }
+
+    class Report {
+        -author: String
+        +getAuthor() String
+        +setAuthor(String)
+    }
+
+    %% Document Manager
+    class DocumentManager {
+        -prototypes: Map~String, Document~
+        +DocumentManager()
+        +addPrototype(String, Document)
+        +removePrototype(String)
+        +clone(String) Document
+    }
+
+    %% Main Class
+    class Main {
+        +main(String[])
+    }
+
+    %% Relationships
+    Document <|-- Letter
+    Document <|-- Report
+
+    DocumentManager "1" *-- "*" Document : manages prototypes
+    DocumentManager ..> Document : clones
+
+    Main ..> DocumentManager : uses
+    Main ..> Letter : casts
+    Main ..> Report : casts
 ```
 
 In this example, the Document class is the abstract prototype that defines the interface for creating new documents. The Letter and Report classes are concrete prototypes that extend the Document class and provide their own implementation of the getText() method. The DocumentManager class is responsible for managing the prototypes and creating new documents based on existing prototypes. The com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main class demonstrates how the application can create new Letter and Report objects by cloning the corresponding prototypes and modifying the recipient and author fields as needed.
@@ -3000,7 +3310,7 @@ private static Map<String, Employee> registry = new HashMap<>();
 
 }
 
-public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
+public class Main {
 public static void main(String[] args) {
 Employee employee1 = new Employee("John Doe", 30, "Sales");
 Employee employee2 = new Employee("Jane Smith", 25, "Marketing");
