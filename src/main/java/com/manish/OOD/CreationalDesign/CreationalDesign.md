@@ -674,6 +674,39 @@ classDiagram
     Client ..> Order : uses
 ```
 
+### Sequence Diagram
+```mermaid
+sequenceDiagram
+    participant Client
+    participant OrderFactory
+    participant PhysicalOrder
+    participant DigitalOrder
+    participant ServiceOrder
+
+    %% Physical Order Flow
+    Client->>+OrderFactory: createOrder("Physical")
+    OrderFactory->>+PhysicalOrder: new()
+    PhysicalOrder-->>-OrderFactory: instance
+    OrderFactory-->>-Client: PhysicalOrder
+    Client->>+PhysicalOrder: generateInvoice()
+    PhysicalOrder-->>-Client: invoice generated
+
+    %% Digital Order Flow
+    Client->>+OrderFactory: createOrder("Digital")
+    OrderFactory->>+DigitalOrder: new()
+    DigitalOrder-->>-OrderFactory: instance
+    OrderFactory-->>-Client: DigitalOrder
+    Client->>+DigitalOrder: generateInvoice()
+    DigitalOrder-->>-Client: invoice generated
+
+    %% Service Order Flow
+    Client->>+OrderFactory: createOrder("Service")
+    OrderFactory->>+ServiceOrder: new()
+    ServiceOrder-->>-OrderFactory: instance
+    OrderFactory-->>-Client: ServiceOrder
+    Client->>+ServiceOrder: generateInvoice()
+    ServiceOrder-->>-Client: invoice generated
+```
 
 
 ---
