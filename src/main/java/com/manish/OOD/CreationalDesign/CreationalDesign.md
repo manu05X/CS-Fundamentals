@@ -1183,6 +1183,55 @@ classDiagram
     Main ..> Car : uses
 ```
 
+### Sequence Diagram
+```mermaid
+sequenceDiagram
+    participant Main
+    participant CarFactory
+    participant LuxuryCarFactory
+    participant SportsCarFactory
+    participant Car
+    participant Engine
+    participant Wheels
+    participant Seats
+
+    %% Luxury Car Creation
+    Main->>+LuxuryCarFactory: new()
+    Main->>+Car: new(LuxuryCarFactory)
+    Car->>+LuxuryCarFactory: createEngine()
+    LuxuryCarFactory-->>-Car: LuxuryEngine
+    Car->>+LuxuryCarFactory: createWheels()
+    LuxuryCarFactory-->>-Car: LuxuryWheels
+    Car->>+LuxuryCarFactory: createSeats()
+    LuxuryCarFactory-->>-Car: LuxurySeats
+    Main->>+Car: design()
+    Car->>+LuxuryEngine: design()
+    LuxuryEngine-->>-Car: "Designing Luxury Engine"
+    Car->>+LuxuryWheels: design()
+    LuxuryWheels-->>-Car: "Designing Luxury Wheels"
+    Car->>+LuxurySeats: design()
+    LuxurySeats-->>-Car: "Designing Luxury Seats"
+    Car-->>-Main: Luxury car designed
+
+    %% Sports Car Creation
+    Main->>+SportsCarFactory: new()
+    Main->>+Car: new(SportsCarFactory)
+    Car->>+SportsCarFactory: createEngine()
+    SportsCarFactory-->>-Car: SportsEngine
+    Car->>+SportsCarFactory: createWheels()
+    SportsCarFactory-->>-Car: SportsWheels
+    Car->>+SportsCarFactory: createSeats()
+    SportsCarFactory-->>-Car: SportsSeats
+    Main->>+Car: design()
+    Car->>+SportsEngine: design()
+    SportsEngine-->>-Car: "Designing Sports Engine"
+    Car->>+SportsWheels: design()
+    SportsWheels-->>-Car: "Designing Sports Wheels"
+    Car->>+SportsSeats: design()
+    SportsSeats-->>-Car: "Designing Sports Seats"
+    Car-->>-Main: Sports car designed
+```
+
 
 Here’s a categorized breakdown of the classes in your Abstract Factory pattern implementation for car creation:
 
@@ -1547,7 +1596,74 @@ classDiagram
     LinuxClient ..> Application : uses
 ```
 
+### Sequence Diagram
 
+```mermaid
+sequenceDiagram
+    participant Main
+    participant GUIFactory
+    participant WindowsGUIFactory
+    participant MacOSGUIFactory
+    participant LinuxGUIFactory
+    participant Application
+    participant Button
+    participant TextBox
+    participant Label
+
+    %% Windows GUI Flow
+    Main->>+WindowsGUIFactory: new()
+    Main->>+Application: new(WindowsGUIFactory)
+    Application->>+WindowsGUIFactory: createButton()
+    WindowsGUIFactory-->>-Application: WindowsButton
+    Application->>+WindowsGUIFactory: createTextBox()
+    WindowsGUIFactory-->>-Application: WindowsTextBox
+    Application->>+WindowsGUIFactory: createLabel()
+    WindowsGUIFactory-->>-Application: WindowsLabel
+    Main->>+Application: paint()
+    Application->>+WindowsButton: paint()
+    WindowsButton-->>-Application: "Painting Windows button"
+    Application->>+WindowsTextBox: paint()
+    WindowsTextBox-->>-Application: "Painting Windows text box"
+    Application->>+WindowsLabel: paint()
+    WindowsLabel-->>-Application: "Painting Windows label"
+    Application-->>-Main: Windows GUI rendered
+
+    %% macOS GUI Flow
+    Main->>+MacOSGUIFactory: new()
+    Main->>+Application: new(MacOSGUIFactory)
+    Application->>+MacOSGUIFactory: createButton()
+    MacOSGUIFactory-->>-Application: MacOSButton
+    Application->>+MacOSGUIFactory: createTextBox()
+    MacOSGUIFactory-->>-Application: MacOSTextBox
+    Application->>+MacOSGUIFactory: createLabel()
+    MacOSGUIFactory-->>-Application: MacOSLabel
+    Main->>+Application: paint()
+    Application->>+MacOSButton: paint()
+    MacOSButton-->>-Application: "Painting macOS button"
+    Application->>+MacOSTextBox: paint()
+    MacOSTextBox-->>-Application: "Painting macOS text box"
+    Application->>+MacOSLabel: paint()
+    MacOSLabel-->>-Application: "Painting macOS label"
+    Application-->>-Main: macOS GUI rendered
+
+    %% Linux GUI Flow
+    Main->>+LinuxGUIFactory: new()
+    Main->>+Application: new(LinuxGUIFactory)
+    Application->>+LinuxGUIFactory: createButton()
+    LinuxGUIFactory-->>-Application: LinuxButton
+    Application->>+LinuxGUIFactory: createTextBox()
+    LinuxGUIFactory-->>-Application: LinuxTextBox
+    Application->>+LinuxGUIFactory: createLabel()
+    LinuxGUIFactory-->>-Application: LinuxLabel
+    Main->>+Application: paint()
+    Application->>+LinuxButton: paint()
+    LinuxButton-->>-Application: "Painting Linux button"
+    Application->>+LinuxTextBox: paint()
+    LinuxTextBox-->>-Application: "Painting Linux text box"
+    Application->>+LinuxLabel: paint()
+    LinuxLabel-->>-Application: "Painting Linux label"
+    Application-->>-Main: Linux GUI rendered
+```
 
 Here’s a categorized breakdown of the classes in your Abstract Factory pattern implementation:
 
@@ -1990,6 +2106,60 @@ classDiagram
     Main ..> Product : uses
     Main ..> Address : uses
     Main ..> OrderBuilder : uses
+```
+### Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    participant Main
+    participant OrderBuilder
+    participant Order
+    participant Product
+    participant Address
+
+    %% Product Creation
+    Main->>+Product: new("Laptop", 1500.0)
+    Main->>+Product: new("Phone", 800.0)
+    
+    %% Address Creation
+    Main->>+Address: new("123 Main St", "NY", "NY", "10001")
+    Main->>+Address: new("456 Elm St", "LA", "CA", "90001")
+    
+    %% Order Construction
+    Main->>+OrderBuilder: new()
+    OrderBuilder-->>-Main: builder instance
+    
+    %% Building Steps
+    Main->>+OrderBuilder: addProduct(product1)
+    OrderBuilder-->>-Main: return self
+    Main->>+OrderBuilder: addProduct(product2)
+    OrderBuilder-->>-Main: return self
+    Main->>+OrderBuilder: setBillingAddress(billingAddress)
+    OrderBuilder-->>-Main: return self
+    Main->>+OrderBuilder: setShippingAddress(shippingAddress)
+    OrderBuilder-->>-Main: return self
+    Main->>+OrderBuilder: setDiscount(10.0)
+    OrderBuilder-->>-Main: return self
+    Main->>+OrderBuilder: setTax(5.0)
+    OrderBuilder-->>-Main: return self
+    
+    %% Final Build
+    Main->>+OrderBuilder: build()
+    OrderBuilder->>+Order: new(products, addresses, discount, tax)
+    Order-->>-OrderBuilder: order instance
+    OrderBuilder-->>-Main: order instance
+    
+    %% Output Results
+    Main->>+Order: getProducts()
+    Order-->>-Main: products list
+    Main->>+Order: getBillingAddress()
+    Order-->>-Main: billing address
+    Main->>+Order: getShippingAddress()
+    Order-->>-Main: shipping address
+    Main->>+Order: getDiscount()
+    Order-->>-Main: discount value
+    Main->>+Order: getTax()
+    Order-->>-Main: tax value
 ```
 
 
