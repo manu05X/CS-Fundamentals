@@ -56,6 +56,8 @@ Requirements
 ### Database Schema
 #### Tables
 
+
+
 1. City (1:M) Cinema
     - city_id (PK)
     - name 
