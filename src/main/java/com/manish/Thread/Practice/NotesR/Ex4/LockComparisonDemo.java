@@ -14,6 +14,7 @@ public class LockComparisonDemo {
         synchronized (syncLock) {
             counter++;
             System.out.println(Thread.currentThread().getName() + " (synchronized): " + counter);
+            //System.out.println("The Counter value is : " + counter);
         }
     }
 
@@ -77,7 +78,7 @@ public class LockComparisonDemo {
         for (int i = 0; i < threadCount; i++) {
             executor.submit(() -> {
                 try {
-                    for (int j = 0; j < 2; j++) {
+                    for (int j = 0; j < 4; j++) {
                         demo.incrementSemaphore();
                     }
                 } catch (InterruptedException e) {
