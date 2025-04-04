@@ -1,4 +1,4 @@
-package com.manish.LLD.ThredPool;
+package com.manish.LLD.ThreadPool;
 
 public class Main {
     public static void main(String[] args) {

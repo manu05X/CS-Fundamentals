@@ -1,4 +1,4 @@
-package com.manish.LLD.ThredPool;
+package com.manish.LLD.ThreadPool;
 
 // Task class implementing Runnable (Factory Method Pattern)
 public class Task implements Runnable{

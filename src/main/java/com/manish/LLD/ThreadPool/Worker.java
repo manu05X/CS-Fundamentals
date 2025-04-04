@@ -1,4 +1,4 @@
-package com.manish.LLD.ThredPool;
+package com.manish.LLD.ThreadPool;
 
 
 import java.util.concurrent.atomic.AtomicBoolean;
