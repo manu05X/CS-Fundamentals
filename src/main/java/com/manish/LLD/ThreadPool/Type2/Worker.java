@@ -1,26 +1,30 @@
-package com.manish.LLD.ThreadPool;
+package com.manish.LLD.ThreadPool.Type2;
 
+import com.manish.LLD.ThreadPool.Type1.Task;
 
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-// Worker class implementing Runnable (Factory Method Pattern)
 public class Worker extends Thread{
+    // Shared task queue
     private final BlockingQueue<Runnable> taskQueue;
+
+    // Shutdown flag shared across all workers
     private final AtomicBoolean isShutDownInitiated;
 
-
-    public Worker(BlockingQueue<Runnable> taskQueue,  AtomicBoolean isShutDownInitiated){
+    public Worker(BlockingQueue<Runnable> taskQueue, AtomicBoolean isShutDownInitiated){
         this.taskQueue = taskQueue;
         this.isShutDownInitiated = isShutDownInitiated;
     }
 
+
     @Override
     public void run() {
-        while (!isShutDownInitiated.get() || !taskQueue.isEmpty()){
-            try{
+        while (!taskQueue.isEmpty() || !isShutDownInitiated.get()){
+            try {
                 Runnable task = taskQueue.take();
                 task.run();
+
             } catch (InterruptedException e){
                 if(isShutDownInitiated.get()){
                     Thread.currentThread().interrupt();

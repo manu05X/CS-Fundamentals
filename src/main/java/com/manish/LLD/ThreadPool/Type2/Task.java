@@ -1,6 +1,5 @@
-package com.manish.LLD.ThreadPool;
+package com.manish.LLD.ThreadPool.Type2;
 
-// Task class implementing Runnable (Factory Method Pattern)
 public class Task implements Runnable{
     private final String taskName;
 
@@ -12,9 +11,9 @@ public class Task implements Runnable{
     public void run() {
         System.out.println("Executing Task: "+ taskName);
 
-        try{
-            Thread.sleep(1000); // Simulate task execution
-        } catch (InterruptedException e){
+        try {
+            Thread.sleep(1000); // Simulate task execution time
+        } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
 
