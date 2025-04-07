@@ -1,5 +1,12 @@
 package com.manish.LLD.CoupounSystem.Type1;
 
+import com.manish.LLD.CoupounSystem.Type1.model.*;
+import com.manish.LLD.CoupounSystem.Type1.rules.ProductTypeRule;
+import com.manish.LLD.CoupounSystem.Type1.rules.Rule;
+import com.manish.LLD.CoupounSystem.Type1.rules.UserRuleType;
+import com.manish.LLD.CoupounSystem.Type1.service.CouponRecommendation;
+import com.manish.LLD.CoupounSystem.Type1.service.CouponRecommendationImpl;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

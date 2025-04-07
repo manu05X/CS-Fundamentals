@@ -1,6 +1,9 @@
-package com.manish.LLD.CoupounSystem.Type1;
+package com.manish.LLD.CoupounSystem.Type1.rules;
 
-public class ProductTypeRule implements Rule{
+import com.manish.LLD.CoupounSystem.Type1.model.CartItem;
+import com.manish.LLD.CoupounSystem.Type1.model.Order;
+
+public class ProductTypeRule implements Rule {
     private String requiredTypeProduct;
 
     public ProductTypeRule(String requiredTypeProduct){

@@ -1,4 +1,6 @@
-package com.manish.LLD.CoupounSystem.Type1;
+package com.manish.LLD.CoupounSystem.Type1.model;
+
+import com.manish.LLD.CoupounSystem.Type1.rules.Rule;
 
 import java.util.List;
 
@@ -20,7 +22,7 @@ public class Coupon {
         return discountAmount;
     }
 
-
+    /*
     public boolean isApplicable(Order order){
         for (Rule rule : rules){
             if(!rule.check(order)){
@@ -30,4 +32,11 @@ public class Coupon {
 
         return true;
     }
+
+     */
+
+    public boolean isApplicable(Order order){
+        return rules.parallelStream().allMatch(rule -> rule.check(order));
+    }
 }
+

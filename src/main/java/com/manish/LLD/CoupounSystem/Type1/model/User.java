@@ -1,4 +1,4 @@
-package com.manish.LLD.CoupounSystem.Type1;
+package com.manish.LLD.CoupounSystem.Type1.model;
 
 import java.util.List;
 
