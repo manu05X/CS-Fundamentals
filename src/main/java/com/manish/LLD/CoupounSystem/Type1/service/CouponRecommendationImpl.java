@@ -73,3 +73,5 @@ public class CouponRecommendationImpl implements CouponRecommendation {
         executorService.shutdown();
     }
 }
+
+
