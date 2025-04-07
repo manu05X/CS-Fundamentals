@@ -42,7 +42,8 @@ public class OrderContext {
 
     // Helper methods
     public boolean isCashOnDelivery() {
-        return paymentMethod == PaymentMethod.CASH_ON_DELIVERY;
+        //return paymentMethod == PaymentMethod.CASH_ON_DELIVERY;
+        return paymentMethod == paymentMethod;
     }
 
     public boolean isUsingWallet() {

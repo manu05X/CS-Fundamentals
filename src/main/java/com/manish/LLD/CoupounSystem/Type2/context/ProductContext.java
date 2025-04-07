@@ -31,13 +31,14 @@ public class ProductContext {
     }
 
     private boolean checkForPremiumProducts() {
-        return products.stream()
-                .anyMatch(Product::isPremium);
+        //return products.stream().anyMatch(Product::isPremium);
+        return true;
     }
 
     private boolean checkForDiscountedItems() {
-        return products.stream()
-                .anyMatch(Product::isDiscounted);
+//        return products.stream()
+//                .anyMatch(Product::isDiscounted);
+        return true;
     }
 
     // Additional helper methods

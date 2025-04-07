@@ -69,3 +69,187 @@
 - Filters by service, state, and severity.
 - Group alarms by resource or tag.
 
+
+---
+
+## 1. Class Diagram
+
+```mermaid
+classDiagram
+    class Alarm {
+        <<interface>>
+        +addSubscriber(Subscriber)
+        +removeSubscriber(Subscriber)
+        +notifySubscribers()
+    }
+
+    class MetricAlarm {
+        -List~Subscriber~ subscribers
+        -String state
+        -String alarmMessage
+        +setState(String)
+        +addSubscriber(Subscriber)
+        +removeSubscriber(Subscriber)
+        +notifySubscribers()
+    }
+
+    class AlarmBuilder {
+        -String metricName
+        -double threshold
+        -String condition
+        -MetricAlarm alarm
+        +setAlarmMessage(String) AlarmBuilder
+        +addSubscriber(Subscriber) AlarmBuilder
+        +build() MetricAlarm
+    }
+
+    class Subscriber {
+        <<interface>>
+        +notify(String)
+    }
+
+    class EmailSubscriber {
+        -String email
+        +notify(String)
+    }
+
+    class SmsSubscriber {
+        -String phoneNumber
+        +notify(String)
+    }
+
+    Alarm <|.. MetricAlarm
+    Subscriber <|.. EmailSubscriber
+    Subscriber <|.. SmsSubscriber
+    MetricAlarm "1" *-- "0..*" Subscriber
+    AlarmBuilder --> MetricAlarm
+```
+
+## 2. Database Schema Diagram
+```mermaid
+erDiagram
+    ALARM ||--o{ SUBSCRIBER : has
+    ALARM ||--o{ ALARM_HISTORY : has
+
+    ALARM {
+        string alarm_id PK
+        string metric_name
+        double threshold
+        string condition
+        string state
+        string message
+        datetime created_at
+    }
+
+    SUBSCRIBER {
+        string subscriber_id PK
+        string alarm_id FK
+        string type
+        string address
+    }
+
+    ALARM_HISTORY {
+        string history_id PK
+        string alarm_id FK
+        string old_state
+        string new_state
+        datetime changed_at
+    }
+
+```
+
+## 3. State Diagram (Alarm Lifecycle)
+```mermaid
+stateDiagram-v2
+    [*] --> OK
+    OK --> ALARM: Metric exceeds threshold
+    ALARM --> OK: Metric back to normal
+    OK --> INSUFFICIENT_DATA: No metric data
+    INSUFFICIENT_DATA --> OK: Data available
+    INSUFFICIENT_DATA --> ALARM: Data exceeds threshold
+    ALARM --> INSUFFICIENT_DATA: No metric data
+```
+
+## 4. Sequence Diagram (Alarm Trigger Flow)
+
+```mermaid
+sequenceDiagram
+    participant MetricMonitor
+    participant MetricAlarm
+    participant EmailSubscriber
+    participant SmsSubscriber
+    
+    MetricMonitor->>MetricAlarm: setState("ALARM")
+    activate MetricAlarm
+    MetricAlarm->>MetricAlarm: Evaluate condition
+    MetricAlarm->>EmailSubscriber: notify("CPU threshold exceeded - ALARM")
+    activate EmailSubscriber
+    EmailSubscriber-->>MetricAlarm: ACK
+    deactivate EmailSubscriber
+    MetricAlarm->>SmsSubscriber: notify("CPU threshold exceeded - ALARM")
+    activate SmsSubscriber
+    SmsSubscriber-->>MetricAlarm: ACK
+    deactivate SmsSubscriber
+    MetricAlarm-->>MetricMonitor: State updated
+    deactivate MetricAlarm
+```
+
+## 5. Code Flow Diagram
+```mermaid
+flowchart TD
+    A[AlarmBuilder] -->|setAlarmMessage| B[Create MetricAlarm]
+    B --> C[Add Subscribers]
+    C --> D[Build Alarm]
+    D --> E[Metric Monitor]
+    E -->|Threshold Crossed| F[Set Alarm State]
+    F --> G[Notify Subscribers]
+    G --> H[Email Notification]
+    G --> I[SMS Notification]
+    
+    subgraph BuilderPattern
+        A --> B --> C --> D
+    end
+    
+    subgraph ObserverPattern
+        F --> G --> H & I
+    end
+```
+
+---
+
+## Potential Interview Questions
+
+---
+
+## 1. Design
+
+- **How would you add support for composite alarms (AND/OR conditions)?**
+- **How would you prevent notification storms during flapping states?**
+
+---
+
+## 2. Scalability
+
+- **How would you handle 1M+ alarms with real-time evaluation?**
+- **Would you use a push or pull model for metric evaluation? Why?**
+
+---
+
+## 3. Concurrency
+
+- **How would you make subscriber notifications thread-safe?**
+- **What happens if a subscriber's `notify()` method blocks?**
+
+---
+
+## 4. Cloud Integration
+
+- **How would you integrate this with AWS CloudWatch metrics?**
+- **What AWS services would you use for production deployment?**
+
+---
+
+## 5. Testing
+
+- **How would you test state transition edge cases?**
+- **How would you mock external dependencies in subscriber tests?**
