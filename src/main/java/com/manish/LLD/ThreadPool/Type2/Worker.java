@@ -1,36 +1,36 @@
 package com.manish.LLD.ThreadPool.Type2;
 
-import com.manish.LLD.ThreadPool.Type1.Task;
-
-import java.util.concurrent.BlockingQueue;
+import com.manish.LLD.ThreadPool.Type2.strategy.TaskSchedulingStrategy;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Worker extends Thread{
-    // Shared task queue
-    private final BlockingQueue<Runnable> taskQueue;
-
-    // Shutdown flag shared across all workers
+public class Worker extends Thread {
+    private final TaskSchedulingStrategy schedulingStrategy;
     private final AtomicBoolean isShutDownInitiated;
 
-    public Worker(BlockingQueue<Runnable> taskQueue, AtomicBoolean isShutDownInitiated){
-        this.taskQueue = taskQueue;
-        this.isShutDownInitiated = isShutDownInitiated;
+    public Worker(TaskSchedulingStrategy strategy, AtomicBoolean shutdownFlag) {
+        this.schedulingStrategy = strategy;
+        this.isShutDownInitiated = shutdownFlag;
     }
-
 
     @Override
     public void run() {
-        while (!taskQueue.isEmpty() || !isShutDownInitiated.get()){
+        while (!isShutDownInitiated.get() || hasPendingTasks()) {
             try {
-                Runnable task = taskQueue.take();
+                // Get next task using the strategy
+                Runnable task = schedulingStrategy.nextTask();
                 task.run();
-
-            } catch (InterruptedException e){
-                if(isShutDownInitiated.get()){
+            } catch (InterruptedException e) {
+                if(isShutDownInitiated.get()) {
                     Thread.currentThread().interrupt();
                     break;
                 }
             }
         }
+    }
+
+    private boolean hasPendingTasks() {
+        // Strategy-specific check for pending tasks
+        // May need to add a method to the strategy interface for this
+        return true; // Simplified for this example
     }
 }
