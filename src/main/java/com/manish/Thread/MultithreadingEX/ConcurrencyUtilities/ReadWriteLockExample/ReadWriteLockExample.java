@@ -8,9 +8,11 @@ public class ReadWriteLockExample {
 
     public static void main(String[] args) {
         SharedData sharedData = new SharedData();
+
         ReaderThread reader1 = new ReaderThread(sharedData);
         ReaderThread reader2 = new ReaderThread(sharedData);
         WriterThread writer = new WriterThread(sharedData);
+
         reader1.start();
         reader2.start();
         writer.start();

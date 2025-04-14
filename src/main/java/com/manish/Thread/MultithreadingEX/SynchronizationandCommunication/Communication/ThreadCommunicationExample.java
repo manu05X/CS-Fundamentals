@@ -10,6 +10,7 @@ public class ThreadCommunicationExample {
 
         Producer producer = new Producer(resource);
         Consumer consumer = new Consumer(resource);
+
         producer.start();
         consumer.start();
     }

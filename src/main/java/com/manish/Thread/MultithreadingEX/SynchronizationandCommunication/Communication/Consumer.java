@@ -2,7 +2,7 @@ package com.manish.Thread.MultithreadingEX.SynchronizationandCommunication.Commu
 
 import com.manish.Thread.MultithreadingEX.SynchronizationandCommunication.Communication.SharedResource;
 
-public class Consumer extends Thread {
+class Consumer extends Thread {
     private SharedResource resource;
 
     public Consumer(SharedResource resource) {

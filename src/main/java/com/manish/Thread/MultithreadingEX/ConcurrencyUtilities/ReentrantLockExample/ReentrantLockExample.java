@@ -7,8 +7,10 @@ public class ReentrantLockExample {
 
     public static void main(String[] args) {
         SharedCounter counter = new SharedCounter();
+
         CounterThread t1 = new CounterThread(counter);
         CounterThread t2 = new CounterThread(counter);
+
         t1.start();
         t2.start();
 

@@ -1,1 +1,3 @@
-Hello, FileChannel!
+Hello, this is an example of writing to a file.
+This is the second line.
+This is the third line.

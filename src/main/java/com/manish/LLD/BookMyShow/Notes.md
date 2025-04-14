@@ -317,6 +317,166 @@ erDiagram
         enum seat_type
     }
 ```
+---
+
+## Complete Diagram
+```mermaid
+erDiagram
+    CITIES ||--o{ CINEMAS : "1:N"
+    CINEMAS ||--o{ CINEMA_HALLS : "1:N"
+    CINEMA_HALLS ||--o{ SEATS : "1:N"
+    MOVIES ||--o{ SHOWS : "1:N"
+    CINEMA_HALLS ||--o{ SHOWS : "1:N"
+    MOVIES }o--|| GENRES : "M:N via MOVIE_GENRES"
+    USERS ||--o{ BOOKINGS : "1:N"
+    SHOWS ||--o{ BOOKINGS : "1:N"
+    BOOKINGS ||--o{ TICKETS : "1:N"
+    BOOKINGS }o--|| DISCOUNT_COUPONS : "0..1"
+    TICKETS }o--|| SEATS : "1:1"
+    BOOKINGS ||--|| PAYMENTS : "1:1"
+
+    CITIES {
+        string city_id PK
+        string name
+        string state
+        string country
+        datetime created_at
+        datetime updated_at
+    }
+
+    CINEMAS {
+        string cinema_id PK
+        string city_id FK
+        string name
+        string address
+        string contact_number
+        datetime opening_time
+        datetime closing_time
+        datetime created_at
+        datetime updated_at
+    }
+
+    CINEMA_HALLS {
+        string hall_id PK
+        string cinema_id FK
+        string name
+        int total_seats
+        string screen_type
+        datetime created_at
+        datetime updated_at
+    }
+
+    SEATS {
+        string seat_id PK
+        string hall_id FK
+        string seat_number
+        enum seat_type
+        string row_number
+        bool is_booked
+        datetime created_at
+        datetime updated_at
+    }
+
+    MOVIES {
+        string movie_id PK
+        string title
+        string description
+        int duration_minutes
+        string language
+        date release_date
+        float rating
+        string director
+        string poster_url
+        datetime created_at
+        datetime updated_at
+    }
+
+    GENRES {
+        string genre_id PK
+        string name
+        string description
+        datetime created_at
+        datetime updated_at
+    }
+
+    MOVIE_GENRES {
+        string movie_id FK
+        string genre_id FK
+        datetime created_at
+    }
+
+    SHOWS {
+        string show_id PK
+        string movie_id FK
+        string hall_id FK
+        datetime start_time
+        datetime end_time
+        float base_price
+        datetime created_at
+        datetime updated_at
+    }
+
+    USERS {
+        string user_id PK
+        string name
+        string email
+        string phone
+        string password_hash
+        datetime email_verified_at
+        datetime created_at
+        datetime updated_at
+    }
+
+    BOOKINGS {
+        string booking_id PK
+        string user_id FK
+        string show_id FK
+        string coupon_id FK
+        datetime booking_time
+        enum status
+        datetime created_at
+        datetime updated_at
+    }
+
+    TICKETS {
+        string ticket_id PK
+        string booking_id FK
+        string seat_id FK
+        float price
+        string qr_code_url
+        datetime created_at
+        datetime updated_at
+    }
+
+    PAYMENTS {
+        string payment_id PK
+        string booking_id FK
+        float amount
+        enum method
+        enum status
+        string transaction_id
+        datetime transaction_time
+        datetime created_at
+        datetime updated_at
+    }
+
+    DISCOUNT_COUPONS {
+        string coupon_id PK
+        string code
+        float discount_percent
+        float max_discount
+        datetime valid_from
+        datetime valid_until
+        int usage_limit
+        datetime created_at
+        datetime updated_at
+    }
+
+```
+
+
+
+
 
 ---
 

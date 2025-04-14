@@ -4,32 +4,32 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 class SharedData {
     private int data = 0;
-    private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+    private ReentrantReadWriteLock reentrantReadWriteLock = new ReentrantReadWriteLock();
 
     SharedData() {
     }
 
     public void writeData(int data) {
-        this.lock.writeLock().lock();
+        this.reentrantReadWriteLock.writeLock().lock();
 
         try {
             this.data = data;
             System.out.println("Written data: " + data);
         } finally {
-            this.lock.writeLock().unlock();
+            this.reentrantReadWriteLock.writeLock().unlock();
         }
 
     }
 
     public int readData() {
-        this.lock.readLock().lock();
+        this.reentrantReadWriteLock.readLock().lock();
 
         int var1;
         try {
             System.out.println("Read data: " + this.data);
             var1 = this.data;
         } finally {
-            this.lock.readLock().unlock();
+            this.reentrantReadWriteLock.readLock().unlock();
         }
 
         return var1;
