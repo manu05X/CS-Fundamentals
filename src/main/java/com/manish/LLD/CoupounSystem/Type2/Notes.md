@@ -5,7 +5,7 @@
 - **Admin**: Manages coupon rules and configurations.
 - **Coupon Engine**: Core system that evaluates and recommends coupons.
 - **Order Service**: Provides order details for evaluation.
-- **User Service**: Provides user information (type, history, etc.).
+- **com.manish.LLD.PropertyPlatformLLD.Type1.User Service**: Provides user information (type, history, etc.).
 - **Product Service**: Provides product information (categories, prices, etc.).
 
 ## 🧱 Core Classes

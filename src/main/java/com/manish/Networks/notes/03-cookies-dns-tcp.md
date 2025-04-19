@@ -18,7 +18,7 @@
 
 
 ### UDP
-> The User Datagram Protocol, or UDP, is a communication protocol used across the Internet for especially time-sensitive transmissions such as video playback or DNS lookups. It speeds up communications by not formally establishing a connection before data is transferred
+> The com.manish.LLD.PropertyPlatformLLD.Type1.User Datagram Protocol, or UDP, is a communication protocol used across the Internet for especially time-sensitive transmissions such as video playback or DNS lookups. It speeds up communications by not formally establishing a connection before data is transferred
 
 
 ### 3-way handshake

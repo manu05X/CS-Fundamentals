@@ -945,7 +945,7 @@ public class com.manish.OOD.CreationalDesign.BuilderDesign.Pizza.Main {
 **Common Use Cases:**
 
 > - **Event handling:** When an event occurs (e.g., button click), all registered observers are notified to take appropriate action.
-> - **User interface components:** Changes in UI components (e.g., checkbox state) can trigger actions in multiple observers.
+> - **com.manish.LLD.PropertyPlatformLLD.Type1.User interface components:** Changes in UI components (e.g., checkbox state) can trigger actions in multiple observers.
 > - **Stock market data:** Notifies observers (like graphs or alerts) whenever stock prices change.
 > - **Weather monitoring:** Observers are notified of changes in weather data like temperature, humidity, or pressure, and can update displays accordingly.
 > - **Database management systems:** When the state of a database changes (e.g., a record is updated), the registered observers can take actions like updating caches or notifying users.

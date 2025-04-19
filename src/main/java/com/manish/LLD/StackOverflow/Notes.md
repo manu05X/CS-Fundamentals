@@ -23,7 +23,7 @@ question.
 ---
 
 ### Classes Identification
-1. User (Abstract)
+1. com.manish.LLD.PropertyPlatformLLD.Type1.User (Abstract)
    - Guest 
    - Member 
    - Moderator (extends Member)
@@ -131,13 +131,13 @@ question.
 
 ### 1:M Relationships:
 
-- A User can create many Posts (Questions, Answers, Comments)
+- A com.manish.LLD.PropertyPlatformLLD.Type1.User can create many Posts (Questions, Answers, Comments)
 - A Question can have many Answers 
 - A Post (Question/Answer) can have many Comments 
-- A User can receive many Notifications 
-- A User can earn many Badges 
-- A User can cast many Votes 
-- A User can create many Flags
+- A com.manish.LLD.PropertyPlatformLLD.Type1.User can receive many Notifications 
+- A com.manish.LLD.PropertyPlatformLLD.Type1.User can earn many Badges 
+- A com.manish.LLD.PropertyPlatformLLD.Type1.User can cast many Votes 
+- A com.manish.LLD.PropertyPlatformLLD.Type1.User can create many Flags
 
 ### M:M Relationships:
 - Questions and Tags (through question_tags)
@@ -147,8 +147,8 @@ question.
 classDiagram
     direction TB
 
-    %% User Hierarchy
-    class User {
+    %% com.manish.LLD.PropertyPlatformLLD.Type1.User Hierarchy
+    class com.manish.LLD.PropertyPlatformLLD.Type1.User {
         <<abstract>>
         -int userId
         -String username
@@ -184,8 +184,8 @@ classDiagram
         +promoteToModerator()
     }
 
-    User <|-- Guest
-    User <|-- Member
+    com.manish.LLD.PropertyPlatformLLD.Type1.User <|-- Guest
+    com.manish.LLD.PropertyPlatformLLD.Type1.User <|-- Member
     Member <|-- Moderator
     Moderator <|-- Admin
 
@@ -274,7 +274,7 @@ classDiagram
 
     class Database {
         -static Database instance
-        -List~User~ users
+        -List~com.manish.LLD.PropertyPlatformLLD.Type1.User~ users
         -List~Post~ posts
         -List~Vote~ votes
         -Map~Integer,List of Tag~ questionTags
@@ -298,7 +298,7 @@ classDiagram
     Question "1" *-- "0..*" Tag : taggedWith
     Answer "1" *-- "0..*" Comment : has
 
-    Database "1" *-- "0..*" User : manages
+    Database "1" *-- "0..*" com.manish.LLD.PropertyPlatformLLD.Type1.User : manages
     Database "1" *-- "0..*" Post : stores
     Database "1" *-- "0..*" Vote : tracks
     Database "1" *-- "0..*" Tag : maintains
@@ -310,7 +310,7 @@ classDiagram
 
 ---
 ## Key Features Implemented
-1. User System: Guest, Member, Moderator, Admin hierarchy with appropriate permissions 
+1. com.manish.LLD.PropertyPlatformLLD.Type1.User System: Guest, Member, Moderator, Admin hierarchy with appropriate permissions 
 2. Post System: Questions, Answers, Comments with proper relationships 
 3. Voting: Upvote/downvote functionality 
 4. Moderation: Close/reopen/undelete questions 
@@ -343,12 +343,12 @@ In the provided LLD (Low-Level Design), the Database class uses Java Collections
 |------------------------|----------------------------------|--------------------------|---------------------------------|
 | `List<Post>`           | Stores all questions/answers/comments | `posts`               | `post_id` (PK), `user_id` (FK)  |
 | `Map<Integer, List<Tag>>` | Question-to-Tag mappings         | `question_tags` (Junction table) | `question_id` (FK), `tag_id` (FK) |
-| `List<User>`           | Registered user accounts          | `users`                  | `user_id` (PK)                  |
+| `List<com.manish.LLD.PropertyPlatformLLD.Type1.User>`           | Registered user accounts          | `users`                  | `user_id` (PK)                  |
 | `List<Vote>`           | All upvotes/downvotes            | `votes`                  | `vote_id` (PK), `post_id` (FK), `user_id` (FK) |
 | `List<Badge>`          | Available badge types            | `badges`                 | `badge_id` (PK)                 |
 | `List<Flag>`           | Content flags/reports            | `flags`                  | `flag_id` (PK), `post_id` (FK), `user_id` (FK) |
 | `List<Bounty>`         | Active question bounties         | `bounties`               | `bounty_id` (PK), `question_id` (FK), `user_id` (FK) |
-| `List<Notification>`    | User notifications               | `notifications`          | `notification_id` (PK), `user_id` (FK) |
+| `List<Notification>`    | com.manish.LLD.PropertyPlatformLLD.Type1.User notifications               | `notifications`          | `notification_id` (PK), `user_id` (FK) |
 
 3. Correctness for LLD Context
    - In LLD, we focus on interfaces and relationships rather than storage implementation 

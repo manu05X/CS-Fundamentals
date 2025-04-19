@@ -338,14 +338,14 @@ Inheritance is the mechanism that allows one class to acquire all the properties
 In Java, we do this by extending the parent class. Thus, the child class gets all the properties from the parent. We will talk about inheritance in detail later.
 
 ```java
-public class User {
+public class com.manish.LLD.PropertyPlatformLLD.Type1.User {
     String username;
     String email;
 };
 ```
-Student inherits all properties and methods from User.
+Student inherits all properties and methods from com.manish.LLD.PropertyPlatformLLD.Type1.User.
 ```java
-public class Student extends User{
+public class Student extends com.manish.LLD.PropertyPlatformLLD.Type1.User{
     int marks;
 }
 ```

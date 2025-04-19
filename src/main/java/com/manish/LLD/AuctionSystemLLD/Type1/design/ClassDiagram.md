@@ -1,6 +1,6 @@
 ```mermaid
 classDiagram
-    class User {
+    class com.manish.LLD.PropertyPlatformLLD.Type1.User {
         <<abstract>>
         -Long id
         -String name
@@ -51,7 +51,7 @@ classDiagram
     }
 
     class AuctionSystem {
-        -List~User~ users
+        -List~com.manish.LLD.PropertyPlatformLLD.Type1.User~ users
         -List~Auction~ auctions
         +addBuyer(String)
         +addSeller(String)
@@ -75,11 +75,11 @@ classDiagram
         WITHDRAWN
     }
 
-    User <|-- Buyer
-    User <|-- Seller
+    com.manish.LLD.PropertyPlatformLLD.Type1.User <|-- Buyer
+    com.manish.LLD.PropertyPlatformLLD.Type1.User <|-- Seller
     Auction "1" *-- "*" Bid
     Auction "*" --* "1" Seller
     Bid "*" --* "1" Buyer
-    AuctionSystem "1" --* "*" User
+    AuctionSystem "1" --* "*" com.manish.LLD.PropertyPlatformLLD.Type1.User
     AuctionSystem "1" --* "*" Auction
 ```

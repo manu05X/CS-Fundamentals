@@ -7,12 +7,12 @@ Should Joe store this result in a database?
 2. The website is a hit. Now Joe wants to show user their past results. So he has the store the values in a database.
 Which of the following should not be in the database?
 
-    >A. User details \
+    >A. com.manish.LLD.PropertyPlatformLLD.Type1.User details \
     B. Input and Output (number and factorial) \
-    C. User's Amazon orders
+    C. com.manish.LLD.PropertyPlatformLLD.Type1.User's Amazon orders
 ---
 3. Joe Bloggs decides to use a MySql database. But he puts all his data in the database. Which of the following can he store as file?
-    >A. User details \
+    >A. com.manish.LLD.PropertyPlatformLLD.Type1.User details \
     B. Input and Output (number and factorial) \
     C. AWS credentials  \
     D. Passwords
@@ -26,6 +26,6 @@ Which of the following should not be in the database?
 ---
 # Answers
 1. A. `Yes`
-2. C `User's Amazon orders`
+2. C `com.manish.LLD.PropertyPlatformLLD.Type1.User's Amazon orders`
 3. C `AWS credentials`
 4. A `Primary key`

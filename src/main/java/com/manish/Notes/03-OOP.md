@@ -70,21 +70,21 @@ It makes sense to create a basic design and extend it to create their specialize
 Similarly, with inheritance, we can create a class with basic features and behavior and create its specialized versions, by creating classes, that inherit this base class. In the same way, interfaces can extend existing interfaces.
 
 
-Let us create a new class `User` which should be the parent class of `Student`:
+Let us create a new class `com.manish.LLD.PropertyPlatformLLD.Type1.User` which should be the parent class of `Student`:
 
 ```java
-public class User {
+public class com.manish.LLD.PropertyPlatformLLD.Type1.User {
     private String name;
     private String email;
 
-    public User(String name, String email) {
+    public com.manish.LLD.PropertyPlatformLLD.Type1.User(String name, String email) {
         this.name = name;
         this.email = email;
     }
 }
 ```
 
-Now, let us create a new class `Student` which should be the child class of `User`. Let us add some methods specific to the student class:
+Now, let us create a new class `Student` which should be the child class of `com.manish.LLD.PropertyPlatformLLD.Type1.User`. Let us add some methods specific to the student class:
 
 ```java
 public class Student {
@@ -98,7 +98,7 @@ public class Student {
 Now in order to inherit the methods and fields of the parent class, we need to use the keyword `extends`:
 
 ```java
-public class Student extends User {
+public class Student extends com.manish.LLD.PropertyPlatformLLD.Type1.User {
     private String batchName;
     private Integer psp;
     
@@ -109,7 +109,7 @@ public class Student extends User {
 To pass the values to the parent class, we need to create a constructor and use the keyword `super`:
 
 ```java
-public class Student extends User {
+public class Student extends com.manish.LLD.PropertyPlatformLLD.Type1.User {
     private String batchName;
     private Integer psp;
     
@@ -163,10 +163,10 @@ Compile-time polymorphism can be achieved by method overloading, and Runtime pol
 
 Subtyping is a concept in object-oriented programming that allows a variable of a base class to reference a derived class object. This is called polymorphism, because the variable can take on many forms. The variable can be used to call methods that are defined in the base class, but the actual implementation of the method is defined in the derived class.
 
-For example, the following is our User class:
+For example, the following is our com.manish.LLD.PropertyPlatformLLD.Type1.User class:
 
 ```java
-public class User {
+public class com.manish.LLD.PropertyPlatformLLD.Type1.User {
     private String name;
     private String email;
 }
@@ -175,16 +175,16 @@ public class User {
 The user class is extended by the Student class:
 
 ```java
-public class Student extends User {
+public class Student extends com.manish.LLD.PropertyPlatformLLD.Type1.User {
     private String batchName;
     private Integer psp;
 }
 ```
 
-The Student class inherits the name and email properties from the User class. The Student class also has its own properties batchName and psp. The Student class can be used in place of the User class, because the Student class is a subtype of the User class. The following is an example of how this works:
+The Student class inherits the name and email properties from the com.manish.LLD.PropertyPlatformLLD.Type1.User class. The Student class also has its own properties batchName and psp. The Student class can be used in place of the com.manish.LLD.PropertyPlatformLLD.Type1.User class, because the Student class is a subtype of the com.manish.LLD.PropertyPlatformLLD.Type1.User class. The following is an example of how this works:
 
 ```java
-User user = new Student();
+com.manish.LLD.PropertyPlatformLLD.Type1.User user = new Student();
 ```
 
 ### Method Overloading
@@ -194,7 +194,7 @@ Method overloading is a feature that allows a class to have more than one method
 Let's take an example of a class that has two methods having the same name but different in parameters.
 
 ```java
-public class User {
+public class com.manish.LLD.PropertyPlatformLLD.Type1.User {
     private String name;
     private String email;
 
@@ -228,10 +228,10 @@ Rules for overriding a method in Java
 * There must be inheritance between classes.
 * The method between the classes must be the same(name of the class, number, and type of arguments must be the same).
 
-Let's add a method to our User class:
+Let's add a method to our com.manish.LLD.PropertyPlatformLLD.Type1.User class:
 
 ```java
-public class User {
+public class com.manish.LLD.PropertyPlatformLLD.Type1.User {
     private String name;
     private String email;
 
@@ -244,7 +244,7 @@ public class User {
 Now, let's add a method to our Student class:
 
 ```java
-public class Student extends User {
+public class Student extends com.manish.LLD.PropertyPlatformLLD.Type1.User {
     private String batchName;
     private Integer psp;
 
@@ -255,7 +255,7 @@ public class Student extends User {
 }
 ```
 
-In the above example, we have added a method to the Student class that overrides the method in the User class. The Student class has a method with the same name and parameters as the User class. The Student class method has an additional print statement that prints the batchName and psp properties.
+In the above example, we have added a method to the Student class that overrides the method in the com.manish.LLD.PropertyPlatformLLD.Type1.User class. The Student class has a method with the same name and parameters as the com.manish.LLD.PropertyPlatformLLD.Type1.User class. The Student class method has an additional print statement that prints the batchName and psp properties.
 
 The @Override annotation is optional, but it is a good practice to use it. It is used to ensure that the method is actually being overridden. If the method is not being overridden, the compiler will throw an error.
 

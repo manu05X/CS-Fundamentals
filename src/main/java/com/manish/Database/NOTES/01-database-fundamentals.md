@@ -177,7 +177,7 @@ A database management systems aims to provide a single interface to a set of dat
 
 > Codd proposed the following functions and services a fully-fledged general purpose DBMS should provide
 > * Data storage, retrieval and update
-> * User accessible catalog or data dictionary describing the metadata
+> * com.manish.LLD.PropertyPlatformLLD.Type1.User accessible catalog or data dictionary describing the metadata
 > * Support for transactions and concurrency
 > * Facilities for recovering the database should it become damaged
 > * Support for authorization of access and update of data

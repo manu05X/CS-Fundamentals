@@ -66,7 +66,7 @@
 - `quantity`: int
 - `price`: BigDecimal
 
-### 6. User
+### 6. com.manish.LLD.PropertyPlatformLLD.Type1.User
 - `userId`: String (UUID)
 - `name`: String
 - `email`: String
@@ -150,10 +150,10 @@
 - **FlashSale 1:M FlashSaleProduct** - One flash sale can have many products
 - **FlashSale 1:M Order** - One flash sale can have many orders
 - **Product 1:M FlashSaleProduct** - One product can be part of many flash sales
-- **User 1:M Order** - One user can place many orders
+- **com.manish.LLD.PropertyPlatformLLD.Type1.User 1:M Order** - One user can place many orders
 - **Order 1:M OrderItem** - One order can have many items
 - **Product 1:1 Inventory** - One product has one inventory record
-- **User M:M FlashSale (through FlashSaleParticipation)** - Many users can participate in many flash sales
+- **com.manish.LLD.PropertyPlatformLLD.Type1.User M:M FlashSale (through FlashSaleParticipation)** - Many users can participate in many flash sales
 
 ## Concurrency Control Strategies
 
@@ -215,7 +215,7 @@ classDiagram
         +BigDecimal price
     }
 
-    class User {
+    class com.manish.LLD.PropertyPlatformLLD.Type1.User {
         +String userId
         +String name
         +String email
@@ -239,10 +239,10 @@ classDiagram
     FlashSale "1" *-- "many" FlashSaleProduct
     FlashSale "1" *-- "many" Order
     Product "1" *-- "many" FlashSaleProduct
-    User "1" *-- "many" Order
+    com.manish.LLD.PropertyPlatformLLD.Type1.User "1" *-- "many" Order
     Order "1" *-- "many" OrderItem
     Product "1" -- "1" Inventory
-    User "many" -- "many" FlashSale : through FlashSaleParticipation
+    com.manish.LLD.PropertyPlatformLLD.Type1.User "many" -- "many" FlashSale : through FlashSaleParticipation
 ```
 
 ## Database Schema Diagram
@@ -326,14 +326,14 @@ erDiagram
 ## Sequence Diagram (Order Placement)
 ```mermaid
 sequenceDiagram
-    participant User
+    participant com.manish.LLD.PropertyPlatformLLD.Type1.User
     participant Controller
     participant Service
     participant Repository
     participant Redis
     participant DB
 
-    User->>Controller: POST /flash-sales/{id}/orders
+    com.manish.LLD.PropertyPlatformLLD.Type1.User->>Controller: POST /flash-sales/{id}/orders
     Controller->>Service: placeOrder(userId, flashSaleId, products)
     
     alt for each product
@@ -350,7 +350,7 @@ sequenceDiagram
         else if not available
             Service->>Redis: Release lock
             Service-->>Controller: Error - Insufficient inventory
-            Controller-->>User: 400 Bad Request
+            Controller-->>com.manish.LLD.PropertyPlatformLLD.Type1.User: 400 Bad Request
         end
         Service->>Redis: Release lock
     end
@@ -363,7 +363,7 @@ sequenceDiagram
     Repository->>DB: INSERT/UPDATE participation
     DB-->>Repository: Success
     Service-->>Controller: Order confirmation
-    Controller-->>User: 201 Created
+    Controller-->>com.manish.LLD.PropertyPlatformLLD.Type1.User: 201 Created
 ```
 
 ---
@@ -415,7 +415,7 @@ public class FlashSaleSystem {
     private Map<String, Product> products = new ConcurrentHashMap<>();
     private Map<String, FlashSale> flashSales = new ConcurrentHashMap<>();
     private Map<String, Inventory> inventories = new ConcurrentHashMap<>();
-    private Map<String, User> users = new ConcurrentHashMap<>();
+    private Map<String, com.manish.LLD.PropertyPlatformLLD.Type1.User> users = new ConcurrentHashMap<>();
     private List<Order> orders = new CopyOnWriteArrayList<>();
     
     // Distributed lock simulation
@@ -451,8 +451,8 @@ public class FlashSaleSystem {
         flashSales.put(fs.getFlashSaleId(), fs);
         
         // Initialize some users
-        users.put("u1", new User("u1", "Alice", "alice@example.com", "1234567890"));
-        users.put("u2", new User("u2", "Bob", "bob@example.com", "0987654321"));
+        users.put("u1", new com.manish.LLD.PropertyPlatformLLD.Type1.User("u1", "Alice", "alice@example.com", "1234567890"));
+        users.put("u2", new com.manish.LLD.PropertyPlatformLLD.Type1.User("u2", "Bob", "bob@example.com", "0987654321"));
         
         // Initialize locks for products
         productLocks.put("p1", new ReentrantLock());
@@ -460,7 +460,7 @@ public class FlashSaleSystem {
     }
     
     public boolean placeOrder(String userId, String flashSaleId, Map<String, Integer> productQuantities) {
-        User user = users.get(userId);
+        com.manish.LLD.PropertyPlatformLLD.Type1.User user = users.get(userId);
         FlashSale flashSale = flashSales.get(flashSaleId);
         
         if (user == null || flashSale == null || flashSale.getStatus() != FlashSaleStatus.ACTIVE) {
@@ -579,7 +579,7 @@ public class FlashSaleSystem {
                 orderItems.put("p1", 1); // Try to buy 1 smartphone
                 
                 boolean success = system.placeOrder("u" + userIdNum, "fs1", orderItems);
-                System.out.println("User u" + userIdNum + " order " + (success ? "successful" : "failed"));
+                System.out.println("com.manish.LLD.PropertyPlatformLLD.Type1.User u" + userIdNum + " order " + (success ? "successful" : "failed"));
             });
         }
         
@@ -662,7 +662,7 @@ class OrderItem {
     // Constructor, getters, setters
 }
 
-class User {
+class com.manish.LLD.PropertyPlatformLLD.Type1.User {
     private String userId;
     private String name;
     private String email;

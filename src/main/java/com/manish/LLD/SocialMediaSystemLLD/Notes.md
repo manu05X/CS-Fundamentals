@@ -23,12 +23,12 @@ friend request or comment on their post.
 ---
 
 ### Actors
-1. Member (Regular User)
+1. Member (Regular com.manish.LLD.PropertyPlatformLLD.Type1.User)
 2. Admin (Special type of member with additional privileges)
 3. System (Background processes for notifications, etc.)
 
 ### Core Classes
-1. User/Member
+1. com.manish.LLD.PropertyPlatformLLD.Type1.User/Member
 2. Profile
 3. WorkExperience
 4. Education
@@ -630,15 +630,15 @@ erDiagram
 
 ```mermaid
 sequenceDiagram
-    actor User
+    actor com.manish.LLD.PropertyPlatformLLD.Type1.User
     participant UI
     participant Controller
     participant Service
     participant Repository
     participant Database
 
-    %% User Registration Flow
-    User->>UI: Submit registration form
+    %% com.manish.LLD.PropertyPlatformLLD.Type1.User Registration Flow
+    com.manish.LLD.PropertyPlatformLLD.Type1.User->>UI: Submit registration form
     UI->>Controller: POST /api/register
     Controller->>Service: registerUser(regDto)
     Service->>Repository: findByEmail(regDto.email)
@@ -653,10 +653,10 @@ sequenceDiagram
     Service->>Service: createProfile(savedMember)
     Service-->>Controller: MemberDto
     Controller-->>UI: 201 Created + MemberDto
-    UI->>User: Show success message
+    UI->>com.manish.LLD.PropertyPlatformLLD.Type1.User: Show success message
 
     %% Create Post Flow
-    User->>UI: Compose post and click "Share"
+    com.manish.LLD.PropertyPlatformLLD.Type1.User->>UI: Compose post and click "Share"
     UI->>Controller: POST /api/posts (with auth token)
     Controller->>Service: createPost(postDto, authUser)
     Service->>Repository: findById(authUser.id)
@@ -670,10 +670,10 @@ sequenceDiagram
     Service->>Service: notifyConnections(savedPost)
     Service-->>Controller: PostDto
     Controller-->>UI: 201 Created + PostDto
-    UI->>User: Show post in feed
+    UI->>com.manish.LLD.PropertyPlatformLLD.Type1.User: Show post in feed
 
     %% Friend Request Flow
-    User->>UI: Click "Connect" on profile
+    com.manish.LLD.PropertyPlatformLLD.Type1.User->>UI: Click "Connect" on profile
     UI->>Controller: POST /api/connections (targetUserId)
     Controller->>Service: sendRequest(authUser.id, targetUserId)
     Service->>Repository: findById(targetUserId)
@@ -691,10 +691,10 @@ sequenceDiagram
     NotificationService-->>Service: ok
     Service-->>Controller: FriendRequestDto
     Controller-->>UI: 201 Created + FriendRequestDto
-    UI->>User: Show "Request sent"
+    UI->>com.manish.LLD.PropertyPlatformLLD.Type1.User: Show "Request sent"
 
     %% Comment on Post Flow
-    User->>UI: Type comment and submit
+    com.manish.LLD.PropertyPlatformLLD.Type1.User->>UI: Type comment and submit
     UI->>Controller: POST /api/posts/{id}/comments
     Controller->>Service: addComment(postId, commentDto, authUser)
     Service->>Repository: findPostById(postId)
@@ -709,7 +709,7 @@ sequenceDiagram
     NotificationService-->>Service: ok
     Service-->>Controller: CommentDto
     Controller-->>UI: 201 Created + CommentDto
-    UI->>User: Show comment under post
+    UI->>com.manish.LLD.PropertyPlatformLLD.Type1.User: Show comment under post
 ```
 
 ### State Diagram
@@ -776,7 +776,7 @@ stateDiagram-v2
 
 
 ```
-1. **User States**:
+1. **com.manish.LLD.PropertyPlatformLLD.Type1.User States**:
     - Guest → Registered (Upon account creation)
     - ProfileIncomplete → ProfileComplete (After adding profile details)
     - AnyState → Deactivated (Account deactivation)
@@ -821,7 +821,7 @@ stateDiagram-v2
     Public --> Private: restrict()
 ```
 
-3. User Engagement State Machine:
+3. com.manish.LLD.PropertyPlatformLLD.Type1.User Engagement State Machine:
 ```mermaid
 stateDiagram-v2
     state UserEngagement {
@@ -836,7 +836,7 @@ stateDiagram-v2
 4. Alternative View (Nested States):
 ```mermaid
 stateDiagram-v2
-    state "User Account" as user {
+    state "com.manish.LLD.PropertyPlatformLLD.Type1.User Account" as user {
         [*] --> Unverified
         Unverified --> Verified: verifyEmail()
         Verified --> Active: completeOnboarding()
@@ -1336,7 +1336,7 @@ public class SocialNetworkApp {
 ## **Step 2: High-Level Design (5 mins)**
 
 ### **Key Components:**
-1. **User Service** (Manages authentication, connections, and preferences)
+1. **com.manish.LLD.PropertyPlatformLLD.Type1.User Service** (Manages authentication, connections, and preferences)
 2. **Location Service** (Real-time GPS updates and geofencing logic)
 3. **Feed Service** (Fetches and prioritizes relevant posts)
 4. **Post Service** (Stores and retrieves user posts)
@@ -1344,7 +1344,7 @@ public class SocialNetworkApp {
 6. **Privacy & Permissions Module** (Handles opt-in location sharing)
 
 ### **Data Flow:**
-1. User shares location → Location Service updates position
+1. com.manish.LLD.PropertyPlatformLLD.Type1.User shares location → Location Service updates position
 2. Feed Service fetches posts from connected users near the location
 3. Post Service retrieves content and applies sorting/filtering
 4. Updates are pushed to the user with a 10-second freshness guarantee
@@ -1374,7 +1374,7 @@ flowchart TD
 1. Location Tracking System
 ```java
 // Adaptive polling based on speed
-public void updateLocation(User user, Location newLoc) {
+public void updateLocation(com.manish.LLD.PropertyPlatformLLD.Type1.User user, Location newLoc) {
     // Store in Redis Geospatial Index
     redis.geoadd("user:locations", newLoc.lng, newLoc.lat, user.id);
     
@@ -1526,7 +1526,7 @@ def get_cache_key(user_id, location):
 ```
 
 5. Step 5: Failure Handling
-   - Scenario: User loses network in tunnel
+   - Scenario: com.manish.LLD.PropertyPlatformLLD.Type1.User loses network in tunnel
    
 ```java
 fun handleOfflineScenario() {

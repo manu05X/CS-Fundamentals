@@ -166,21 +166,21 @@ It makes sense to create a basic design and extend it to create their specialize
 In a similar manner, with inheritance, we can create a class with basic features and behavior and create its specialized versions, by creating classes, that inherit this base class. In the same way, interfaces can extend existing interfaces.
 
 
-Let us create a new class `User` which should be the parent class of `Student`:
+Let us create a new class `com.manish.LLD.PropertyPlatformLLD.Type1.User` which should be the parent class of `Student`:
 
 ```java
-public class User {
+public class com.manish.LLD.PropertyPlatformLLD.Type1.User {
     private String name;
     private String email;
 
-    public User(String name, String email) {
+    public com.manish.LLD.PropertyPlatformLLD.Type1.User(String name, String email) {
         this.name = name;
         this.email = email;
     }
 }
 ```
 
-Now, let us create a new class `Student` which should be the child class of `User`. Let us add some methods specific to the student class:
+Now, let us create a new class `Student` which should be the child class of `com.manish.LLD.PropertyPlatformLLD.Type1.User`. Let us add some methods specific to the student class:
 
 ```java
 public class Student {
@@ -194,7 +194,7 @@ public class Student {
 Now in order to inherit the methods and fields of the parent class, we need to use the keyword `extends`:
 
 ```java
-public class Student extends User {
+public class Student extends com.manish.LLD.PropertyPlatformLLD.Type1.User {
     private String batchName;
     private Integer psp;
     
@@ -205,7 +205,7 @@ public class Student extends User {
 To pass the values to the parent class, we need to create a constructor and use the keyword `super`:
 
 ```java
-public class Student extends User {
+public class Student extends com.manish.LLD.PropertyPlatformLLD.Type1.User {
     private String batchName;
     private Integer psp;
     

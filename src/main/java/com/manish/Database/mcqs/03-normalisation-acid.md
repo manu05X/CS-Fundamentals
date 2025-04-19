@@ -12,7 +12,7 @@ Which of the following dependencies is not correct?
     C. EMAIL -> GROUP ID \
     D. NAME -> GROUP ID
 ---
-3. Joe has created a table for group members where the columns are `Group ID, User ID, Rating, Group Name`. The primary key here is `Group ID, User ID`.
+3. Joe has created a table for group members where the columns are `Group ID, com.manish.LLD.PropertyPlatformLLD.Type1.User ID, Rating, Group Name`. The primary key here is `Group ID, com.manish.LLD.PropertyPlatformLLD.Type1.User ID`.
 Which type of functional dependency exists?
     >A. No functional dependency \
     B. Transitive \

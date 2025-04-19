@@ -1308,7 +1308,7 @@ In the main method, we create a luxury car using the LuxuryCarFactory and a spor
 
 #### Example 2:
 
-Let's say we have a `GUI (Graphical User Interface)` library that can render GUI components such as `buttons`, `text boxes`, and `labels`. We want to support multiple platforms such as `Windows`, `macOS`, and `Linux`, and we want to ensure that the GUI components are consistent across platforms.
+Let's say we have a `GUI (Graphical com.manish.LLD.PropertyPlatformLLD.Type1.User Interface)` library that can render GUI components such as `buttons`, `text boxes`, and `labels`. We want to support multiple platforms such as `Windows`, `macOS`, and `Linux`, and we want to ensure that the GUI components are consistent across platforms.
 
 To implement the Abstract Factory pattern, we can create an abstract factory interface called GUIFactory that defines a set of factory methods for creating GUI components. The `GUIFactory` interface will have three concrete implementations - `WindowsGUIFactory`, `MacOSGUIFactory`, and `LinuxGUIFactory` - which will create the GUI components for Windows, macOS, and Linux respectively.
 

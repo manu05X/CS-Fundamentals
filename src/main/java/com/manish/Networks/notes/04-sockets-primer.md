@@ -42,7 +42,7 @@ A socket comprises 5 things:
 
 ### Types of sockets
 1. `Stream socket`: a socket that is used to send and receive data using TCP in a connection-oriented manner.
-2. `Datagram socket`: Datagram sockets are used to support User Datagram Protocol (UDP) applications that rely on connectionless data transfer. Each packet sent via datagram sockets is individually addressed and routed but takes no measure to ensure order or arrival. Datagram sockets are considered to be “unreliable” transport services.
+2. `Datagram socket`: Datagram sockets are used to support com.manish.LLD.PropertyPlatformLLD.Type1.User Datagram Protocol (UDP) applications that rely on connectionless data transfer. Each packet sent via datagram sockets is individually addressed and routed but takes no measure to ensure order or arrival. Datagram sockets are considered to be “unreliable” transport services.
 3. `Raw socket`: Raw sockets allow the send/receive of Internet Protocol packets from the network layer without any specific constraint on protocol (TCP, UDP, etc.). As such, header specifications are made at the application layer when sending and much of the encapsulation is left up to application developers.
 
 

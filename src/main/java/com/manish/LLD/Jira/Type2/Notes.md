@@ -49,7 +49,7 @@ task-management-system/
 │   │   │           │   │   ├── Subtask.java
 │   │   │           │   │   ├── Task.java
 │   │   │           │   │   ├── Team.java
-│   │   │           │   │   └── User.java
+│   │   │           │   │   └── com.manish.LLD.PropertyPlatformLLD.Type1.User.java
 │   │   │           │   └── projection/                    # Custom query projections
 │   │   │           │       └── TaskStatusCount.java
 │   │   │           ├── repository/                        # Spring Data JPA repositories
@@ -133,7 +133,7 @@ task-management-system/
 │   │   │           ├── controller/
 │   │   │           │   ├── SprintController.java           # Sprint REST endpoints
 │   │   │           │   ├── TaskController.java            # Task REST endpoints
-│   │   │           │   └── UserController.java             # User REST endpoints
+│   │   │           │   └── UserController.java             # com.manish.LLD.PropertyPlatformLLD.Type1.User REST endpoints
 │   │   │           ├── dto/
 │   │   │           │   ├── request/                       # Request DTOs
 │   │   │           │   │   ├── CreateSprintRequest.java
@@ -154,7 +154,7 @@ task-management-system/
 │   │   │           │   ├── Subtask.java
 │   │   │           │   ├── Task.java
 │   │   │           │   ├── Team.java
-│   │   │           │   └── User.java
+│   │   │           │   └── com.manish.LLD.PropertyPlatformLLD.Type1.User.java
 │   │   │           ├── repository/                        # JPA repositories
 │   │   │           │   ├── SprintRepository.java
 │   │   │           │   ├── TaskRepository.java
@@ -241,16 +241,16 @@ This structure follows standard Spring Boot/Maven project conventions while main
 |  +----------------+       +----------------+             |
 |                                                           |
 |  +----------------+       +----------------+             |
-|  |     User       |       |     Task       |             |
+|  |     com.manish.LLD.PropertyPlatformLLD.Type1.User       |       |     Task       |             |
 |  +----------------+       +----------------+             |
 |  | - userId: int  |       | - taskId: int  |             |
 |  | - name: String |       | - title: String|             |
 |  | - email: String|       | - description  |             |
 |  | - role: Role   |       | - type: TaskType             |
 |  | - teams: Set<Team>     | - status: TaskStatus         |
-|  +----------------+       | - assignee: User             |
-|       ^          |        | - reporter: User             |
-|       |          |        | - createdBy: User            |
+|  +----------------+       | - assignee: com.manish.LLD.PropertyPlatformLLD.Type1.User             |
+|       ^          |        | - reporter: com.manish.LLD.PropertyPlatformLLD.Type1.User             |
+|       |          |        | - createdBy: com.manish.LLD.PropertyPlatformLLD.Type1.User            |
 |       |          |        | - sprint: Sprint             |
 |       |          |        | - subtasks: List<Subtask>    |
 |       |          |        +----------------+             |

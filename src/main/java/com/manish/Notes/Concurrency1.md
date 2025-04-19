@@ -88,17 +88,17 @@ Concurrent programming enables multiple operations to progress in overlapping ti
 Google Docs exemplifies the power of concurrency through its collaborative editing feature. When multiple users are editing a document simultaneously, threads come into play. Each user's edits are handled by a separate thread, ensuring that changes made by one user do not disrupt the editing experience of others.
 
 **Threads in Google Docs**
-- Thread per User: Each user's editing actions are processed by an individual thread.
+- Thread per com.manish.LLD.PropertyPlatformLLD.Type1.User: Each user's editing actions are processed by an individual thread.
 - Conflict Resolution: Threads synchronize to resolve conflicts and merge edits seamlessly.
 - Auto-Suggest/Auto-complete: A separate thread can run spell check for the words you write.
 - UI Thread: A separate thread can continuously update UI for the users.
 
-### 2. Music Players: Smooth Playback and User Interaction
+### 2. Music Players: Smooth Playback and com.manish.LLD.PropertyPlatformLLD.Type1.User Interaction
 In music players like Spotify or iTunes, threads are crucial for delivering a smooth user experience during playback while allowing users to interact with the application concurrently.
 
 **How Threads Work in Music Players**
 - Playback Thread: A dedicated thread manages audio playback, ensuring uninterrupted streaming.
-- User Interface Thread: Another thread handles user interactions, such as browsing playlists or adjusting settings.
+- com.manish.LLD.PropertyPlatformLLD.Type1.User Interface Thread: Another thread handles user interactions, such as browsing playlists or adjusting settings.
 - Parallel Execution: Threads allow simultaneous playback and user interactions without one affecting the other.
 
 ### 3. Adobe Lightroom: Image Processing

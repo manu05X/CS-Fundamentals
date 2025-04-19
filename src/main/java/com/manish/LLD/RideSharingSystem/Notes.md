@@ -10,7 +10,7 @@ Ride Sharing Application - Low Level Design
 Application should allow user onboarding.
 1. add_user(user_detail) : Add basic user details
 2. add_vehicle(vehicle_detail) : Add the user’s vehicle(s) details
-   User should be able to offer a shared ride on a route with details.
+   com.manish.LLD.PropertyPlatformLLD.Type1.User should be able to offer a shared ride on a route with details.
 3. offer_ride(ride_detail)
    Ride will have details like vehicle, origin, destination, available seats. (A ride will have no intermediate
    stops.)
@@ -19,7 +19,7 @@ Application should allow user onboarding.
 4. select_ride(source, destination, seats, selection_strategy)
    Preferred Vehicle (Activa/Polo/XUV)
    Most Vacant.
-   System should be able to end the ride. User can only offer a ride for a given
+   System should be able to end the ride. com.manish.LLD.PropertyPlatformLLD.Type1.User can only offer a ride for a given
    vehicle, once there are no active offered rides for that vehicle.
 5. end_ride(ride_details)
    Find total rides offered/taken by all users.
@@ -28,13 +28,13 @@ Application should allow user onboarding.
 ---
 
 ### Actors
-1. User - Can be either a Driver or Passenger
-2. Driver - Special type of User who offers rides
-3. Passenger - Special type of User who consumes rides
+1. com.manish.LLD.PropertyPlatformLLD.Type1.User - Can be either a Driver or Passenger
+2. Driver - Special type of com.manish.LLD.PropertyPlatformLLD.Type1.User who offers rides
+3. Passenger - Special type of com.manish.LLD.PropertyPlatformLLD.Type1.User who consumes rides
 4. System - Manages ride matching, statistics, and operations
 
 ### Core Classes
-1. User
+1. com.manish.LLD.PropertyPlatformLLD.Type1.User
    - `Attributes`: userld, name, gender, age, email, phone 
    - `Methods`: adVehicle(), offerRide(), selectRide(), endRide)
 2. Vehicle
@@ -53,7 +53,7 @@ Application should allow user onboarding.
 ### Database Schema
 #### Tables
 
-1. User
+1. com.manish.LLD.PropertyPlatformLLD.Type1.User
     - user_id (PK)
     - name
     - gender
@@ -93,11 +93,11 @@ Application should allow user onboarding.
    - created_at
 
 ### Relationships
-1. User 1:M Vehicle (One user can have many vehicles)
-2. User 1:M Ride (One user can offer many rides as driver)
+1. com.manish.LLD.PropertyPlatformLLD.Type1.User 1:M Vehicle (One user can have many vehicles)
+2. com.manish.LLD.PropertyPlatformLLD.Type1.User 1:M Ride (One user can offer many rides as driver)
 3. Ride M:1 Vehicle (One ride is associated with one vehicle)
 4. Ride 1:M RideBooking (One ride can have many bookings)
-5. User M:M Ride through RideBooking (Many users can book many rides)
+5. com.manish.LLD.PropertyPlatformLLD.Type1.User M:M Ride through RideBooking (Many users can book many rides)
 
 
 ---
@@ -106,7 +106,7 @@ Application should allow user onboarding.
 
 ```mermaid
 classDiagram
-    class User {
+    class com.manish.LLD.PropertyPlatformLLD.Type1.User {
         - String userId
         - String name
         - String gender
@@ -155,7 +155,7 @@ classDiagram
     }
 
     class RideManager {
-        - Map<String, User> users
+        - Map<String, com.manish.LLD.PropertyPlatformLLD.Type1.User> users
         - Map<String, Vehicle> vehicles
         - Map<String, Ride> rides
         - Map<String, List<RideBooking>> rideBookings
@@ -191,13 +191,13 @@ classDiagram
         MOST_VACANT
     }
 
-    User "1" *-- "0..*" Vehicle : owns
-    User "1" --o "0..*" Ride : offers (as driver)
+    com.manish.LLD.PropertyPlatformLLD.Type1.User "1" *-- "0..*" Vehicle : owns
+    com.manish.LLD.PropertyPlatformLLD.Type1.User "1" --o "0..*" Ride : offers (as driver)
     Ride "1" *-- "0..*" RideBooking : contains
-    User "1" --o "0..*" RideBooking : books (as passenger)
+    com.manish.LLD.PropertyPlatformLLD.Type1.User "1" --o "0..*" RideBooking : books (as passenger)
     Ride "1" --* "1" Vehicle : uses
     RideManager -- Ride : manages
-    RideManager -- User : manages
+    RideManager -- com.manish.LLD.PropertyPlatformLLD.Type1.User : manages
     RideManager -- Vehicle : manages
     RideSelectionStrategy <|-- PreferredVehicleStrategy
     RideSelectionStrategy <|-- MostVacantStrategy
@@ -424,7 +424,7 @@ erDiagram
 
 ```mermaid
 sequenceDiagram
-    actor User as Passenger
+    actor com.manish.LLD.PropertyPlatformLLD.Type1.User as Passenger
     participant App as Mobile App
     participant API as RideService API
     participant Geo as Geospatial Index
@@ -432,7 +432,7 @@ sequenceDiagram
     participant DB as Database
     participant Push as Push Notification
 
-    User->>App: Search for rides (source=current location)
+    com.manish.LLD.PropertyPlatformLLD.Type1.User->>App: Search for rides (source=current location)
     App->>API: GET /api/rides/nearby?lat=12.34&lon=56.78&radius=5km
     activate API
 
@@ -454,8 +454,8 @@ sequenceDiagram
     API->>App: Return available rides (with ETA calculations)
     deactivate API
 
-    App->>User: Show rides on map (sorted by ETA)
-    User->>App: Select ride (V1)
+    App->>com.manish.LLD.PropertyPlatformLLD.Type1.User: Show rides on map (sorted by ETA)
+    com.manish.LLD.PropertyPlatformLLD.Type1.User->>App: Select ride (V1)
     App->>API: POST /api/bookings {ride_id=V1}
     API->>Push: Notify driver (New booking request)
 ```

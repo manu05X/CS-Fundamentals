@@ -28,11 +28,11 @@ public interface Person {
 Now let's create a class that implements the Person interface:
 
 ```java
-public class User implements Person {
+public class com.manish.LLD.PropertyPlatformLLD.Type1.User implements Person {
     private String name;
     private String email;
 
-    public User(String name, String email) {
+    public com.manish.LLD.PropertyPlatformLLD.Type1.User(String name, String email) {
         this.name = name;
         this.email = email;
     }
@@ -234,11 +234,11 @@ public abstract Person {
 Now let's create a class that extends the Person abstract class:
 
 ```java
-public class User extends Person {
+public class com.manish.LLD.PropertyPlatformLLD.Type1.User extends Person {
     private String name;
     private String email;
 
-    public User(String name, String email) {
+    public com.manish.LLD.PropertyPlatformLLD.Type1.User(String name, String email) {
         this.name = name;
         this.email = email;
     }

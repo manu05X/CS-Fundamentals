@@ -22,11 +22,11 @@
 
 ### Core Classes
 
-1. **User**
+1. **com.manish.LLD.PropertyPlatformLLD.Type1.User**
    - Base class for both Buyer and Seller
    - Properties: id, name
 
-2. **Buyer (extends User)**
+2. **Buyer (extends com.manish.LLD.PropertyPlatformLLD.Type1.User)**
    - Properties:
      - auctionsParticipated (count)
      - isPreferredBuyer
@@ -35,7 +35,7 @@
      - updateBid()
      - withdrawBid()
 
-3. **Seller (extends User)**
+3. **Seller (extends com.manish.LLD.PropertyPlatformLLD.Type1.User)**
    - Methods:
      - createAuction()
      - getProfit()
@@ -133,7 +133,7 @@
 ### Relationships
 
 1. **1:1 Relationships**
-   - User to Buyer/Seller (inheritance)
+   - com.manish.LLD.PropertyPlatformLLD.Type1.User to Buyer/Seller (inheritance)
 
 2. **1:M Relationships**
    - Seller to Auctions

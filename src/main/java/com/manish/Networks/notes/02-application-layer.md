@@ -145,7 +145,7 @@ HTTP headers contain text information stored in key-value pairs, and they are in
 Some common headers are:
 * Host - The host header specifies the domain name or IP address of the server receiving the request.
 * Referer - The Referer header specifies the address of the previous web page from which a link to the currently requested page was followed.
-* User-Agent - The User-Agent header specifies the name of the user agent originating the request.
+* com.manish.LLD.PropertyPlatformLLD.Type1.User-Agent - The com.manish.LLD.PropertyPlatformLLD.Type1.User-Agent header specifies the name of the user agent originating the request.
 * Accept - The Accept header is used to specify what content types the client is willing to accept.
 * Connection - The Connection header is used to control whether the connection should be closed after the request is complete.
 

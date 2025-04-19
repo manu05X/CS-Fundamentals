@@ -31,15 +31,15 @@ classDiagram
 
     class Order {
         -String orderId
-        -User user
+        -com.manish.LLD.PropertyPlatformLLD.Type1.User user
         -Cart cart
         -double totalAmount
-        +getUser() User
+        +getUser() com.manish.LLD.PropertyPlatformLLD.Type1.User
         +getCart() Cart
         +getTotalAmount() double
     }
 
-    class User {
+    class com.manish.LLD.PropertyPlatformLLD.Type1.User {
         -String userId
         -String userType
         -List<String> pastPurchases
@@ -75,7 +75,7 @@ classDiagram
     }
 
     Cart "1" -- "*" CartItem
-    Order "1" -- "1" User
+    Order "1" -- "1" com.manish.LLD.PropertyPlatformLLD.Type1.User
     Order "1" -- "1" Cart
     Coupon "1" -- "*" Rule
     CouponRecommendationImpl ..|> CouponRecommendation
@@ -228,7 +228,7 @@ flowchart TD
 - How does polymorphism manifest in this design?
 - What SOLID principles are demonstrated in the `CouponRecommendationImpl`?
 - How would you extend this system to support composite rules (OR/NOT conditions)?
-- Why are the model classes (User, Order) immutable? What are the advantages?
+- Why are the model classes (com.manish.LLD.PropertyPlatformLLD.Type1.User, Order) immutable? What are the advantages?
 
 ## 5. Testing
 - How would you unit test `UserRuleType.check()`?

@@ -1,6 +1,6 @@
 # Questions
 1. Joe Bloggs is helping us build Scaler. He is trying to delete some batches but the database throws an error that the batch is used by a tuple in another table. Which type of integrity constraint is being enforced here?
-    >A. User-defined integrity \
+    >A. com.manish.LLD.PropertyPlatformLLD.Type1.User-defined integrity \
     B. Domain integrity \
     C. Entity integrity \
     D. Referential integrity
